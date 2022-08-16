@@ -119,17 +119,16 @@
     <div class="page-wraper">
         <div id="loading-area"></div>
         <?php $address = $phone = $email = $linkFB = $pageId = $linkYtb = $linkInsta = '';
-if ($info->count() > 0) {
-    $address = $info[0]['address'];
-    $phone = $info[0]['phone'];
-    $email = $info[0]['email'];
-    $linkFB = $info[0]['link_fb'];
-    $pageId = $info[0]['page_id_fb'];
-    $linkYtb = $info[0]['link_youtube'];
-    $linkInsta = $info[0]['link_instagram'];
-
-}
-?>
+        if ($info->count() > 0) {
+            $address = $info[0]['address'];
+            $phone = $info[0]['phone'];
+            $email = $info[0]['email'];
+            $linkFB = $info[0]['link_fb'];
+            $pageId = $info[0]['page_id_fb'];
+            $linkYtb = $info[0]['link_youtube'];
+            $linkInsta = $info[0]['link_instagram'];
+        }
+        ?>
         <!-- header -->
         @include('template.include.headerMenu')
         <div class="page-content bg-white">
@@ -140,9 +139,9 @@ if ($info->count() > 0) {
                 </div>
             </div>
             <?php
-            $year = date('Y', strtotime($post->update_at));
-            $month = date('m', strtotime($post->update_at));
-            $day = date('d', strtotime($post->update_at));
+            $year = date('Y', strtotime($post->create_at));
+            $month = date('m', strtotime($post->create_at));
+            $day = date('d', strtotime($post->create_at));
             ?>
             <!-- inner page banner END -->
             <div class="content-area bgeffect" style="background-image:url(images/background/bg12.jpg);" data-0="background-position:0px 0px;" data-end="background-position:0px 2000px;">
@@ -157,7 +156,7 @@ if ($info->count() > 0) {
                                 </div>
                                 <div class="dez-post-meta m-b20">
                                     <ul>
-                                        <li class="post-date"> <i class="fa fa-calendar"></i><strong>Ngày {{$day}} Tháng {{$month}}</strong> <span> {{$year}}</span> </li>
+                                        <li class="post-date"> <i class="fa fa-calendar"></i><strong>Ngày {{$day}} Tháng {{$month}}</strong> <span>Năm {{$year}}</span> </li>
                                         <li class="post-author"><i class="fa fa-user"></i>By <a href="#">Thiên Phú</a> </li>
                                         <li class="post-comment"><i class="fa fa-comments"></i> <a href="#">0 Bình luận</a> </li>
                                     </ul>
@@ -216,7 +215,7 @@ if ($info->count() > 0) {
                                             <div class="widget-post clearfix">
                                                 <div class="dez-post-media">
                                                     <a href="{{URL::to($item->post_id .'/bai-viet-'.$item->post_slug)}}">
-                                                        <img class="new-img" src="{{asset('public/uploads/post/'.$item->post_image)}}"  alt="{{$item->post_title}}">
+                                                        <img class="new-img" src="{{asset('public/uploads/post/'.$item->post_image)}}" alt="{{$item->post_title}}">
                                                     </a>
                                                 </div>
                                                 <div class="dez-post-info">

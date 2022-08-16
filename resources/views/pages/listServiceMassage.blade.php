@@ -153,15 +153,15 @@
 
                         <?php if ($homePost) {
                             foreach ($homePost as $key => $value) {
-                                $year = date('Y', strtotime($value->update_at));
-                                $month = date('m', strtotime($value->update_at));
-                                $day = date('d', strtotime($value->update_at));
+                                $year = date('Y', strtotime($value->create_at));
+                                $month = date('m', strtotime($value->create_at));
+                                $day = date('d', strtotime($value->create_at));
                         ?>
 
                                 <div class="post card-container col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <div class="blog-post blog-grid date-style-2">
                                         <div class="dez-post-media dez-img-effect shrink background-hover"> <a href="{{URL::to($value->post_id .'/bai-viet-'.$value->post_slug)}}">
-                                            <img class="new-thumb" src="{{asset('public/uploads/post/'.$value->post_image)}}" alt="{{$value->post_desc}}"></a> </div>
+                                                <img class="new-thumb" src="{{asset('public/uploads/post/'.$value->post_image)}}" alt="{{$value->post_desc}}"></a> </div>
                                         <div class="dez-post-info">
                                             <div class="dez-post-title ">
                                                 <h4 class="post-title"><a href="{{URL::to($value->post_id .'/bai-viet-'.$value->post_slug)}}">{{$value->post_title}}</a></h4>

@@ -201,40 +201,40 @@ $productVip = Helper::getProductVip();
 								</h2>
 							</div>
 							<?php
-							$id = $slug =  $img = $title= '';
-							if(isset($productVip[0])){
+							$id = $slug =  $img = $title = '';
+							if (isset($productVip[0])) {
 								$img = $productVip[0]['post_image'];
 								$title = $productVip[0]['post_title'];
 								$id =  $productVip[0]['post_id'];
 								$slug = $productVip[0]['post_slug'];
-							
-							 ?>
-							 
-							<div class="container">
-								<div class="row equal-wraper">
-									<div class="col-lg-6 col-md-6 p-a0 equal-col">
-										<div class=" dis-tbl-cell">
-											<div class="row">
-												<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+
+							?>
+
+								<div class="container">
+									<div class="row equal-wraper">
+										<div class="col-lg-6 col-md-6 p-a0 equal-col">
+											<div class=" dis-tbl-cell">
+												<div class="row">
+													<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="col-lg-6 col-md-6 p-lr0 dis-tbl equal-col">
-										<div class="p-a30 dis-tbl-cell">
-											<div class="max-w700 m-auto p-tb30 border-p">
-												<div class="row position-relative">
-													<div class="col-md-12 ">
-														<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
+										<div class="col-lg-6 col-md-6 p-lr0 dis-tbl equal-col">
+											<div class="p-a30 dis-tbl-cell">
+												<div class="max-w700 m-auto p-tb30 border-p">
+													<div class="row position-relative">
+														<div class="col-md-12 ">
+															<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
+														</div>
+														<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
+															Xem dự án
+														</a>
 													</div>
-													<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
-														Xem dự án
-													</a>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 							<?php } ?>
 						</div>
 					</div>
@@ -245,86 +245,17 @@ $productVip = Helper::getProductVip();
 			<div class="section-flagship relative p-tb70">
 				<div class="container">
 					<div class="row">
-					<?php
-							$id = $slug =  $img = $title= '';
-							if(isset($productVip[1])){
-								$img = $productVip[1]['post_image'];
-								$title = $productVip[1]['post_title'];
-								$id =  $productVip[1]['post_id'];
-								$slug = $productVip[1]['post_slug'];
-							
-							 ?>
-							 <div class="col col-sm-12 col-lg-5 col-sm-12">
-							<div class="max-w700 m-auto p-b50 col-sm-12 ">
-								<div class="row position-relative">
-									<div class="col-md-12 ">
-										<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
-
-									</div>
-									<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
-										Xem dự án
-									</a>
-								</div>
-							</div>
-
-							<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
-								<div class=" dis-tbl-cell">
-
-									<div class="row">
-										<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
-									</div>
-
-								</div>
-							</div>
-						</div>
-								<?php } else{ ?>
-
-						<div class="col col-sm-12 col-lg-5 col-sm-12">
-							<div class="max-w700 m-auto p-b50 col-sm-12 ">
-								<div class="row position-relative">
-									<div class="col-md-12 ">
-										<h2 class="font-weight-500 text-primary text-center">SUN GRAND CITY HILLSIDE
-											RESIDENCE</h2>
-
-									</div>
-									<a href="" target="_self" class="p-b10 text-center text-blue link-project">
-										Xem dự án
-									</a>
-								</div>
-							</div>
-
-							<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
-								<div class=" dis-tbl-cell">
-
-									<div class="row">
-										<img src="{{asset('public/frontend/images/banner/du-an3.jpg')}}" style="height:510px ;" alt="" class="img-cover equal-col" />
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<?php } ?>
-						<div class="col col-sm-12 col-lg-1 display-mobile-none"></div>
-
 						<?php
-							$id = $slug =  $img = $title= '';
-							if(isset($productVip[2])){
-								$img = $productVip[2]['post_image'];
-								$title = $productVip[2]['post_title'];
-								$id =  $productVip[2]['post_id'];
-								$slug = $productVip[2]['post_slug'];
-							
-							 ?>
-						<div class="col col-sm-12 col-lg-6">
-							<div class="col-lg-12 col-md-12 p-a0 equal-col">
-								<div class=" dis-tbl-cell">
-									<div class="row">
-										<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
-									</div>
-								</div>
-							</div>
-							<div class="p-a30 dis-tbl-cell">
-								<div class="max-w700 m-auto p-tb30">
+						$id = $slug =  $img = $title = '';
+						if (isset($productVip[1])) {
+							$img = $productVip[1]['post_image'];
+							$title = $productVip[1]['post_title'];
+							$id =  $productVip[1]['post_id'];
+							$slug = $productVip[1]['post_slug'];
+
+						?>
+							<div class="col col-sm-12 col-lg-5 col-sm-12">
+								<div class="max-w700 m-auto p-b50 col-sm-12 ">
 									<div class="row position-relative">
 										<div class="col-md-12 ">
 											<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
@@ -335,23 +266,25 @@ $productVip = Helper::getProductVip();
 										</a>
 									</div>
 								</div>
-							</div>
-						</div>
-						<?php } else{ ?>
-							<div class="col col-sm-12 col-lg-6">
-							<div class="col-lg-12 col-md-12 p-a0 equal-col">
-								<div class=" dis-tbl-cell">
-									<div class="row">
-										<img src="{{asset('public/frontend/images/banner/du-an2.jpg')}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+
+								<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
+									<div class=" dis-tbl-cell">
+
+										<div class="row">
+											<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+										</div>
+
 									</div>
 								</div>
 							</div>
-							<div class="p-a30 dis-tbl-cell">
-								<div class="max-w700 m-auto p-tb30">
+						<?php } else { ?>
+
+							<div class="col col-sm-12 col-lg-5 col-sm-12">
+								<div class="max-w700 m-auto p-b50 col-sm-12 ">
 									<div class="row position-relative">
 										<div class="col-md-12 ">
-											<h2 class="font-weight-500 text-primary text-center">SUN
-												GRAND CITY HILLSIDE RESIDENCE</h2>
+											<h2 class="font-weight-500 text-primary text-center">SUN GRAND CITY HILLSIDE
+												RESIDENCE</h2>
 
 										</div>
 										<a href="" target="_self" class="p-b10 text-center text-blue link-project">
@@ -359,10 +292,52 @@ $productVip = Helper::getProductVip();
 										</a>
 									</div>
 								</div>
-							</div>
-						</div>
 
+								<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
+									<div class=" dis-tbl-cell">
+
+										<div class="row">
+											<img src="{{asset('public/frontend/images/banner/du-an3.jpg')}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+										</div>
+
+									</div>
+								</div>
+							</div>
 						<?php } ?>
+						<div class="col col-sm-12 col-lg-1 display-mobile-none"></div>
+
+						<?php
+						$id = $slug =  $img = $title = '';
+						if (isset($productVip[2])) {
+							$img = $productVip[2]['post_image'];
+							$title = $productVip[2]['post_title'];
+							$id =  $productVip[2]['post_id'];
+							$slug = $productVip[2]['post_slug'];
+
+						?>
+							<div class="col col-sm-12 col-lg-6">
+								<div class="col-lg-12 col-md-12 p-a0 equal-col">
+									<div class=" dis-tbl-cell">
+										<div class="row">
+											<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+										</div>
+									</div>
+								</div>
+								<div class="p-a30 dis-tbl-cell">
+									<div class="max-w700 m-auto p-tb30">
+										<div class="row position-relative">
+											<div class="col-md-12 ">
+												<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
+
+											</div>
+											<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
+												Xem dự án
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						<?php  } ?>
 					</div>
 				</div>
 			</div>
@@ -375,24 +350,25 @@ $productVip = Helper::getProductVip();
 				<div class="row">
 					<div class="col col-sm-12 col-lg-12">
 						<div class="container section-title-container hide-for-medium">
-							<h2 class="section-title section-title-bold-center"><b></b><span class="section-title-main text-primary font-weight-700">ĐỐI TÁC
-								</span><b></b></h2>
+							<h2 class="section-title section-title-bold-center"><b></b>
+								<span class="section-title-main text-primary font-weight-700">ĐỐI TÁC</span><b></b>
+							</h2>
 						</div>
 
-						<div class="container list-vendor">
-							<div class="row">
+						<div class="section-content container m-t80 button-example list-vendor">
+							<div class="img-carousel owl-carousel mfp-gallery gallery owl-btn-center-lr" id="vendor-owl">
 								@if(count($listVendor) > 0)
 								@foreach($listVendor as $vendor)
-								<div class=" col-sm-6 col-lg-3">
-									<div class="text-align"><img src="{{asset('public/uploads/vendor/'.$vendor->image)}}" alt="{{$vendor->name}}"></div>
+								<div class="item">
+									<div class="ow-img dez-img-effect zoom-slow"> <a href="#"><img src="{{asset('public/uploads/vendor/'.$vendor->image)}}" alt="{{$vendor->name}}"></a> </div>
 								</div>
 
 								@endforeach
 								@endif
 							</div>
 						</div>
-
 					</div>
+					
 				</div>
 			</div>
 		</section>

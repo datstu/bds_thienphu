@@ -96,6 +96,16 @@
                             @endif
                         </select>
                     </div>
+
+                    <?php
+                    $date = date_create($postById->create_at);
+                    $dateCreateAt = date_format($date, "Y-m-d");
+                    // echo $dateCreateAt ;exit;
+                    ?>
+                    <div class="form-group ">
+                        <label>Ngày tạo:</label>
+                        <input data-date-format="DD MMMM YYYY" required type="date" name="create_at" value="{{$dateCreateAt}}">
+                    </div>
                     <input type="hidden" name="id" value="{{$postById->post_id }}">
                     <input type="submit" name="submit" value="Cập nhật" class="btn btn-primary">
                     @else
@@ -157,7 +167,10 @@
                             </select>
                         </div>
 
-
+                        <div class="form-group ">
+                            <label>Ngày tạo:</label>
+                            <input data-date-format="DD MMMM YYYY" required type="date" name="create_at" class="" placeholder="Tên sản phẩm...">
+                        </div>
                         <input type="submit" name="submit" value="Thêm" class="btn btn-primary">
                         @endif
 
@@ -170,6 +183,40 @@
     </div>
 </div>
 <!--/.row-->
+
+<style>
+    input[type="date"]::-webkit-datetime-edit,
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-clear-button {
+        color: #fff;
+        position: relative;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-year-field {
+        position: absolute !important;
+        border-left: 1px solid #8c8c8c;
+        padding: 2px;
+        color: #000;
+        left: 56px;
+    }
+
+    input[type="date"]::-webkit-datetime-edit-month-field {
+        position: absolute !important;
+        border-left: 1px solid #8c8c8c;
+        padding: 2px;
+        color: #000;
+        left: 26px;
+    }
+
+
+    input[type="date"]::-webkit-datetime-edit-day-field {
+        position: absolute !important;
+        color: #000;
+        padding: 2px;
+        left: 4px;
+
+    }
+</style>
 <script>
     document.querySelectorAll('.price_class').forEach(inp => new Cleave(inp, {
         numeral: true,
@@ -184,4 +231,5 @@
         }
     }
 </script>
+
 @endsection()
