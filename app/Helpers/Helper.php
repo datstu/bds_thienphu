@@ -8,6 +8,7 @@ use App\Vendor;
 use App\BrandProduct;
 use App\Banner;
 use App\AboutUs;
+
 class Helper
 {
     public static function getListCategory()
@@ -202,4 +203,8 @@ class Helper
         return $homePost;
     }
     
+    public static function getPostById($id){
+        $result = Posts::find($id);
+        return   $result;
+    }
 }

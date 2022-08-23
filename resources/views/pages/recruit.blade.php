@@ -30,9 +30,9 @@ if ($info->count() > 0) {
 
 
         </main>
-        <section class="section-first recruitment-5 on-show">
+        <section class="section-first recruitment-5 ">
             <div class="box-recruitment">
-                <div class="title-4 ani-item on-show" style="will-change: transform, opacity;">
+                <div class="title-4 ani-item on-show">
                     <h2>Thông tin tuyển dụng</h2>
                 </div>
                 <div class="list-job ani-item on-show">
@@ -48,28 +48,35 @@ if ($info->count() > 0) {
                             </tr>
                         </thead>
                         <tbody>
+                            @if(isset($list))
+                            <?php $stt = 1; ?>
+                            @foreach($list as $recruit)
+                            <?php
+                                                $post = Helper::getPostById($recruit->post_id);
+                                                $url = '';
+                                                if (isset($post->post_id) && $post->post_id > 0) {
+                                                    
+                                                    $url =  (URL::to('/' . $post->post_id . '/bai-viet-' . $post->post_slug));
+                                                } ?>
+
                             <tr>
-                                <td data-label="STT">01</td>
+
+                                <td data-label="STT"><?php echo ($stt < 10) ? ('0' . (string)$stt) : $stt ?></td>
                                 <td data-label="Vị trí tuyển dụng">
-                                    <h3><a class="" target="blank" href="{{URL::to('/18/bai-viet-nhan-vien-kinh-doanh-bat-dong-san')}}" data-name="career-31" data-title="Nhân viên kinh doanh Bất động sản" data-description="" data-keyword="">Nhân viên kinh doanh Bất động sản</a></h3>
+                                    <a href="{{$url}}">{{$recruit->position}}</a>
                                 </td>
-                                <td data-label="Số lượng">20</td>
-                                <td data-label="Địa điểm làm việc">Tây Ninh</td>
-                                <td data-label="Ngày hết hạn">08/05/2021</td>
+                                <td data-label="Số lượng"><?php echo ($recruit->qty < 10) ? ('0' . (string)$recruit->qty) : $recruit->qty; ?></td>
+                                <td data-label="Địa điểm làm việc"> <a href="{{$url}}">{{$recruit->address}}</a></td>
+                                <?php $date = date_create($recruit->date_ex); ?>
+                                <td data-label="Ngày hết hạn"><?= date_format($date, "d-m-Y"); ?></td>
                                 <td data-label="Tình trạng đăng tuyển"><span class="status hot">
-                                    <a  target="blank" href="{{URL::to('/18/bai-viet-nhan-vien-kinh-doanh-bat-dong-san')}}" data-name="career-31" data-title="Nhân viên kinh doanh Bất động sản" data-description="" data-keyword="">Gấp</a></span></td>
+                                        <?php echo ($recruit->status == 2) ? 'Gấp' : ''; ?></span></td>
+
                             </tr>
-                            <tr>
-                                <td data-label="STT">02</td>
-                                <td data-label="Vị trí tuyển dụng">
-                                    <h3><a class="" targe t="blank"href="{{URL::to('19/bai-viet-giam-doc-phat-trien-dai-ly-bat-dong-san')}}"
-                                      data-name="career-3" data-title="Thiên Phú - Địa ốc Thiên Phú Tây Ninh" data-description="Thiên Phú - Địa ốc Thiên Phú Tây Ninh" data-keyword="Thiên Phú - Địa ốc Thiên Phú Tây Ninh">Giám đốc phát triển đại lý bất động sản</a></h3>
-                                </td>
-                                <td data-label="Số lượng">01</td>
-                                <td data-label="Địa điểm làm việc">Tây Ninh</td>
-                                <td data-label="Ngày hết hạn">09/02/2018</td>
-                                <td data-label="Tình trạng đăng tuyển"></td>
-                            </tr>
+
+                            <?php $stt++; ?>
+                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -88,7 +95,7 @@ if ($info->count() > 0) {
                             </div>
                             <div class="input-text file-up">
                                 <input id="fileInput" type="file" name="myfile" onchange="onChange(this);"><span class="file-name" data-default="File hồ sơ của bạn">
-                                
+
                             </div>
                         </div>
                         <a href="javascript:void(0);" onclick="alert('Hệ thống đang cập nhật. Xin cảm ơn.');" class="btn-1" id="btn-recruitment-submit">Nộp đơn</a>

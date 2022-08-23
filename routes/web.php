@@ -150,3 +150,11 @@ Route::post('/save-page-aboutus', "AboutUsController@save");
 Route::get('/tuyen-dung', "HomeController@recruit");
 
 Route::get('/lien-he', "HomeController@contact");
+
+Route::get('/quan-ly-tuyen-dung', "RecruitController@listRecruit");
+Route::get('/them-tin-tuyen-dung', "RecruitController@addRecruit");
+Route::post('/save-recruit','RecruitController@saveCruit');
+Route::get('/cap-nhat-tin-tuyen-dung/{id}', "RecruitController@updateRecruitById");
+
+Route::get('/searchPostAjax','PostsController@ajaxSearchPosts');
+Route::get('/xoa-tin-tuyen-dung/{id}', "RecruitController@delRecruit");

@@ -133,7 +133,7 @@
 		<div class="hotline-phone-ring-circle"></div>
 		<div class="hotline-phone-ring-circle-fill"></div>
 		<div class="hotline-phone-ring-img-circle">
-			<a href="tel:0987654321" class="pps-btn-img">
+			<a href="tel:<?= $phone ?>" class="pps-btn-img">
 				<img src="{{asset('public/frontend/images/icon-call-nh.png')}}" alt="Gọi điện thoại" width="50">
 			</a>
 		</div>

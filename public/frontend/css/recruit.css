@@ -91,7 +91,7 @@
     .btn-1,
     .btn-1::before,
     .file-mark,
-    .status.hot a,
+    .status.hot,
     .table-re tbody td:nth-child(2),
     .table-re td a {
         -webkit-transition: all .3s ease-in-out;
@@ -111,7 +111,7 @@
     border: #fff  1px solid;;
 }
 
-.status.hot a{
+.status.hot {
     color:red;
 }
 

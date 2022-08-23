@@ -8,6 +8,7 @@ use App\GaneraInfo;
 use App\Banner;
 use App\CategoryProduct;
 use App\AboutUs;
+use App\Recruit;
 
 use Mail;
 use URL;
@@ -22,7 +23,8 @@ class HomeController extends Controller
 
     public function recruit(Request $req){
         $info = GaneraInfo::get();
-        return view("pages.recruit")->with(compact('info','info'));
+        $list = Recruit::where('active',1)->get();
+        return view("pages.recruit")->with(compact('info','list'));
     }
 
     public function index(Request $req){
