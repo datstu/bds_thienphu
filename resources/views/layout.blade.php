@@ -95,55 +95,61 @@ $productVip = Helper::getProductVip();
 				<!-- About Quotes -->
 				<div class="section-full content-inner-2 bg-primary bg-img-fix">
 					<div class="container">
-						<div class="section-content">
-							<div class="row">
-								<div class="col-md-3 col-sm-6 text-center">
-									<div class="counter-style-1">
-										<div class="">
-											<span class="counter">123</span>
-											<span class="count-plus">+</span>
-										</div>
-										<span class="counter-text">Dự án</span>
-									</div>
+						<div class="section-content ">
+							<div class="row m-b30">
+								<div class="col-lg-12 text-center video-ytb">
+
+									<iframe  src="https://www.youtube.com/embed/LECgBci5EHc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 								</div>
-								<div class="col-md-3 col-sm-6 text-center">
-									<div class="counter-style-1">
-										<div class="">
-											<span class="counter">62</span>
-											<span class="count-plus">+</span>
+							</div>
+								<div class="row">
+									<div class="col-md-3 col-sm-6 text-center">
+										<div class="counter-style-1">
+											<div class="">
+												<span class="counter">123</span>
+												<span class="count-plus">+</span>
+											</div>
+											<span class="counter-text">Dự án</span>
 										</div>
-										<span class="counter-text">Nhân viên</span>
 									</div>
-								</div>
-								<div class="col-md-3 col-sm-6 text-center">
-									<div class="counter-style-1">
-										<div class="">
-											<span class="counter">35</span>
-											<span class="count-plus">+</span>
+									<div class="col-md-3 col-sm-6 text-center">
+										<div class="counter-style-1">
+											<div class="">
+												<span class="counter">62</span>
+												<span class="count-plus">+</span>
+											</div>
+											<span class="counter-text">Nhân viên</span>
 										</div>
-										<span class="counter-text">Đối tác</span>
 									</div>
-								</div>
-								<div class="col-md-3 col-sm-6 text-center">
-									<div class="counter-style-1">
-										<div class="">
-											<span class="counter">2089</span><span class="count-plus">+</span>
+									<div class="col-md-3 col-sm-6 text-center">
+										<div class="counter-style-1">
+											<div class="">
+												<span class="counter">35</span>
+												<span class="count-plus">+</span>
+											</div>
+											<span class="counter-text">Đối tác</span>
 										</div>
-										<span class="counter-text">Khách hàng</span>
+									</div>
+									<div class="col-md-3 col-sm-6 text-center">
+										<div class="counter-style-1">
+											<div class="">
+												<span class="counter">2089</span><span class="count-plus">+</span>
+											</div>
+											<span class="counter-text">Khách hàng</span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- About Quotes End -->
+
+
 				</div>
-				<!-- About Quotes End -->
-
-
 			</div>
-		</div>
-		<!-- flagship product -->
+			<!-- flagship product -->
 
-		<!-- <section class="section hide-for-medium" id="section-chu-luc">
+			<!-- <section class="section hide-for-medium" id="section-chu-luc">
 			<div class="section-flagship relative">
 				<div class="row">
 					<div class="col col-sm-12 col-lg-12">
@@ -188,143 +194,75 @@ $productVip = Helper::getProductVip();
 			</div>
 		</section> -->
 
-		<!-- product feature -->
-		<section class="section hide-for-medium section-noi-bat">
-			<div class="section-flagship relative">
-				<div class="row">
-					<div class="col col-sm-12 col-lg-12">
-						<div class="col-inner">
-							<div class="container section-title-container hide-for-medium">
-								<h2 class="section-title section-title-bold-center"><b></b>
-									<span class="section-title-main text-primary"> <strong> SẢN PHẨM NỔI BẬT</strong>
-									</span><b></b>
-								</h2>
-							</div>
-							<?php
-							$id = $slug =  $img = $title = '';
-							if (isset($productVip[0])) {
-								$img = $productVip[0]['post_image'];
-								$title = $productVip[0]['post_title'];
-								$id =  $productVip[0]['post_id'];
-								$slug = $productVip[0]['post_slug'];
 
-							?>
+			<!-- product feature -->
+			<section class="section hide-for-medium section-noi-bat">
+				<div class="section-flagship relative">
+					<div class="row">
+						<div class="col col-sm-12 col-lg-12">
+							<div class="col-inner">
+								<div class="container section-title-container hide-for-medium">
+									<h2 class="section-title section-title-bold-center"><b></b>
+										<span class="section-title-main text-primary"> <strong> SẢN PHẨM NỔI BẬT</strong>
+										</span><b></b>
+									</h2>
+								</div>
+								<?php
+								$id = $slug =  $img = $title = '';
+								if (isset($productVip[0])) {
+									$img = $productVip[0]['post_image'];
+									$title = $productVip[0]['post_title'];
+									$id =  $productVip[0]['post_id'];
+									$slug = $productVip[0]['post_slug'];
 
-								<div class="container">
-									<div class="row equal-wraper">
-										<div class="col-lg-6 col-md-6 p-a0 equal-col">
-											<div class=" dis-tbl-cell">
-												<div class="row">
-													<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+								?>
+
+									<div class="container">
+										<div class="row equal-wraper">
+											<div class="col-lg-6 col-md-6 p-a0 equal-col">
+												<div class=" dis-tbl-cell">
+													<div class="row">
+														<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 p-lr0 dis-tbl equal-col">
-											<div class="p-a30 dis-tbl-cell">
-												<div class="max-w700 m-auto p-tb30 border-p">
-													<div class="row position-relative">
-														<div class="col-md-12 ">
-															<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
+											<div class="col-lg-6 col-md-6 p-lr0 dis-tbl equal-col">
+												<div class="p-a30 dis-tbl-cell">
+													<div class="max-w700 m-auto p-tb30 border-p">
+														<div class="row position-relative">
+															<div class="col-md-12 ">
+																<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
+															</div>
+															<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
+																Xem dự án
+															</a>
 														</div>
-														<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
-															Xem dự án
-														</a>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							<?php } ?>
+								<?php } ?>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-		<section class="section hide-for-medium" id="section-noi-bat1">
-			<div class="section-flagship relative p-tb70">
-				<div class="container">
-					<div class="row">
-						<?php
-						$id = $slug =  $img = $title = '';
-						if (isset($productVip[1])) {
-							$img = $productVip[1]['post_image'];
-							$title = $productVip[1]['post_title'];
-							$id =  $productVip[1]['post_id'];
-							$slug = $productVip[1]['post_slug'];
+			</section>
+			<section class="section hide-for-medium" id="section-noi-bat1">
+				<div class="section-flagship relative p-tb70">
+					<div class="container">
+						<div class="row">
+							<?php
+							$id = $slug =  $img = $title = '';
+							if (isset($productVip[1])) {
+								$img = $productVip[1]['post_image'];
+								$title = $productVip[1]['post_title'];
+								$id =  $productVip[1]['post_id'];
+								$slug = $productVip[1]['post_slug'];
 
-						?>
-							<div class="col col-sm-12 col-lg-5 col-sm-12">
-								<div class="max-w700 m-auto p-b50 col-sm-12 ">
-									<div class="row position-relative">
-										<div class="col-md-12 ">
-											<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
-
-										</div>
-										<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
-											Xem dự án
-										</a>
-									</div>
-								</div>
-
-								<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
-									<div class=" dis-tbl-cell">
-
-										<div class="row">
-											<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
-										</div>
-
-									</div>
-								</div>
-							</div>
-						<?php } else { ?>
-
-							<div class="col col-sm-12 col-lg-5 col-sm-12">
-								<div class="max-w700 m-auto p-b50 col-sm-12 ">
-									<div class="row position-relative">
-										<div class="col-md-12 ">
-											<h2 class="font-weight-500 text-primary text-center">SUN GRAND CITY HILLSIDE
-												RESIDENCE</h2>
-
-										</div>
-										<a href="" target="_self" class="p-b10 text-center text-blue link-project">
-											Xem dự án
-										</a>
-									</div>
-								</div>
-
-								<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
-									<div class=" dis-tbl-cell">
-
-										<div class="row">
-											<img src="{{asset('public/frontend/images/banner/du-an3.jpg')}}" style="height:510px ;" alt="" class="img-cover equal-col" />
-										</div>
-
-									</div>
-								</div>
-							</div>
-						<?php } ?>
-						<div class="col col-sm-12 col-lg-1 display-mobile-none"></div>
-
-						<?php
-						$id = $slug =  $img = $title = '';
-						if (isset($productVip[2])) {
-							$img = $productVip[2]['post_image'];
-							$title = $productVip[2]['post_title'];
-							$id =  $productVip[2]['post_id'];
-							$slug = $productVip[2]['post_slug'];
-
-						?>
-							<div class="col col-sm-12 col-lg-6">
-								<div class="col-lg-12 col-md-12 p-a0 equal-col">
-									<div class=" dis-tbl-cell">
-										<div class="row">
-											<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
-										</div>
-									</div>
-								</div>
-								<div class="p-a30 dis-tbl-cell">
-									<div class="max-w700 m-auto p-tb30">
+							?>
+								<div class="col col-sm-12 col-lg-5 col-sm-12">
+									<div class="max-w700 m-auto p-b50 col-sm-12 ">
 										<div class="row position-relative">
 											<div class="col-md-12 ">
 												<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
@@ -335,170 +273,239 @@ $productVip = Helper::getProductVip();
 											</a>
 										</div>
 									</div>
-								</div>
-							</div>
-						<?php  } ?>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- end product feature -->
 
-		<!-- investor -->
-		<section class="section hide-for-medium ">
-			<div class="section-flagship relative">
-				<div class="row">
-					<div class="col col-sm-12 col-lg-12">
-						<div class="container section-title-container hide-for-medium">
-							<h2 class="section-title section-title-bold-center"><b></b>
-								<span class="section-title-main text-primary font-weight-700">ĐỐI TÁC</span><b></b>
-							</h2>
-						</div>
+									<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
+										<div class=" dis-tbl-cell">
 
-						<div class="section-content container m-t80 button-example list-vendor">
-							<div class="img-carousel owl-carousel mfp-gallery gallery owl-btn-center-lr" id="vendor-owl">
-								@if(count($listVendor) > 0)
-								@foreach($listVendor as $vendor)
-								<div class="item">
-									<div class="ow-img dez-img-effect zoom-slow"> <a href="#"><img src="{{asset('public/uploads/vendor/'.$vendor->image)}}" alt="{{$vendor->name}}"></a> </div>
-								</div>
+											<div class="row">
+												<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+											</div>
 
-								@endforeach
-								@endif
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</section>
-		<!-- end investor -->
-
-		<!-- new and event -->
-		<section class="section hide-for-medium section-investor">
-			<div class="section-investor relative">
-				<div class="row">
-					<div class="col-sm-12 col-lg-12">
-						<div class="container section-title-container hide-for-medium">
-							<h2 class="section-title section-title-bold-center"><b></b><span class="section-title-main text-primary font-weight-700">TIN TỨC & SỰ KIỆN
-								</span><b></b></h2>
-						</div>
-
-						<div class="container m-t60">
-							<div class="row">
-								@if(count($listNewsHome) > 0)
-
-								<?php $firstPost = array_shift($listNewsHome);
-								$date = date_create($firstPost->create_at); ?>
-								<div class="col-sm-12 col-lg-6  height-new-mobile" id="height-new-left">
-									<a class="relative" style="display: block;" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-										<div class="box-image"><img style="min-height:648px" src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
-										<div class="box-text">
-											<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
-											<div class="post-meta is-small op-8">{{date_format($date,"d-m-Y")}}</div>
-
-											<p class="from_the_blog_excerpt ">{{$firstPost->post_desc}}</p>
-											<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
-												Xem Thêm </button>
 										</div>
-										<!-- <div class="badge absolute top post-date badge-circle-inside">
+									</div>
+								</div>
+							<?php } else { ?>
+
+								<div class="col col-sm-12 col-lg-5 col-sm-12">
+									<div class="max-w700 m-auto p-b50 col-sm-12 ">
+										<div class="row position-relative">
+											<div class="col-md-12 ">
+												<h2 class="font-weight-500 text-primary text-center">SUN GRAND CITY HILLSIDE
+													RESIDENCE</h2>
+
+											</div>
+											<a href="" target="_self" class="p-b10 text-center text-blue link-project">
+												Xem dự án
+											</a>
+										</div>
+									</div>
+
+									<div class="col-lg-12 col-md-12 p-a0 equal-col col-sm-12">
+										<div class=" dis-tbl-cell">
+
+											<div class="row">
+												<img src="{{asset('public/frontend/images/banner/du-an3.jpg')}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+											</div>
+
+										</div>
+									</div>
+								</div>
+							<?php } ?>
+							<div class="col col-sm-12 col-lg-1 display-mobile-none"></div>
+
+							<?php
+							$id = $slug =  $img = $title = '';
+							if (isset($productVip[2])) {
+								$img = $productVip[2]['post_image'];
+								$title = $productVip[2]['post_title'];
+								$id =  $productVip[2]['post_id'];
+								$slug = $productVip[2]['post_slug'];
+
+							?>
+								<div class="col col-sm-12 col-lg-6">
+									<div class="col-lg-12 col-md-12 p-a0 equal-col">
+										<div class=" dis-tbl-cell">
+											<div class="row">
+												<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+											</div>
+										</div>
+									</div>
+									<div class="p-a30 dis-tbl-cell">
+										<div class="max-w700 m-auto p-tb30">
+											<div class="row position-relative">
+												<div class="col-md-12 ">
+													<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
+
+												</div>
+												<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
+													Xem dự án
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php  } ?>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- end product feature -->
+
+			<!-- investor -->
+			<section class="section hide-for-medium ">
+				<div class="section-flagship relative">
+					<div class="row">
+						<div class="col col-sm-12 col-lg-12">
+							<div class="container section-title-container hide-for-medium">
+								<h2 class="section-title section-title-bold-center"><b></b>
+									<span class="section-title-main text-primary font-weight-700">ĐỐI TÁC</span><b></b>
+								</h2>
+							</div>
+
+							<div class="section-content container m-t80 button-example list-vendor">
+								<div class="img-carousel owl-carousel mfp-gallery gallery owl-btn-center-lr" id="vendor-owl">
+									@if(count($listVendor) > 0)
+									@foreach($listVendor as $vendor)
+									<div class="item">
+										<div class="ow-img dez-img-effect zoom-slow"> <a href="#"><img src="{{asset('public/uploads/vendor/'.$vendor->image)}}" alt="{{$vendor->name}}"></a> </div>
+									</div>
+
+									@endforeach
+									@endif
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+			<!-- end investor -->
+
+			<!-- new and event -->
+			<section class="section hide-for-medium section-investor">
+				<div class="section-investor relative">
+					<div class="row">
+						<div class="col-sm-12 col-lg-12">
+							<div class="container section-title-container hide-for-medium">
+								<h2 class="section-title section-title-bold-center"><b></b><span class="section-title-main text-primary font-weight-700">TIN TỨC & SỰ KIỆN
+									</span><b></b></h2>
+							</div>
+
+							<div class="container m-t60">
+								<div class="row">
+									@if(count($listNewsHome) > 0)
+
+									<?php $firstPost = array_shift($listNewsHome);
+									$date = date_create($firstPost->create_at); ?>
+									<div class="col-sm-12 col-lg-6  height-new-mobile" id="height-new-left">
+										<a class="relative" style="display: block;" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
+											<div class="box-image"><img style="min-height:648px" src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+											<div class="box-text">
+												<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
+												<div class="post-meta is-small op-8">{{date_format($date,"d-m-Y")}}</div>
+
+												<p class="from_the_blog_excerpt ">{{$firstPost->post_desc}}</p>
+												<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+													Xem Thêm </button>
+											</div>
+											<!-- <div class="badge absolute top post-date badge-circle-inside">
 											<div class="badge-inner">
 												<span class="post-date-day">01</span><br>
 												<span class="post-date-month is-xsmall">Th6</span>
 											</div>
 										</div> -->
-									</a>
-								</div>
+										</a>
+									</div>
 
-								@endif
+									@endif
 
-								<div class="col-sm-12 col-lg-6  col-right">
-									<div class="row" id="height-new-right">
-										@if(count($listNewsHome) > 0)
-										<?php $firstPost = array_shift($listNewsHome);
-										$date = date_create($firstPost->create_at); ?>
-										<div class="col-12 m-b20">
-											<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-												<div class="box-image"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
-												<div class="box-text">
-													<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
-													<div class="post-meta is-small op-8">{{date_format($date,"d-m-Y")}}</div>
+									<div class="col-sm-12 col-lg-6  col-right">
+										<div class="row" id="height-new-right">
+											@if(count($listNewsHome) > 0)
+											<?php $firstPost = array_shift($listNewsHome);
+											$date = date_create($firstPost->create_at); ?>
+											<div class="col-12 m-b20">
+												<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
+													<div class="box-image"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+													<div class="box-text">
+														<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
+														<div class="post-meta is-small op-8">{{date_format($date,"d-m-Y")}}</div>
 
 
-													<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
-														Xem Thêm </button>
-												</div>
-											</a>
-										</div>
+														<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+															Xem Thêm </button>
+													</div>
+												</a>
+											</div>
 
-										@endif
-										@if(count($listNewsHome) > 0)
-										<?php $firstPost = array_shift($listNewsHome); ?>
-										<div class="col-sm-12 col-lg-6  magrin-new-mobile ">
-											<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-												<div class="box-image box-image-custom"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
-												<div class="box-text ">
-													<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
+											@endif
+											@if(count($listNewsHome) > 0)
+											<?php $firstPost = array_shift($listNewsHome); ?>
+											<div class="col-sm-12 col-lg-6  magrin-new-mobile ">
+												<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
+													<div class="box-image box-image-custom"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+													<div class="box-text ">
+														<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
 
-													<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
-														Xem Thêm </button>
-												</div>
+														<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+															Xem Thêm </button>
+													</div>
 
-											</a>
-										</div>
+												</a>
+											</div>
 
-										@endif
-										@if(count($listNewsHome) > 0)
-										<?php $firstPost = array_shift($listNewsHome); ?>
-										<div class="col-sm-12 col-lg-6 magrin-new-mobile">
-											<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-												<div class="box-image box-image-custom"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
-												<div class="box-text box-image-custom">
-													<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
+											@endif
+											@if(count($listNewsHome) > 0)
+											<?php $firstPost = array_shift($listNewsHome); ?>
+											<div class="col-sm-12 col-lg-6 magrin-new-mobile">
+												<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
+													<div class="box-image box-image-custom"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+													<div class="box-text box-image-custom">
+														<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
 
-													<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
-														Xem Thêm </button>
-												</div>
-												<!-- <div class="badge absolute top post-date badge-circle-inside">
+														<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+															Xem Thêm </button>
+													</div>
+													<!-- <div class="badge absolute top post-date badge-circle-inside">
 													<div class="badge-inner">
 														<span class="post-date-day">01</span><br>
 														<span class="post-date-month is-xsmall">Th6</span>
 													</div>
 												</div> -->
-											</a>
+												</a>
+											</div>
+
+											@endif
+
 										</div>
-
-										@endif
-
 									</div>
 								</div>
 							</div>
-						</div>
 
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-		<script>
-			if (window.innerWidth > 480) {
-				var height = document.getElementById('height-new-left').offsetHeight;
-				if (height < 100) {
-					height = 564;
+			</section>
+			<script>
+				if (window.innerWidth > 480) {
+					var height = document.getElementById('height-new-left').offsetHeight;
+					if (height < 100) {
+						height = 564;
+					}
+					console.log('height: ', height);
+					document.getElementById("height-new-right").style.height = height + 'px';
+
+					console.log('ffff: ', (height / 2 - 20));
+					document.getElementsByClassName("box-image-custom")[0].style.height = (height / 2 - 20) + 'px';
+					document.getElementsByClassName("box-image-custom")[1].style.height = (height / 2 - 20) + 'px';
+
 				}
-				console.log('height: ', height);
-				document.getElementById("height-new-right").style.height = height + 'px';
-
-				console.log('ffff: ', (height / 2 - 20));
-				document.getElementsByClassName("box-image-custom")[0].style.height = (height / 2 - 20) + 'px';
-				document.getElementsByClassName("box-image-custom")[1].style.height = (height / 2 - 20) + 'px';
-
-			}
-		</script>
-		<!-- end new and event -->
+			</script>
+			<!-- end new and event -->
 
 
-		<!-- brand -->
-		<!-- <section class="section hide-for-medium ">
+			<!-- brand -->
+			<!-- <section class="section hide-for-medium ">
 			<div class="section-flagship relative">
 				<div class="row">
 					<div class="col col-sm-12 col-lg-12">
@@ -523,9 +530,9 @@ $productVip = Helper::getProductVip();
 				</div>
 			</div>
 		</section> -->
-		<!-- end brand -->
-	</div>
-	<!-- end flagship product -->
+			<!-- end brand -->
+		</div>
+		<!-- end flagship product -->
 
 
-	@include('template.footer')
+		@include('template.footer')

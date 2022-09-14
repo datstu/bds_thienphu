@@ -576,10 +576,17 @@ a.link-project:hover:before {
 .new-thumb {
     height: 377px !important;
 }
+.video-ytb iframe{
+    height: 515px;
+    width: 100%;
+}
 
 @media only screen and (max-width: 480px) {
     .new-thumb {
         height: auto !important;
+    }
+    .video-ytb iframe{
+        height: 300px;
     }
 }
 
