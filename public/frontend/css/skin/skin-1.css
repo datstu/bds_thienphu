@@ -588,6 +588,9 @@ a.link-project:hover:before {
     .video-ytb iframe{
         height: 300px;
     }
+    #height-new-left a .box-image img{
+        min-height: unset !important;
+    }
 }
 
 .from_the_blog_excerpt {
