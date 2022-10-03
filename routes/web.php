@@ -14,6 +14,9 @@
 //User
 // Route::get('/',"HomeController@index");
 // Route::get('/trang-chu', "HomeController@index");
+
+Route::get('/tim-bai-viet',"AdminController@searchPostAdmin");
+
 Route::get('/',"HomeController@index");
 Route::get('/trang-chu', "ProductController@listProduct");
 

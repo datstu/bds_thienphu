@@ -15,10 +15,17 @@ use App\GaneraInfo;
 use App\Banner;
 use App\Vendor;
 use App\BrandProduct;
+use App\Posts;
 session_start();
 class AdminController extends Controller
 {
-    
+    public function searchPostAdmin(Request $req){
+        if( !$this->checkAuthAdmin())  return redirect('/admin-login');
+        $list = Posts::where('post_title','LIKE', "%{$req->search}%") 
+        ->paginate(50);
+       
+        return view("admin.post.searchResult")->with('listProduct',$list);
+    }
     public function brandHome(){
         if( !$this->checkAuthAdmin())  return redirect('/admin-login');
         $listBrandProduct = BrandProduct::paginate(5);

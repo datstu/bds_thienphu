@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// not needed in the Standard(s) toolbar.
 	//config.removeButtons = 'Underline,Subscript,Superscript';
 
-	config.filebrowserBrowseUrl= 'https://www.diaocthienphu.com.vn/public/backend/ckfinder/ckfinder.html';
-    config.filebrowserUploadUrl='https://www.diaocthienphu.com.vn/public/backend/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
+	config.filebrowserBrowseUrl= 'http://dev.phuonghung.abc/public/backend/ckfinder/ckfinder.html';
+    config.filebrowserUploadUrl='http://dev.phuonghung.abc/public/backend/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
 
 };

@@ -74,7 +74,12 @@ $data = [[
 @endforeach
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Quản lý bài viết</div>
+            <div class="panel-heading search-admin">Quản lý bài viết
+            <form action="{{URL::to('/tim-bai-viet')}}" method="get">
+                    <input name ="search" placeholder="abc..." class="color-gray " type="text">
+                    <button>Tìm</button>
+                </form>
+            </div>
             <div class="panel-body">
                 <div class="bootstrap-table">
                     <div class="table-responsive">
