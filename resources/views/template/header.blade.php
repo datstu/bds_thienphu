@@ -5,13 +5,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="keywords" content="" />
+	<meta name="keywords" content="{{$meta_keywords}}" />
 	<meta name="author" content="" />
 	<meta name="robots" content="" />
 
-	<meta name="description" content="Công ty Cổ Phần Đầu Tư Địa Ốc Thiên Phú Tây Ninh" />
-	<meta property="og:title" content="Thiên Phú - Địa ốc Thiên Phú Tây Ninh" />
-	<meta property="og:description" content="Thiên Phú - Địa ốc Thiên Phú Tây Ninh" />
+	<meta name="description" content="{{$meta_desc}}" />
+	<meta property="og:title" content="{{$meta_title}}" />
+	<meta property="og:description" content="{{$meta_desc}}" />
 	<!-- <meta property="og:image" content="https://butterfly.dexignzone.com/xhtml/social-image.png" /> -->
 	<meta name="format-detection" content="telephone=no">
 
@@ -20,7 +20,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="{{asset('public/frontend/images/logo/favicon.png')}}" />
 
 	<!-- Page Title Here -->
-	<title>Thiên Phú - Địa ốc Thiên Phú Tây Ninh</title>
+	<title>{{$meta_title}}</title>
 	<!-- Mobile Specific -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--[if lt IE 9]>

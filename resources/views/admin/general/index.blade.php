@@ -41,6 +41,11 @@ if ($info->count() > 0) {
                 4. Thương hiệu
             </div>
         </a>
+        <a href="{{URL::to('/home-quan-li-meta-seo')}}">
+            <div class="header-setting head-title">
+                5. Meta SEO
+            </div>
+        </a>
     </div>
     <?php
     $message = Session::get('message');

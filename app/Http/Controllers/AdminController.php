@@ -16,6 +16,7 @@ use App\Banner;
 use App\Vendor;
 use App\BrandProduct;
 use App\Posts;
+use App\MetaSeo;
 session_start();
 class AdminController extends Controller
 {
@@ -25,6 +26,17 @@ class AdminController extends Controller
         ->paginate(50);
        
         return view("admin.post.searchResult")->with('listProduct',$list);
+    }
+    
+    public function getMetaSeo(){
+        $listMeta = MetaSeo::get();
+        return $listMeta[0] ;
+    }
+
+    public function metaSeoHome(){
+        if( !$this->checkAuthAdmin())  return redirect('/admin-login');
+        $listMeta = MetaSeo::get();
+        return view('admin.general.homeMetaSeo')->with(compact('listMeta','listMeta'));
     }
     public function brandHome(){
         if( !$this->checkAuthAdmin())  return redirect('/admin-login');
@@ -44,6 +56,35 @@ class AdminController extends Controller
         $listBanner = Banner::orderby('id', 'DESC')->paginate(5);
         return view('admin.general.homeBanner')->with(compact('listBanner','listBanner'));
     }
+
+    public function saveGaneralMeta(Request $req){
+        $meta = MetaSeo::find(1);
+            
+        $data = $req->all();
+        if(isset($meta->id)){
+            $meta->meta_desc = $data['meta_desc'];
+            $meta->meta_keywords = $data['meta_keywords'];
+            $meta->meta_title = $data['meta_title'];
+       
+            $result = $meta->save();
+        } else{
+            $meta = new MetaSeo();
+            $meta->meta_desc = $data['meta_desc'];
+            $meta->meta_keywords = $data['meta_keywords'];
+            $meta->meta_title = $data['meta_title'];
+       
+            $result = $meta->save();
+        }
+       
+        
+        if($result){
+            Session::put('message','success_add');
+         } else {
+            Session::put('message','fail_add');
+         }
+        return Redirect::to('/home-quan-li-meta-seo');
+    }
+
     public function saveGaneralInfo(Request $req){
         $info = GaneraInfo::find(3);
             

@@ -9,51 +9,67 @@ use App\Banner;
 use App\CategoryProduct;
 use App\AboutUs;
 use App\Recruit;
+use App\MetaSeo;
 
 use Mail;
 use URL;
 class HomeController extends Controller
 {
-    
-    public function contact(Request $req){
+    public function getMetaSeo(){
+        $listMeta = MetaSeo::get();
+        return $listMeta[0] ;
+    }
+
+    public function contact(Request $req){ 
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
+        $url_cannonical = $req->url();
         $info = GaneraInfo::get();
-        return view("pages.contact")->with(compact('info','info'));
+        return view("pages.contact")->with(compact('info','meta_desc','meta_keywords','meta_title','url_cannonical'));
     }
 
 
     public function recruit(Request $req){
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
+        $url_cannonical = $req->url();
+
         $info = GaneraInfo::get();
         $list = Recruit::where('active',1)->get();
-        return view("pages.recruit")->with(compact('info','list'));
+        return view("pages.recruit")->with(compact('info','list','meta_desc','meta_keywords','meta_title','url_cannonical'));
     }
 
     public function index(Request $req){
-        $meta_desc = "Công ty Cổ phần Đầu tư Kinh doanh Thiên phú";
-        $meta_keywords = "Công ty Cổ phần Đầu tư Kinh doanh Hải Phát chuyên cung cấp các dự án bật động sản hàng đầu ở Việt Nam. Và đây củng là nơi cập nhật tin tức bất động sản nhanh nhất cho giới đầu tư";
-        $meta_title = "Công ty Cổ phần Đầu tư Kinh doanh Thiên phú";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
         
         $info = GaneraInfo::get();
         $banners = Banner::where('status',1)->get();
-        // echo '<pre>';
-        // print_r($banners);
-        // echo '</pre>';
-        // exit;
+        
         return view("layout")->with(compact('meta_desc','meta_keywords','meta_title','url_cannonical','info','banners'));
     }
      public function listServiceMassage(Request $req){
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Cùng Lea cập nhật tin mới mỗi ngày";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
         $listProduct = Product::where('status',1)->where('type',1)->get();
         return view("pages.listServiceMassage")->with(compact('meta_desc','meta_keywords','meta_title','url_cannonical'));
     }
     
     public function detailServiceMassage(Request $req){
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Cùng Lea cập nhật tin mới mỗi ngày";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
         $listProduct = Product::where('status',1)->where('type',1)->get();
         return view("pages.detailServiceMassage")->with(compact('meta_desc','meta_keywords','meta_title','url_cannonical'));
@@ -70,9 +86,10 @@ class HomeController extends Controller
         return redirect('/')->with('message','');
     }
     public function returnPolicy(Request $req){
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
  
         return view('template/ecommerce/returnPolicy')->with(compact('meta_desc','meta_keywords','meta_title','url_canonical'));
@@ -80,9 +97,10 @@ class HomeController extends Controller
 
     
     public function paymentPolicy(Request $req){
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
  
         return view('template/ecommerce/paymentPolicy')->with(compact('meta_desc','meta_keywords','meta_title','url_canonical'));
@@ -96,9 +114,10 @@ class HomeController extends Controller
         return view('template/ecommerce/receivePolicy')->with(compact('meta_desc','meta_keywords','meta_title','url_canonical'));
     }
     public function aboutUs(Request $req){
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
  
         $about = AboutUs::get();
@@ -107,9 +126,10 @@ class HomeController extends Controller
     }
 
     public function productCategory(Request $req, $id){
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
 
        
@@ -124,10 +144,7 @@ class HomeController extends Controller
             ->paginate(12);
 
             $category = CategoryProduct::find($id);
-            // echo '<pre>';
-            // print_r($category);
-            // echo '</pre>';
-            // exit;
+           
             if( empty($category) || empty($productCategory)) return redirect('/trang-chu');
             return view('pages/product/productCategory')->with(compact('productCategory','category'))->with(compact('meta_desc','meta_keywords','meta_title','url_canonical'));;
         } 

@@ -16,11 +16,16 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Order;
 use App\OrderDetail;
-use App\Shipping;
+use App\MetaSeo;
 
 
 class OrderManagementController extends Controller
 {
+    public function getMetaSeo(){
+        $listMeta = MetaSeo::get();
+        return $listMeta[0] ;
+    }
+
     public function userCheckOrderById(Request $req,$id){
         $orderbyid = Order::find($id );
         $productOfOrder = Product::join('tbl_order_detail','tbl_order_detail.id_product','=','tbl_product.productID')->where('id_order',$id)->get();
@@ -29,9 +34,10 @@ class OrderManagementController extends Controller
             Session::put('message','Không tìm thấy đơn hàng nào từ mã đơn hoặc số điện thoại '.$id);
             return redirect('/tra-cuu-don-hang');
         }
-        $meta_desc = "Chuyển các dòng sản phẩm trị mụn, dịch vụ làm đẹp cao cấp hàng đầu Việt Nam";
-        $meta_keywords = "trị mụn, spa, sản phẩm y tế";
-        $meta_title = "Khỏe cùng Lea chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
         return view('pages.order.detailOrder')->with(compact('orderbyid','productOfOrder','orderDetail','meta_desc','meta_keywords','meta_title','url_canonical'));
    
@@ -42,9 +48,10 @@ class OrderManagementController extends Controller
             Session::put('message','Không tìm thấy đơn hàng nào từ mã đơn hoặc số điện thoại '.$phone);
             return redirect('/tra-cuu-don-hang');
         }
-        $meta_desc = "Chuyển các dòng sản phẩm trị mụn, dịch vụ làm đẹp cao cấp hàng đầu Việt Nam";
-        $meta_keywords = "trị mụn, spa, sản phẩm y tế";
-        $meta_title = "Khỏe cùng Lea chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
         return view('pages.order.orderByPhone')->with(compact('orderByPhone','phone','meta_desc','meta_keywords','meta_title','url_canonical'));
     }
@@ -53,9 +60,10 @@ class OrderManagementController extends Controller
         $string = preg_replace('/\s+/', '', $data['search_order']);
         $firstChar = substr($string, 0, 1);
 
-        $meta_desc = "Chuyển các dòng sản phẩm trị mụn, dịch vụ làm đẹp cao cấp hàng đầu Việt Nam";
-        $meta_keywords = "trị mụn, spa, sản phẩm y tế";
-        $meta_title = "Khỏe cùng Lea chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
         if($firstChar == '#'){
             $orderbyid = Order::where('increment_id',$req->search_order)->first();
@@ -73,9 +81,10 @@ class OrderManagementController extends Controller
       
     }
     public function userCheckOder(Request $req){
-        $meta_desc = "Chuyển các dòng sản phẩm trị mụn, dịch vụ làm đẹp cao cấp hàng đầu Việt Nam";
-        $meta_keywords = "trị mụn, spa, sản phẩm y tế";
-        $meta_title = "Khỏe cùng Lea chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_canonical = $req->url();
         return view('pages.order.checkOrder')->with(compact('meta_desc','meta_keywords','meta_title','url_canonical'));
     }

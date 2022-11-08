@@ -146,6 +146,10 @@ Route::get('/home-quan-li-banner', "AdminController@bannerHome");
 Route::get('/home-quan-li-nha-dau-tu', "AdminController@vendorHome");
 Route::get('/home-quan-li-thuong-hieu', "AdminController@brandHome");
 
+Route::get('/home-quan-li-meta-seo', "AdminController@metaSeoHome");
+Route::post('/save-ganeral-meta', "AdminController@saveGaneralMeta");
+
+
 Route::get('/page-gioi-thieu', "AboutUsController@home");
 Route::get('/edit-page-gioi-thieu-{id}', "AboutUsController@page");
 Route::post('/save-page-aboutus', "AboutUsController@save");

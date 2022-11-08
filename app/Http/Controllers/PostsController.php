@@ -17,8 +17,16 @@ use App\Http\Requests;
 use Session;
 use Illuminate\Support\Facades\Redirect;
 
+use App\MetaSeo;
+
 class PostsController extends Controller
 {
+
+    public function getMetaSeo(){
+        $listMeta = MetaSeo::get();
+        return $listMeta[0] ;
+    }
+
 
     public function ajaxSearchPosts(Request $req){
         $posts = Posts::join('tbl_category_product','tbl_category_product.category_id','=','tbl_posts.catID')
@@ -48,9 +56,10 @@ class PostsController extends Controller
     }
     public function listServiceMassage(Request $req)
     {
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Chăm sóc sắc đẹp";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
         return view("pages.listServiceMassage")->with(compact('meta_desc', 'meta_keywords', 'meta_title', 'url_cannonical'));
     }
@@ -60,7 +69,7 @@ class PostsController extends Controller
         $checkAuth = (new AdminController)->checkAuthAdmin();
         if (!$checkAuth) return redirect('/admin-login');
 
-        $posts = Posts::orderby('post_id', 'DESC')->paginate(5);
+        $posts = Posts::orderby('post_id', 'DESC')->paginate(10);
 
         return view('admin.post.list')->with(compact('posts'));
     }
@@ -184,9 +193,10 @@ class PostsController extends Controller
 
     public function homePost(Request $req)
     {
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Cùng Lea cập nhật tin mới mỗi ngày";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
         $listPost = Posts::where('display', '<>', NULL)->get();
         // echo '<pre>';
@@ -205,9 +215,10 @@ class PostsController extends Controller
 
     public function detailPost(Request $req, $hi, $ha)
     {
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Cùng Lea cập nhật tin mới mỗi ngày";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
         $post = Posts::find($hi);
         $recentPost = Posts::orderby('post_id', 'DESC')->limit(5)->get();
@@ -231,19 +242,15 @@ class PostsController extends Controller
     public function listCategoryById(Request $req, $hi, $ha)
     {
         $homePost = Posts::join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_posts.catID')
-            ->where('catID', $hi)->where('catID', $hi)->where('tbl_posts.status', 1)->get();
+            ->where('catID', $hi)
+            ->where('tbl_posts.status', 1)
+            ->orderBy('tbl_posts.create_at', 'desc')->get();
 
-        // $homePost = [];
-        // foreach($categoryPost as $post){
-        //     $show = json_decode($post['display']);
-
-        //     if ( is_array($show) && in_array(1, $show) || in_array(3, $show) ) {
-        //         $homePost[] = $post;
-        //     }
-        // }
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Cùng Lea cập nhật tin mới mỗi ngày";
+       
+            $meta = $this->getMetaSeo();
+            $meta_desc = $meta['meta_desc']; 
+            $meta_keywords =$meta['meta_keywords'];
+            $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
 
         $info = GaneraInfo::get();
@@ -252,9 +259,10 @@ class PostsController extends Controller
 
     public function searchPost(Request $req)
     {
-        $meta_desc = "Lea Beauty - Spa Điều Trị Da Uy Tín Phú Nhuận";
-        $meta_keywords = "Trị mụn tắm trắng triệt lông";
-        $meta_title = "Cùng Lea cập nhật tin mới mỗi ngày";
+        $meta = $this->getMetaSeo();
+        $meta_desc = $meta['meta_desc']; 
+        $meta_keywords =$meta['meta_keywords'];
+        $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
 
         $posts = Posts::where('post_content', 'LIKE', '%' . $req->search . '%')

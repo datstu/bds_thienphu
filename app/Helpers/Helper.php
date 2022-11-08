@@ -180,7 +180,8 @@ class Helper
     }
 
     public static function getBanner(){
-        $list = Banner::where('status',1)->orderby('id','DESC')
+        $list = Banner::where('status',1)
+        ->orderby('id','DESC')
         ->get();
         return $list;
     }
@@ -191,15 +192,21 @@ class Helper
     }
 
     public static function getProductVip(){
-        $list = Posts::where('status',1)->get();
+        $list = Posts::where('status',1)
+        ->orderBy('tbl_posts.create_at', 'desc')
+        ->get();
          $homePost = [];
+
+         $i = 0;
         foreach($list as $post){
             $show = json_decode($post['display']);
             
-            if ( is_array($show) && in_array(2, $show)) {
+            if ( is_array($show) && in_array(2, $show) && $i<3) {
                 $homePost[] = $post;
+                $i++;
             }
         }
+        
         return $homePost;
     }
     
