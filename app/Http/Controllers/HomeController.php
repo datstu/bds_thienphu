@@ -15,6 +15,7 @@ use Mail;
 use URL;
 class HomeController extends Controller
 {
+   
     public function getMetaSeo(){
         $listMeta = MetaSeo::get();
         return $listMeta[0] ;
@@ -138,7 +139,7 @@ class HomeController extends Controller
           
             return view('pages/product/productCategory')->with(compact('productCategory'))->with(compact('meta_desc','meta_keywords','meta_title','url_canonical'));;
         } else{
-            $productCategory = Product::join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.catID')
+            $productCategory = Product::join('tbl_category_product','tbl_category_product.id','=','tbl_product.catID')
             ->where('tbl_product.catID',$id)
             ->where('tbl_product.status',1)->where('tbl_product.type','!=' ,2)
             ->paginate(12);

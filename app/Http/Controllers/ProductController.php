@@ -51,7 +51,7 @@ class ProductController extends Controller
     public function searchFrontend(Request $req){
         $search =  $req->searchFE;
        // $featureProducts = Product::orderby('productID','DESC')->paginate(30);
-        $productCategory = Product::join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.catID')
+        $productCategory = Product::join('tbl_category_product','tbl_category_product.id','=','tbl_product.catID')
         ->where('tbl_category_product.category_name','LIKE', "%{$search}%") 
         ->orwhere('tbl_product.productName','LIKE', "%{$search}%") 
         ->orwhere('tbl_product.product_desc','LIKE', "%{$search}%") 
@@ -71,7 +71,7 @@ class ProductController extends Controller
         
         $featureProducts = Product::where('status',1)->orderby('productID','DESC')->paginate(30);
         //dd($featureProducts);
-       // $meidcanProducts = Product::join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.catID')
+       // $meidcanProducts = Product::join('tbl_category_product','tbl_category_product.id','=','tbl_product.catID')
        // ->where('tbl_product.catID',27)->orderby('productID','DESC')
        
        // var_dump( $meidcanProducts);
@@ -98,7 +98,7 @@ class ProductController extends Controller
         $featureProducts = Product::where('status',1)->orderby('productID','DESC')->where('type',1)
         ->get();
         //dd($featureProducts);
-       // $meidcanProducts = Product::join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.catID')
+       // $meidcanProducts = Product::join('tbl_category_product','tbl_category_product.id','=','tbl_product.catID')
        // ->where('tbl_product.catID',27)->orderby('productID','DESC')
        $productSales = Product::take(8)->where('status',1)->orderby('productID','DESC')->where('type',2)->get();
 

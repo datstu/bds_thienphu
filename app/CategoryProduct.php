@@ -8,8 +8,8 @@ class CategoryProduct extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'flagship','icon_svg','category_name','category_desc','category_status','display_menu','category_image','meta_keywords'
+        'flagship','icon_svg','category_name','category_desc','category_status','display_menu','category_image','meta_keywords','slug'
     ];
-    protected $primaryKey = 'category_id';
+    protected $primaryKey = 'id';
     protected $table = 'tbl_category_product';
 }

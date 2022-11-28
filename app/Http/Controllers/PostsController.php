@@ -29,7 +29,7 @@ class PostsController extends Controller
 
 
     public function ajaxSearchPosts(Request $req){
-        $posts = Posts::join('tbl_category_product','tbl_category_product.category_id','=','tbl_posts.catID')
+        $posts = Posts::join('tbl_category_product','tbl_category_product.id','=','tbl_posts.catID')
             ->where('tbl_posts.catID',29)
             ->where('tbl_posts.status',1)
             ->where('post_desc', 'LIKE', '%' . $req->value . '%')
@@ -85,7 +85,7 @@ class PostsController extends Controller
     public function savePost(Request $req)
     {
         $data = $req->all();
-        $path = 'public/uploads/post';
+        $path = 'public/storage';
 
         if (empty($req->id)) {
             $post = new Posts();
@@ -174,7 +174,7 @@ class PostsController extends Controller
         
         $result = Posts::find($id);
         if ($result) {
-            $path = 'public/uploads/post';
+            $path = 'public/storage';
             //delete file if image old isset
             $images = scandir($path, SCANDIR_SORT_DESCENDING);
             foreach ($images as $image) {
@@ -221,18 +221,19 @@ class PostsController extends Controller
         $meta_title = $meta['meta_title'];
         $url_cannonical = $req->url();
         $post = Posts::find($hi);
-        $recentPost = Posts::orderby('post_id', 'DESC')->limit(5)->get();
+        $recentPost = Posts::orderby('id', 'DESC')->limit(5)->get();
 
-        // $categoryPost = CategoryProduct::rightJoin('tbl_posts','tbl_posts.catID','=','tbl_category_product.category_id')
-        // ->groupBy('tbl_category_product.category_id') ->get();
+        // $categoryPost = CategoryProduct::rightJoin('tbl_posts','tbl_posts.catID','=','tbl_category_product.id')
+        // ->groupBy('tbl_category_product.id') ->get();
         $categoryPost = DB::select("SELECT tbl_posts.catID FROM tbl_category_product  RIGHT JOIN tbl_posts  
-        ON tbl_category_product.category_id=tbl_posts.catID GROUP BY tbl_posts.catID");
+        ON tbl_category_product.id=tbl_posts.catID GROUP BY tbl_posts.catID");
         //dd( $categoryPost);
         $listCate = [];
         foreach ($categoryPost as $cate) {
             $listCate[] = CategoryProduct::find($cate->catID);
         }
         $info = GaneraInfo::get();
+
         if ($post) {
             return view("pages.detailServiceMassage")->with(compact('info', 'listCate', 'meta_desc', 'meta_keywords', 'meta_title', 'url_cannonical', 'recentPost', 'post'));
         } else {
@@ -241,11 +242,15 @@ class PostsController extends Controller
     }
     public function listCategoryById(Request $req, $hi, $ha)
     {
-        $homePost = Posts::join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_posts.catID')
-            ->where('catID', $hi)
-            ->where('tbl_posts.status', 1)
-            ->orderBy('tbl_posts.create_at', 'desc')->get();
+        // $homePost = Posts::join('tbl_category_product', 'tbl_category_product.id', '=', 'tbl_posts.catID')
+        //     ->where('tbl_posts.catID', $hi)
+        //     ->where('tbl_posts.status', 1)
+        //     ->orderBy('tbl_posts.create_at', 'desc')->get('*','tbl_posts.id');
 
+            $homePost = CategoryProduct::join('tbl_posts', 'tbl_posts.catID', '=', 'tbl_category_product.id')
+            ->where('tbl_posts.catID', $hi)
+            ->where('tbl_posts.status', 1)
+            ->orderBy('tbl_posts.create_at', 'desc')->get('tbl_posts.*');
        
             $meta = $this->getMetaSeo();
             $meta_desc = $meta['meta_desc']; 
@@ -254,7 +259,8 @@ class PostsController extends Controller
         $url_cannonical = $req->url();
 
         $info = GaneraInfo::get();
-        return view("pages.listServiceMassage")->with(compact('info', 'meta_desc', 'meta_keywords', 'meta_title', 'url_cannonical', 'homePost'));
+       if(count($homePost) >1) return view("pages.listServiceMassage")->with(compact('info', 'meta_desc', 'meta_keywords', 'meta_title', 'url_cannonical', 'homePost'));
+        else return Redirect("/not-found");
     }
 
     public function searchPost(Request $req)

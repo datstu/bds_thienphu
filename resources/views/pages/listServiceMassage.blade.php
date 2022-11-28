@@ -150,9 +150,14 @@
                 <div class="container">
                     <div class="row">
                         <!-- blog grid -->
-
-                        <?php if ($homePost) {
+                       
+                        <?php if (count($homePost) >1) {
+                            //   var_dump(($homePost));
                             foreach ($homePost as $key => $value) {
+                            //     echo"<pre>";
+                              
+                            //   print_r("asdsadasd $value");
+                            //   echo"</pre>";
                                 $year = date('Y', strtotime($value->create_at));
                                 $month = date('m', strtotime($value->create_at));
                                 $day = date('d', strtotime($value->create_at));
@@ -160,23 +165,23 @@
 
                                 <div class="post card-container col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <div class="blog-post blog-grid date-style-2">
-                                        <div class="dez-post-media dez-img-effect shrink background-hover"> <a href="{{URL::to($value->post_id .'/bai-viet-'.$value->post_slug)}}">
-                                                <img class="new-thumb" src="{{asset('public/uploads/post/'.$value->post_image)}}" alt="{{$value->post_desc}}"></a> </div>
+                                        <div class="dez-post-media dez-img-effect shrink background-hover"> <a href="{{URL::to($value->id .'/bai-viet-'.$value->post_slug)}}">
+                                                <img class="new-thumb" src="{{asset('public/storage/'.$value->post_image)}}" alt="{{$value->post_desc}}"></a> </div>
                                         <div class="dez-post-info">
                                             <div class="dez-post-title ">
-                                                <h4 class="post-title"><a href="{{URL::to($value->post_id .'/bai-viet-'.$value->post_slug)}}">{{$value->post_title}}</a></h4>
+                                                <h4 class="post-title"><a href="{{URL::to($value->id .'/bai-viet-'.$value->post_slug)}}">{{$value->post_title}}</a></h4>
                                             </div>
                                             <div class="dez-post-meta ">
                                                 <ul>
                                                     <li class="post-date"> <i class="fa fa-calendar"></i><strong>{{$day}}-{{$month}}</strong> <span>{{$year}}</span> </li>
-                                                    <li class="post-author"><i class="fa fa-user"></i><a href="{{URL::to($value->post_id .'/bai-viet-'.$value->post_slug)}}">Thiên Phú</a> </li>
-                                                    <li class="post-comment"><i class="fa fa-comments"></i> <a href="{{URL::to($value->post_id .'/bai-viet-'.$value->post_slug )}}">0 Comments</a> </li>
+                                                    <li class="post-author"><i class="fa fa-user"></i><a href="{{URL::to($value->id .'/bai-viet-'.$value->post_slug)}}">Thiên Phú</a> </li>
+                                                    <li class="post-comment"><i class="fa fa-comments"></i> <a href="{{URL::to($value->id .'/bai-viet-'.$value->post_slug )}}">0 Comments</a> </li>
                                                 </ul>
                                             </div>
                                             <div class="dez-post-text">
                                                 <p>{{$value->post_desc}}</p>
                                             </div>
-                                            <div class="dez-post-readmore"> <a href="{{URL::to($value->post_id .'/bai-viet-'.$value->post_slug)}}" title="READ MORE" rel="bookmark" class="site-button-link">Xem chi tiết <i class="fa fa-angle-double-right"></i></a> </div>
+                                            <div class="dez-post-readmore"> <a href="{{URL::to($value->id .'/bai-viet-'.$value->post_slug)}}" title="READ MORE" rel="bookmark" class="site-button-link">Xem chi tiết <i class="fa fa-angle-double-right"></i></a> </div>
                                         </div>
                                     </div>
                                 </div>

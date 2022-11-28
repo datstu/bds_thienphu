@@ -66,7 +66,7 @@
 
 										@if(count($categoryMenu) > 0)
 										@foreach($categoryMenu as $category)
-									<li> <a href="{{URL::to('/'.$category->category_id.'/danh-muc-'.$category->slug)}}">{{$category->category_name}} </a>
+									<li> <a href="{{URL::to($category->id.'/danh-muc-'.$category->slug)}}">{{$category->category_name}} </a>
 										
 										@endforeach
 										@endif
@@ -81,7 +81,7 @@
 
 										@if(count($categoryMenu) > 0)
 										@foreach($categoryMenu as $category)
-									<li> <a href="{{URL::to('/'.$category->category_id.'/danh-muc-'.$category->slug)}}" >{{$category->category_name}} </a>
+									<li> <a href="{{URL::to($category->id.'/danh-muc-'.$category->slug)}}" >{{$category->category_name}} </a>
 										
 										@endforeach
 										@endif

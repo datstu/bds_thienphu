@@ -125,7 +125,7 @@ class Helper
      */
     public static function getCatalogMenu($id){
         $result = [];
-        $list = CategoryProduct::where('category_status',1)->orderby('category_id','DESC')
+        $list = CategoryProduct::where('category_status',1)->orderby('id','DESC')
         ->get();
         foreach($list as $category){
             $display = json_decode($category->display_menu,true);
@@ -138,7 +138,7 @@ class Helper
 
     public static function countPostOfCategory($id){
       
-       $list = Posts::join('tbl_category_product','tbl_category_product.category_id','=','tbl_posts.catID')
+       $list = Posts::join('tbl_category_product','tbl_category_product.id','=','tbl_posts.catID')
        ->where('tbl_posts.catID',$id)
        ->where('tbl_posts.status',1)
        ->get();
@@ -167,7 +167,7 @@ class Helper
      */
     public static function getNewsHome(){
         $result = [];
-        $list = Posts::join('tbl_category_product','tbl_category_product.category_id','=','tbl_posts.catID')
+        $list = Posts::join('tbl_category_product','tbl_category_product.id','=','tbl_posts.catID')
         ->where('tbl_posts.status',1)
         ->get();
         foreach($list as $post){

@@ -212,7 +212,7 @@ $productVip = Helper::getProductVip();
 								if (isset($productVip[0])) {
 									$img = $productVip[0]['post_image'];
 									$title = $productVip[0]['post_title'];
-									$id =  $productVip[0]['post_id'];
+									$id =  $productVip[0]['id'];
 									$slug = $productVip[0]['post_slug'];
 
 								?>
@@ -222,7 +222,7 @@ $productVip = Helper::getProductVip();
 											<div class="col-lg-6 col-md-6 p-a0 equal-col">
 												<div class=" dis-tbl-cell">
 													<div class="row">
-														<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+														<img src="{{asset('public/storage/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
 													</div>
 												</div>
 											</div>
@@ -233,7 +233,7 @@ $productVip = Helper::getProductVip();
 															<div class="col-md-12 ">
 																<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
 															</div>
-															<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
+															<a href="{{URL::to($id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
 																Xem dự án
 															</a>
 														</div>
@@ -257,7 +257,7 @@ $productVip = Helper::getProductVip();
 							if (isset($productVip[1])) {
 								$img = $productVip[1]['post_image'];
 								$title = $productVip[1]['post_title'];
-								$id =  $productVip[1]['post_id'];
+								$id =  $productVip[1]['id'];
 								$slug = $productVip[1]['post_slug'];
 
 							?>
@@ -268,7 +268,7 @@ $productVip = Helper::getProductVip();
 												<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
 
 											</div>
-											<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
+											<a href="{{URL::to($id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
 												Xem dự án
 											</a>
 										</div>
@@ -278,7 +278,7 @@ $productVip = Helper::getProductVip();
 										<div class=" dis-tbl-cell">
 
 											<div class="row">
-												<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+												<img src="{{asset('public/storage/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
 											</div>
 
 										</div>
@@ -318,7 +318,7 @@ $productVip = Helper::getProductVip();
 							if (isset($productVip[2])) {
 								$img = $productVip[2]['post_image'];
 								$title = $productVip[2]['post_title'];
-								$id =  $productVip[2]['post_id'];
+								$id =  $productVip[2]['id'];
 								$slug = $productVip[2]['post_slug'];
 
 							?>
@@ -326,7 +326,7 @@ $productVip = Helper::getProductVip();
 									<div class="col-lg-12 col-md-12 p-a0 equal-col">
 										<div class=" dis-tbl-cell">
 											<div class="row">
-												<img src="{{asset('public/uploads/post/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
+												<img src="{{asset('public/storage/'.$img )}}" style="height:510px ;" alt="" class="img-cover equal-col" />
 											</div>
 										</div>
 									</div>
@@ -337,7 +337,7 @@ $productVip = Helper::getProductVip();
 													<h2 class="font-weight-500 text-primary text-center">{{$title}}</h2>
 
 												</div>
-												<a href="{{URL::to('/'.$id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
+												<a href="{{URL::to($id.'/bai-viet-'.$slug)}}" target="_self" class="p-b10 text-center text-blue link-project">
 													Xem dự án
 												</a>
 											</div>
@@ -398,14 +398,14 @@ $productVip = Helper::getProductVip();
 									<?php $firstPost = array_shift($listNewsHome);
 									$date = date_create($firstPost->create_at); ?>
 									<div class="col-sm-12 col-lg-6  height-new-mobile" id="height-new-left">
-										<a class="relative" style="display: block;" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-											<div class="box-image"><img style="min-height:648px" src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+										<a class="relative" style="display: block;" href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}">
+											<div class="box-image"><img style="min-height:648px" src="{{asset('public/storage/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
 											<div class="box-text">
 												<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
 												<div class="post-meta is-small op-8">{{date_format($date,"d-m-Y")}}</div>
 
 												<p class="from_the_blog_excerpt ">{{$firstPost->post_desc}}</p>
-												<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+												<button href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
 													Xem Thêm </button>
 											</div>
 											<!-- <div class="badge absolute top post-date badge-circle-inside">
@@ -425,14 +425,14 @@ $productVip = Helper::getProductVip();
 											<?php $firstPost = array_shift($listNewsHome);
 											$date = date_create($firstPost->create_at); ?>
 											<div class="col-12 m-b20">
-												<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-													<div class="box-image"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+												<a style="display: block;" class="relative" href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}">
+													<div class="box-image"><img src="{{asset('public/storage/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
 													<div class="box-text">
 														<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
 														<div class="post-meta is-small op-8">{{date_format($date,"d-m-Y")}}</div>
 
 
-														<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+														<button href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
 															Xem Thêm </button>
 													</div>
 												</a>
@@ -442,12 +442,12 @@ $productVip = Helper::getProductVip();
 											@if(count($listNewsHome) > 0)
 											<?php $firstPost = array_shift($listNewsHome); ?>
 											<div class="col-sm-12 col-lg-6  magrin-new-mobile ">
-												<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-													<div class="box-image box-image-custom"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+												<a style="display: block;" class="relative" href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}">
+													<div class="box-image box-image-custom"><img src="{{asset('public/storage/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
 													<div class="box-text ">
 														<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
 
-														<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+														<button href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
 															Xem Thêm </button>
 													</div>
 
@@ -458,12 +458,12 @@ $productVip = Helper::getProductVip();
 											@if(count($listNewsHome) > 0)
 											<?php $firstPost = array_shift($listNewsHome); ?>
 											<div class="col-sm-12 col-lg-6 magrin-new-mobile">
-												<a style="display: block;" class="relative" href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}">
-													<div class="box-image box-image-custom"><img src="{{asset('public/uploads/post/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
+												<a style="display: block;" class="relative" href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}">
+													<div class="box-image box-image-custom"><img src="{{asset('public/storage/'.$firstPost->post_image)}}" alt="{{$firstPost->post_slug}}"></div>
 													<div class="box-text box-image-custom">
 														<h5 class="text-uppercase font-weight-800">{{$firstPost->post_title}}</h5>
 
-														<button href="{{URL::to('/'.$firstPost->post_id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
+														<button href="{{URL::to($firstPost->id.'/bai-viet-'.$firstPost->post_title)}}" class="button  is-outline is-small mb-0">
 															Xem Thêm </button>
 													</div>
 													<!-- <div class="badge absolute top post-date badge-circle-inside">

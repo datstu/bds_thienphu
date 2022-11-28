@@ -10,6 +10,6 @@ class Posts extends Model
     protected $fillable = [
         'post_desc','post_content','post_image','post_author','create_at','update_at','post_title','catID','display','post_slug','status'
     ];
-    protected $primaryKey = 'post_id';
+    protected $primaryKey = 'id';
     protected $table = 'tbl_posts';
 }

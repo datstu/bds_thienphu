@@ -165,3 +165,16 @@ Route::get('/cap-nhat-tin-tuyen-dung/{id}', "RecruitController@updateRecruitById
 
 Route::get('/searchPostAjax','PostsController@ajaxSearchPosts');
 Route::get('/xoa-tin-tuyen-dung/{id}', "RecruitController@delRecruit");
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+
+Route::get('/not-found',  function () {
+    return view('pages.notFound',
+    ['meta_keywords' => 'Địa ốc thiên phú',
+    'meta_desc'=>'Địa ốc thiên phú',
+    'meta_title'=>'Địa ốc thiên phú',
+    'info'=> App\GaneraInfo::get()
+]);
+});

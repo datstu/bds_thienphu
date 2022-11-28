@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th10 09, 2022 lúc 01:01 AM
--- Phiên bản máy phục vụ: 10.3.36-MariaDB-log-cll-lve
--- Phiên bản PHP: 7.4.30
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th10 29, 2022 lúc 02:04 AM
+-- Phiên bản máy phục vụ: 8.0.31
+-- Phiên bản PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,8 +18,668 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `diaocthi_renew`
+-- Cơ sở dữ liệu: `ph_server`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int UNSIGNED NOT NULL,
+  `parent_id` int UNSIGNED DEFAULT NULL,
+  `order` int NOT NULL DEFAULT '1',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `categories`
+--
+
+INSERT INTO `categories` (`id`, `parent_id`, `order`, `name`, `slug`, `created_at`, `updated_at`) VALUES
+(1, NULL, 1, 'Category 1', 'category-1', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(2, NULL, 1, 'Category 2', 'category-2', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(3, 1, 1, 'BIODERMA SENSIBIO H2O 500 ML (TWIN PACK)', 'bioderma-sensibio-h2o-500-ml-twin-pack', '2022-11-28 05:29:33', '2022-11-28 05:29:33');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `data_rows`
+--
+
+CREATE TABLE `data_rows` (
+  `id` int UNSIGNED NOT NULL,
+  `data_type_id` int UNSIGNED NOT NULL,
+  `field` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `required` tinyint(1) NOT NULL DEFAULT '0',
+  `browse` tinyint(1) NOT NULL DEFAULT '1',
+  `read` tinyint(1) NOT NULL DEFAULT '1',
+  `edit` tinyint(1) NOT NULL DEFAULT '1',
+  `add` tinyint(1) NOT NULL DEFAULT '1',
+  `delete` tinyint(1) NOT NULL DEFAULT '1',
+  `details` text COLLATE utf8mb4_unicode_ci,
+  `order` int NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `data_rows`
+--
+
+INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, `required`, `browse`, `read`, `edit`, `add`, `delete`, `details`, `order`) VALUES
+(1, 1, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(2, 1, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
+(3, 1, 'email', 'text', 'Email', 1, 1, 1, 1, 1, 1, NULL, 3),
+(4, 1, 'password', 'password', 'Password', 1, 0, 0, 1, 1, 0, NULL, 4),
+(5, 1, 'remember_token', 'text', 'Remember Token', 0, 0, 0, 0, 0, 0, NULL, 5),
+(6, 1, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, NULL, 6),
+(7, 1, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 7),
+(8, 1, 'avatar', 'image', 'Avatar', 0, 1, 1, 1, 1, 1, NULL, 8),
+(9, 1, 'user_belongsto_role_relationship', 'relationship', 'Role', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsTo\",\"column\":\"role_id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"roles\",\"pivot\":0}', 10),
+(10, 1, 'user_belongstomany_role_relationship', 'relationship', 'voyager::seeders.data_rows.roles', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"user_roles\",\"pivot\":\"1\",\"taggable\":\"0\"}', 11),
+(11, 1, 'settings', 'hidden', 'Settings', 0, 0, 0, 0, 0, 0, NULL, 12),
+(12, 2, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(13, 2, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
+(14, 2, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, NULL, 3),
+(15, 2, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 4),
+(16, 3, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(17, 3, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
+(18, 3, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, NULL, 3),
+(19, 3, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 4),
+(20, 3, 'display_name', 'text', 'Display Name', 1, 1, 1, 1, 1, 1, NULL, 5),
+(21, 1, 'role_id', 'text', 'Role', 1, 1, 1, 1, 1, 1, NULL, 9),
+(22, 4, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(23, 4, 'parent_id', 'select_dropdown', 'Parent', 0, 0, 1, 1, 1, 1, '{\"default\":\"\",\"null\":\"\",\"options\":{\"\":\"-- None --\"},\"relationship\":{\"key\":\"id\",\"label\":\"name\"}}', 2),
+(24, 4, 'order', 'text', 'Order', 1, 1, 1, 1, 1, 1, '{\"default\":1}', 3),
+(25, 4, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 4),
+(26, 4, 'slug', 'text', 'Slug', 1, 1, 1, 1, 1, 1, '{\"slugify\":{\"origin\":\"name\"}}', 5),
+(27, 4, 'created_at', 'timestamp', 'Created At', 0, 0, 1, 0, 0, 0, NULL, 6),
+(28, 4, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 7),
+(29, 5, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, '{}', 1),
+(30, 5, 'author_id', 'text', 'Author', 1, 0, 1, 1, 0, 1, '{}', 2),
+(31, 5, 'category_id', 'text', 'Category', 0, 0, 1, 1, 1, 0, '{}', 3),
+(32, 5, 'title', 'text', 'Title', 1, 1, 1, 1, 1, 1, '{}', 4),
+(33, 5, 'excerpt', 'text_area', 'Excerpt', 0, 0, 1, 1, 1, 1, '{}', 5),
+(34, 5, 'body', 'rich_text_box', 'Body', 1, 0, 1, 1, 1, 1, '{}', 6),
+(35, 5, 'image', 'image', 'Post Image', 0, 1, 1, 1, 1, 1, '{\"resize\":{\"width\":\"1000\",\"height\":\"null\"},\"quality\":\"70%\",\"upsize\":true,\"thumbnails\":[{\"name\":\"medium\",\"scale\":\"50%\"},{\"name\":\"small\",\"scale\":\"25%\"},{\"name\":\"cropped\",\"crop\":{\"width\":\"300\",\"height\":\"250\"}}]}', 7),
+(36, 5, 'slug', 'text', 'Slug', 1, 0, 1, 1, 1, 1, '{\"slugify\":{\"origin\":\"categoy_name\",\"forceUpdate\":true}}', 8),
+(37, 5, 'meta_description', 'text_area', 'Meta Description', 0, 0, 1, 1, 1, 1, '{}', 9),
+(38, 5, 'meta_keywords', 'text_area', 'Meta Keywords', 0, 0, 1, 1, 1, 1, '{}', 10),
+(39, 5, 'status', 'select_dropdown', 'Status', 1, 1, 1, 1, 1, 1, '{\"default\":\"DRAFT\",\"options\":{\"PUBLISHED\":\"published\",\"DRAFT\":\"draft\",\"PENDING\":\"pending\"}}', 11),
+(40, 5, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '{}', 12),
+(41, 5, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 13),
+(42, 5, 'seo_title', 'text', 'SEO Title', 0, 1, 1, 1, 1, 1, '{}', 14),
+(43, 5, 'featured', 'checkbox', 'Featured', 1, 1, 1, 1, 1, 1, '{}', 15),
+(44, 6, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(45, 6, 'author_id', 'text', 'Author', 1, 0, 0, 0, 0, 0, NULL, 2),
+(46, 6, 'title', 'text', 'Title', 1, 1, 1, 1, 1, 1, NULL, 3),
+(47, 6, 'excerpt', 'text_area', 'Excerpt', 1, 0, 1, 1, 1, 1, NULL, 4),
+(48, 6, 'body', 'rich_text_box', 'Body', 1, 0, 1, 1, 1, 1, NULL, 5),
+(49, 6, 'slug', 'text', 'Slug', 1, 0, 1, 1, 1, 1, '{\"slugify\":{\"origin\":\"title\"},\"validation\":{\"rule\":\"unique:pages,slug\"}}', 6),
+(50, 6, 'meta_description', 'text', 'Meta Description', 1, 0, 1, 1, 1, 1, NULL, 7),
+(51, 6, 'meta_keywords', 'text', 'Meta Keywords', 1, 0, 1, 1, 1, 1, NULL, 8),
+(52, 6, 'status', 'select_dropdown', 'Status', 1, 1, 1, 1, 1, 1, '{\"default\":\"INACTIVE\",\"options\":{\"INACTIVE\":\"INACTIVE\",\"ACTIVE\":\"ACTIVE\"}}', 9),
+(53, 6, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 0, 0, 0, NULL, 10),
+(54, 6, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, NULL, 11),
+(55, 6, 'image', 'image', 'Page Image', 0, 1, 1, 1, 1, 1, NULL, 12),
+(56, 8, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
+(57, 8, 'avatar', 'image', 'Ảnh đại diện', 0, 1, 1, 1, 1, 1, '{}', 2),
+(58, 8, 'name', 'text', 'Tên nhân viên', 0, 1, 1, 1, 1, 1, '{}', 3),
+(59, 8, 'status', 'radio_btn', 'Trangj thái', 0, 1, 1, 1, 1, 1, '{}', 4),
+(60, 8, 'date_start_work', 'date', 'Ngày vào làm', 0, 1, 1, 1, 1, 1, '{}', 5),
+(61, 8, 'title', 'text', 'Chưc danh', 0, 1, 1, 1, 1, 1, '{}', 6),
+(62, 8, 'department_name', 'text', 'Tên phòng ban', 0, 1, 1, 1, 1, 1, '{}', 7),
+(63, 8, 'number_phone', 'text', 'Số điện thoại', 0, 1, 1, 1, 1, 1, '{}', 8),
+(64, 8, 'email', 'text', 'Email', 0, 1, 1, 1, 1, 1, '{}', 9),
+(65, 8, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 10),
+(66, 8, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 11),
+(67, 9, 'id', 'text', 'Id', 1, 1, 0, 0, 0, 0, '{}', 1),
+(68, 9, 'position', 'text', 'Vị trí tuyển dụng', 1, 1, 1, 1, 1, 1, '{}', 3),
+(69, 9, 'qty', 'number', 'Số lượng', 0, 1, 1, 1, 1, 1, '{}', 4),
+(70, 9, 'address', 'text', 'Địa điểm làm việc', 0, 1, 1, 1, 1, 1, '{}', 5),
+(71, 9, 'date_ex', 'timestamp', 'Ngày hết hạn', 0, 1, 1, 1, 1, 1, '{}', 7),
+(72, 9, 'status', 'checkbox', 'Tình trạng', 0, 1, 1, 1, 1, 1, '{\"on\":\"B\\u1eadt\",\"off\":\"T\\u1eaft\",\"checked\":true}', 2),
+(73, 9, 'post_id', 'text', 'Link bài viết', 0, 1, 1, 1, 1, 1, '{}', 8),
+(74, 9, 'active', 'hidden', 'Active', 0, 0, 1, 1, 1, 1, '{}', 9),
+(76, 11, 'category_name', 'text', 'Tên danh mục', 1, 1, 1, 1, 1, 1, '{}', 3),
+(77, 11, 'category_desc', 'rich_text_box', 'Miêu tả', 0, 1, 1, 1, 1, 1, '{}', 5),
+(78, 11, 'category_status', 'checkbox', 'Trạng thái', 1, 1, 1, 1, 1, 1, '{\"on\":\"B\\u1eadt\",\"off\":\"T\\u1eaft\",\"checked\":true}', 2),
+(79, 11, 'created_at', 'timestamp', 'Ngày tạo', 1, 1, 1, 1, 1, 1, '{}', 11),
+(80, 11, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 12),
+(81, 11, 'category_image', 'image', 'Hình ảnh', 0, 0, 1, 1, 1, 1, '{}', 6),
+(82, 11, 'icon_svg', 'hidden', 'Icon Svg', 0, 0, 0, 1, 1, 1, '{}', 9),
+(83, 11, 'flagship', 'hidden', 'Flagship', 0, 0, 0, 1, 1, 1, '{}', 7),
+(84, 11, 'slug', 'text', 'Slug', 0, 0, 1, 1, 1, 1, '{\"slugify\":{\"origin\":\"category_name\",\"forceUpdate\":true},\"validation\":{\"rule\":\"unique:tbl_category_product,slug\"}}', 4),
+(85, 11, 'display_menu', 'multiple_checkbox', 'Hiển thị trên Menu', 0, 0, 0, 1, 1, 1, '{\"checked\":true,\"options\":{\"1\":\"D\\u1ef1 \\u00e1n \",\"2\":\"Tin t\\u1ee9c\"}}', 8),
+(86, 11, 'meta_keywords', 'text', 'Meta Keywords', 0, 1, 1, 1, 1, 1, '{}', 10),
+(99, 11, 'id', 'number', 'Id', 1, 1, 0, 0, 0, 0, '{}', 1),
+(101, 14, 'post_desc', 'text', 'Mô tả ngắn', 1, 0, 1, 1, 1, 1, '{}', 6),
+(102, 14, 'post_content', 'rich_text_box', 'Nội dung', 1, 0, 1, 1, 1, 1, '{}', 7),
+(103, 14, 'post_image', 'image', 'Hình ảnh', 1, 1, 1, 1, 1, 1, '{}', 5),
+(104, 14, 'post_author', 'text', 'Tác giả', 0, 0, 1, 1, 1, 1, '{}', 8),
+(105, 14, 'create_at', 'timestamp', 'Ngày tạo', 1, 1, 1, 1, 1, 1, '{}', 14),
+(106, 14, 'update_at', 'timestamp', 'Update At', 1, 0, 0, 0, 0, 0, '{}', 11),
+(107, 14, 'post_title', 'text', 'Tiêu đề', 1, 1, 1, 1, 1, 1, '{}', 3),
+(108, 14, 'catID', 'text', 'Danh mục', 1, 0, 1, 1, 1, 1, '{}', 9),
+(109, 14, 'display', 'select_multiple', 'Hiển thị', 0, 0, 1, 1, 1, 1, '{\"checked\":true,\"options\":{\"1\":\"M\\u1ee5c tin t\\u1ee9c \\u1edf trang ch\\u1ee7\",\"2\":\"M\\u1ee5c s\\u1ea3n ph\\u1ea9m n\\u1ed5i b\\u1eadt \\u1edf trang ch\\u1ee7 \",\"3\":\"Danh s\\u00e1ch b\\u00e0i vi\\u1ebft\"}}', 10),
+(110, 14, 'post_slug', 'text', 'Slug', 0, 0, 1, 1, 1, 1, '{\"slugify\":{\"origin\":\"post_title\",\"forceUpdate\":true},\"validation\":{\"rule\":\"unique:post_title,slug\"}}', 4),
+(111, 14, 'status', 'checkbox', 'Trạng thái', 0, 1, 1, 1, 1, 1, '{\"on\":\"B\\u1eadt\",\"off\":\"T\\u1eaft\",\"checked\":true}', 2),
+(112, 14, 'id', 'text', 'Id', 1, 1, 0, 0, 0, 0, '{}', 1),
+(113, 14, 'tbl_post_belongsto_tbl_category_product_relationship', 'relationship', 'Danh mục', 1, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\CategoryProduct\",\"table\":\"tbl_category_product\",\"type\":\"belongsTo\",\"column\":\"catID\",\"key\":\"id\",\"label\":\"category_name\",\"pivot_table\":\"categories\",\"pivot\":\"0\",\"taggable\":\"0\"}', 12),
+(114, 14, 'tbl_post_belongsto_user_relationship', 'relationship', 'Người viết', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"post_author\",\"key\":\"name\",\"label\":\"name\",\"pivot_table\":\"categories\",\"pivot\":\"0\",\"taggable\":\"0\"}', 13),
+(115, 9, 'tbl_recruit_belongsto_tbl_post_relationship', 'relationship', 'Link bài viết', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Posts\",\"table\":\"tbl_posts\",\"type\":\"belongsTo\",\"column\":\"post_id\",\"key\":\"id\",\"label\":\"post_title\",\"pivot_table\":\"categories\",\"pivot\":\"0\",\"taggable\":\"0\"}', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `data_types`
+--
+
+CREATE TABLE `data_types` (
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name_singular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name_plural` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `model_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `policy_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `controller` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
+  `server_side` tinyint NOT NULL DEFAULT '0',
+  `details` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `data_types`
+--
+
+INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `display_name_plural`, `icon`, `model_name`, `policy_name`, `controller`, `description`, `generate_permissions`, `server_side`, `details`, `created_at`, `updated_at`) VALUES
+(1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', '', 1, 0, NULL, '2022-11-15 09:06:11', '2022-11-15 09:06:11'),
+(2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2022-11-15 09:06:11', '2022-11-15 09:06:11'),
+(3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2022-11-15 09:06:11', '2022-11-15 09:06:11'),
+(4, 'categories', 'categories', 'Category', 'Categories', 'voyager-categories', 'TCG\\Voyager\\Models\\Category', NULL, '', '', 1, 0, NULL, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(5, 'posts', 'posts', 'Post', 'Posts', 'voyager-news', 'TCG\\Voyager\\Models\\Post', 'TCG\\Voyager\\Policies\\PostPolicy', NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2022-11-15 09:06:12', '2022-11-28 05:59:49'),
+(6, 'pages', 'pages', 'Page', 'Pages', 'voyager-file-text', 'TCG\\Voyager\\Models\\Page', NULL, '', '', 1, 0, NULL, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(8, 'tbl_nhan_vien', 'nhan-vien', 'Nhan Vien', 'Nhan Vien', NULL, 'App\\Employees', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-11-16 07:35:41', '2022-11-16 07:48:33'),
+(9, 'tbl_recruit', 'quan-ly-tuyen-dung', 'Tuyển dụng', 'Tuyển dụng', 'voyager-pizza', 'App\\Recruit', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-11-17 07:02:23', '2022-11-28 11:30:54'),
+(11, 'tbl_category_product', 'quan-ly-danh-muc', 'Danh mục', 'Danh mục', 'voyager-categories', 'App\\CategoryProduct', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-11-17 07:27:10', '2022-11-28 07:52:49'),
+(14, 'tbl_posts', 'quan-ly-bai-viet', 'Quản lý bài viết', 'Quản lý bài viết', 'voyager-news', 'App\\Posts', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2022-11-28 06:58:29', '2022-11-28 11:14:07');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint UNSIGNED NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `menus`
+--
+
+INSERT INTO `menus` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '2022-11-15 09:06:11', '2022-11-15 09:06:11'),
+(2, '.3', '2022-11-15 11:31:46', '2022-11-15 11:31:46');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `menu_items`
+--
+
+CREATE TABLE `menu_items` (
+  `id` int UNSIGNED NOT NULL,
+  `menu_id` int UNSIGNED DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `target` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '_self',
+  `icon_class` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_id` int DEFAULT NULL,
+  `order` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `route` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parameters` text COLLATE utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `menu_items`
+--
+
+INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
+(1, 1, 'Dashboard', '', '_self', 'voyager-boat', NULL, NULL, 7, '2022-11-15 09:06:11', '2022-11-28 06:58:52', 'voyager.dashboard', NULL),
+(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 10, '2022-11-15 09:06:11', '2022-11-28 06:58:52', 'voyager.media.index', NULL),
+(3, 1, 'Users', '', '_self', 'voyager-person', NULL, NULL, 9, '2022-11-15 09:06:11', '2022-11-28 06:58:52', 'voyager.users.index', NULL),
+(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, NULL, 8, '2022-11-15 09:06:11', '2022-11-28 06:58:52', 'voyager.roles.index', NULL),
+(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 4, '2022-11-15 09:06:11', '2022-11-28 06:58:52', NULL, NULL),
+(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, NULL, 1, '2022-11-15 09:06:11', '2022-11-28 05:20:58', 'voyager.menus.index', NULL),
+(7, 1, 'Database', '', '_self', 'voyager-data', NULL, 5, 2, '2022-11-15 09:06:12', '2022-11-28 06:58:52', 'voyager.database.index', NULL),
+(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 3, '2022-11-15 09:06:12', '2022-11-28 06:58:52', 'voyager.compass.index', NULL),
+(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 4, '2022-11-15 09:06:12', '2022-11-28 06:58:52', 'voyager.bread.index', NULL),
+(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, NULL, 12, '2022-11-15 09:06:12', '2022-11-28 06:58:52', 'voyager.settings.index', NULL),
+(11, 1, 'Danh mục', '', '_self', 'voyager-categories', '#000000', 14, 2, '2022-11-15 09:06:12', '2022-11-28 06:58:50', 'voyager.categories.index', 'null'),
+(12, 1, 'Quản lý bài viết', '', '_self', 'voyager-news', '#000000', 5, 1, '2022-11-15 09:06:12', '2022-11-28 06:58:52', 'voyager.posts.index', 'null'),
+(13, 1, 'Pages', '', '_self', 'voyager-file-text', NULL, NULL, 11, '2022-11-15 09:06:12', '2022-11-28 06:58:52', 'voyager.pages.index', NULL),
+(14, 1, 'Nhân sự', '/', '_self', 'voyager-people', '#d3c5c5', NULL, 6, '2022-11-15 11:25:04', '2022-11-28 06:58:52', NULL, ''),
+(16, 1, 'Hợp đồng lao động', '/', '_self', NULL, '#000000', 14, 3, '2022-11-15 11:39:41', '2022-11-28 06:58:50', NULL, ''),
+(17, 1, 'Bảo hiểm', '/', '_self', NULL, '#000000', 14, 4, '2022-11-15 11:40:05', '2022-11-28 06:58:50', NULL, ''),
+(18, 1, 'Sơ dồ tổ chức', '/', '_self', NULL, '#000000', 14, 5, '2022-11-15 11:42:04', '2022-11-28 06:58:50', NULL, ''),
+(19, 1, 'Hợp đồng lương theo giờ', '/', '_self', NULL, '#000000', 14, 6, '2022-11-15 11:42:18', '2022-11-28 06:58:50', NULL, ''),
+(20, 1, 'Hồ Sơ Nhân Viên', '', '_self', NULL, '#000000', 14, 1, '2022-11-16 07:35:41', '2022-11-17 07:20:44', 'voyager.nhan-vien.index', 'null'),
+(21, 1, 'Tuyển dụng', '', '_self', 'voyager-pizza', NULL, NULL, 5, '2022-11-17 07:02:23', '2022-11-28 06:58:52', 'voyager.quan-ly-tuyen-dung.index', NULL),
+(22, 1, 'Danh mục', '', '_self', 'voyager-categories', '#000000', NULL, 2, '2022-11-17 07:27:10', '2022-11-28 06:52:43', 'voyager.quan-ly-danh-muc.index', 'null'),
+(24, 1, 'Bài viết', '', '_self', 'voyager-news', '#000000', NULL, 3, '2022-11-28 06:58:29', '2022-11-28 11:19:43', 'voyager.quan-ly-bai-viet.index', 'null');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_01_07_073615_create_tagged_table', 1),
+(2, '2014_01_07_073615_create_tags_table', 1),
+(3, '2014_10_12_000000_create_users_table', 1),
+(4, '2014_10_12_100000_create_password_resets_table', 1),
+(5, '2016_01_01_000000_add_voyager_user_fields', 1),
+(6, '2016_01_01_000000_create_data_types_table', 1),
+(7, '2016_05_19_173453_create_menu_table', 1),
+(8, '2016_06_29_073615_create_tag_groups_table', 1),
+(9, '2016_06_29_073615_update_tags_table', 1),
+(10, '2016_10_21_190000_create_roles_table', 1),
+(11, '2016_10_21_190000_create_settings_table', 1),
+(12, '2016_11_30_135954_create_permission_table', 1),
+(13, '2016_11_30_141208_create_permission_role_table', 1),
+(14, '2016_12_26_201236_data_types__add__server_side', 1),
+(15, '2017_01_13_000000_add_route_to_menu_items_table', 1),
+(16, '2017_01_14_005015_create_translations_table', 1),
+(17, '2017_01_15_000000_make_table_name_nullable_in_permissions_table', 1),
+(18, '2017_03_06_000000_add_controller_to_data_types_table', 1),
+(19, '2017_04_21_000000_add_order_to_data_rows_table', 1),
+(20, '2017_07_05_210000_add_policyname_to_data_types_table', 1),
+(21, '2017_08_05_000000_add_group_to_settings_table', 1),
+(22, '2017_11_26_013050_add_user_role_relationship', 1),
+(23, '2017_11_26_015000_create_user_roles_table', 1),
+(24, '2018_03_11_000000_add_user_settings', 1),
+(25, '2018_03_14_000000_add_details_to_data_types_table', 1),
+(26, '2018_03_16_000000_make_settings_value_nullable', 1),
+(27, '2019_08_19_000000_create_failed_jobs_table', 1),
+(28, '2021_06_03_150549_create_tbl_admin_table', 2),
+(29, '2021_06_06_170146_create_tbl_category_product', 3),
+(30, '2021_08_06_154224_add_category_image_to_tbl_category_product_table', 3),
+(31, '2021_08_07_082140_create_tbl_brand_product', 4),
+(32, '2016_01_01_000000_create_pages_table', 5),
+(33, '2016_01_01_000000_create_posts_table', 5),
+(34, '2016_02_15_204651_create_categories_table', 5),
+(35, '2017_04_11_000000_alter_post_nullable_fields_table', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `pages`
+--
+
+CREATE TABLE `pages` (
+  `id` int UNSIGNED NOT NULL,
+  `author_id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `excerpt` text COLLATE utf8mb4_unicode_ci,
+  `body` text COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci,
+  `status` enum('ACTIVE','INACTIVE') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'INACTIVE',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `pages`
+--
+
+INSERT INTO `pages` (`id`, `author_id`, `title`, `excerpt`, `body`, `image`, `slug`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
+(1, 0, 'Hello World', 'Hang the jib grog grog blossom grapple dance the hempen jig gangway pressgang bilge rat to go on account lugger. Nelsons folly gabion line draught scallywag fire ship gaff fluke fathom case shot. Sea Legs bilge rat sloop matey gabion long clothes run a shot across the bow Gold Road cog league.', '<p>Hello World. Scallywag grog swab Cat o\'nine tails scuttle rigging hardtack cable nipper Yellow Jack. Handsomely spirits knave lad killick landlubber or just lubber deadlights chantey pinnace crack Jennys tea cup. Provost long clothes black spot Yellow Jack bilged on her anchor league lateen sail case shot lee tackle.</p>\n<p>Ballast spirits fluke topmast me quarterdeck schooner landlubber or just lubber gabion belaying pin. Pinnace stern galleon starboard warp carouser to go on account dance the hempen jig jolly boat measured fer yer chains. Man-of-war fire in the hole nipperkin handsomely doubloon barkadeer Brethren of the Coast gibbet driver squiffy.</p>', 'pages/page1.jpg', 'hello-world', 'Yar Meta Description', 'Keyword1, Keyword2', 'ACTIVE', '2022-11-15 09:06:12', '2022-11-15 09:06:12');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `table_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`) VALUES
+(1, 'browse_admin', NULL, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(2, 'browse_bread', NULL, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(3, 'browse_database', NULL, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(4, 'browse_media', NULL, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(5, 'browse_compass', NULL, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(6, 'browse_menus', 'menus', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(7, 'read_menus', 'menus', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(8, 'edit_menus', 'menus', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(9, 'add_menus', 'menus', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(10, 'delete_menus', 'menus', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(11, 'browse_roles', 'roles', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(12, 'read_roles', 'roles', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(13, 'edit_roles', 'roles', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(14, 'add_roles', 'roles', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(15, 'delete_roles', 'roles', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(16, 'browse_users', 'users', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(17, 'read_users', 'users', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(18, 'edit_users', 'users', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(19, 'add_users', 'users', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(20, 'delete_users', 'users', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(21, 'browse_settings', 'settings', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(22, 'read_settings', 'settings', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(23, 'edit_settings', 'settings', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(24, 'add_settings', 'settings', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(25, 'delete_settings', 'settings', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(26, 'browse_categories', 'categories', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(27, 'read_categories', 'categories', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(28, 'edit_categories', 'categories', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(29, 'add_categories', 'categories', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(30, 'delete_categories', 'categories', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(31, 'browse_posts', 'posts', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(32, 'read_posts', 'posts', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(33, 'edit_posts', 'posts', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(34, 'add_posts', 'posts', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(35, 'delete_posts', 'posts', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(36, 'browse_pages', 'pages', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(37, 'read_pages', 'pages', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(38, 'edit_pages', 'pages', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(39, 'add_pages', 'pages', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(40, 'delete_pages', 'pages', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(41, 'browse_tbl_nhan_vien', 'tbl_nhan_vien', '2022-11-16 07:35:41', '2022-11-16 07:35:41'),
+(42, 'read_tbl_nhan_vien', 'tbl_nhan_vien', '2022-11-16 07:35:41', '2022-11-16 07:35:41'),
+(43, 'edit_tbl_nhan_vien', 'tbl_nhan_vien', '2022-11-16 07:35:41', '2022-11-16 07:35:41'),
+(44, 'add_tbl_nhan_vien', 'tbl_nhan_vien', '2022-11-16 07:35:41', '2022-11-16 07:35:41'),
+(45, 'delete_tbl_nhan_vien', 'tbl_nhan_vien', '2022-11-16 07:35:41', '2022-11-16 07:35:41'),
+(46, 'browse_tbl_recruit', 'tbl_recruit', '2022-11-17 07:02:23', '2022-11-17 07:02:23'),
+(47, 'read_tbl_recruit', 'tbl_recruit', '2022-11-17 07:02:23', '2022-11-17 07:02:23'),
+(48, 'edit_tbl_recruit', 'tbl_recruit', '2022-11-17 07:02:23', '2022-11-17 07:02:23'),
+(49, 'add_tbl_recruit', 'tbl_recruit', '2022-11-17 07:02:23', '2022-11-17 07:02:23'),
+(50, 'delete_tbl_recruit', 'tbl_recruit', '2022-11-17 07:02:23', '2022-11-17 07:02:23'),
+(51, 'browse_tbl_category_product', 'tbl_category_product', '2022-11-17 07:27:10', '2022-11-17 07:27:10'),
+(52, 'read_tbl_category_product', 'tbl_category_product', '2022-11-17 07:27:10', '2022-11-17 07:27:10'),
+(53, 'edit_tbl_category_product', 'tbl_category_product', '2022-11-17 07:27:10', '2022-11-17 07:27:10'),
+(54, 'add_tbl_category_product', 'tbl_category_product', '2022-11-17 07:27:10', '2022-11-17 07:27:10'),
+(55, 'delete_tbl_category_product', 'tbl_category_product', '2022-11-17 07:27:10', '2022-11-17 07:27:10'),
+(61, 'browse_tbl_posts', 'tbl_posts', '2022-11-28 06:58:29', '2022-11-28 06:58:29'),
+(62, 'read_tbl_posts', 'tbl_posts', '2022-11-28 06:58:29', '2022-11-28 06:58:29'),
+(63, 'edit_tbl_posts', 'tbl_posts', '2022-11-28 06:58:29', '2022-11-28 06:58:29'),
+(64, 'add_tbl_posts', 'tbl_posts', '2022-11-28 06:58:29', '2022-11-28 06:58:29'),
+(65, 'delete_tbl_posts', 'tbl_posts', '2022-11-28 06:58:29', '2022-11-28 06:58:29');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `permission_role`
+--
+
+CREATE TABLE `permission_role` (
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `permission_role`
+--
+
+INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(16, 1),
+(17, 1),
+(18, 1),
+(19, 1),
+(20, 1),
+(21, 1),
+(22, 1),
+(23, 1),
+(24, 1),
+(25, 1),
+(26, 1),
+(27, 1),
+(28, 1),
+(29, 1),
+(30, 1),
+(31, 1),
+(32, 1),
+(33, 1),
+(34, 1),
+(35, 1),
+(36, 1),
+(37, 1),
+(38, 1),
+(39, 1),
+(40, 1),
+(41, 1),
+(42, 1),
+(43, 1),
+(44, 1),
+(45, 1),
+(46, 1),
+(47, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(61, 1),
+(62, 1),
+(63, 1),
+(64, 1),
+(65, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int UNSIGNED NOT NULL,
+  `author_id` int NOT NULL,
+  `category_id` int DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `excerpt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `meta_keywords` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` enum('PUBLISHED','DRAFT','PENDING') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'DRAFT',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `posts`
+--
+
+INSERT INTO `posts` (`id`, `author_id`, `category_id`, `title`, `seo_title`, `excerpt`, `body`, `image`, `slug`, `meta_description`, `meta_keywords`, `status`, `featured`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Lorem Ipsum Post', NULL, 'This is the excerpt for the Lorem Ipsum Post', '<p>This is the body of the lorem ipsum post<img src=\"http://dev.phuonghung.abc//public/storage/posts/November2022/z3105900926111_d849179e5963dc28cbce775b77ef811c1642306128.jpg\" alt=\"\" /></p>', 'posts/November2022/MEsbsj7035OcSK3Ly21m.png', 'lorem-ipsum-post', 'This is the meta description', 'keyword1, keyword2, keyword3', 'PUBLISHED', 0, '2022-11-15 09:06:12', '2022-11-15 09:50:28'),
+(2, 0, NULL, 'My Sample Post', NULL, 'This is the excerpt for the sample Post', '<p>This is the body for the sample post, which includes the body.</p>\n                <h2>We can use all kinds of format!</h2>\n                <p>And include a bunch of other stuff.</p>', 'posts/post2.jpg', 'my-sample-post', 'Meta Description for sample post', 'keyword1, keyword2, keyword3', 'PUBLISHED', 0, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(3, 0, NULL, 'Latest Post', NULL, 'This is the excerpt for the latest post', '<p>This is the body for the latest post</p>', 'posts/post3.jpg', 'latest-post', 'This is the meta description', 'keyword1, keyword2, keyword3', 'PUBLISHED', 0, '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(4, 0, NULL, 'Yarr Post', NULL, 'Reef sails nipperkin bring a spring upon her cable coffer jury mast spike marooned Pieces of Eight poop deck pillage. Clipper driver coxswain galleon hempen halter come about pressgang gangplank boatswain swing the lead. Nipperkin yard skysail swab lanyard Blimey bilge water ho quarter Buccaneer.', '<p>Swab deadlights Buccaneer fire ship square-rigged dance the hempen jig weigh anchor cackle fruit grog furl. Crack Jennys tea cup chase guns pressgang hearties spirits hogshead Gold Road six pounders fathom measured fer yer chains. Main sheet provost come about trysail barkadeer crimp scuttle mizzenmast brig plunder.</p>\n<p>Mizzen league keelhaul galleon tender cog chase Barbary Coast doubloon crack Jennys tea cup. Blow the man down lugsail fire ship pinnace cackle fruit line warp Admiral of the Black strike colors doubloon. Tackle Jack Ketch come about crimp rum draft scuppers run a shot across the bow haul wind maroon.</p>\n<p>Interloper heave down list driver pressgang holystone scuppers tackle scallywag bilged on her anchor. Jack Tar interloper draught grapple mizzenmast hulk knave cable transom hogshead. Gaff pillage to go on account grog aft chase guns piracy yardarm knave clap of thunder.</p>', 'posts/post4.jpg', 'yarr-post', 'this be a meta descript', 'keyword1, keyword2, keyword3', 'PUBLISHED', 0, '2022-11-15 09:06:12', '2022-11-15 09:06:12');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'Administrator', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(2, 'user', 'Normal User', '2022-11-15 09:06:12', '2022-11-15 09:06:12');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int UNSIGNED NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `details` text COLLATE utf8mb4_unicode_ci,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order` int NOT NULL DEFAULT '1',
+  `group` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `settings`
+--
+
+INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`, `order`, `group`) VALUES
+(1, 'site.title', 'Site Title', 'Site Title', '', 'text', 1, 'Site'),
+(2, 'site.description', 'Site Description', 'Site Description', '', 'text', 2, 'Site'),
+(3, 'site.logo', 'Site Logo', 'settings/November2022/57azF90PbZFjq1hvRZrm.jpg', '', 'image', 3, 'Site'),
+(4, 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', NULL, '', 'text', 4, 'Site'),
+(5, 'admin.bg_image', 'Admin Background Image', 'settings/November2022/fKzy7IVUlT1TuCKOC4g2.png', '', 'image', 5, 'Admin'),
+(6, 'admin.title', 'Admin Title', 'Voyager', '', 'text', 1, 'Admin'),
+(7, 'admin.description', 'Admin Description', 'Welcome to Voyager. The Missing Admin for Laravel', '', 'text', 3, 'Admin'),
+(8, 'admin.loader', 'Admin Loader', '', '', 'image', 2, 'Admin'),
+(9, 'admin.icon_image', 'Admin Icon Image', 'settings/November2022/xHqX0ZlCJavtQSPVW1Oq.jpg', '', 'image', 4, 'Admin'),
+(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', NULL, '', 'text', 1, 'Admin');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tagging_tagged`
+--
+
+CREATE TABLE `tagging_tagged` (
+  `id` int UNSIGNED NOT NULL,
+  `taggable_id` int UNSIGNED NOT NULL,
+  `taggable_type` varchar(125) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tag_name` varchar(125) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tag_slug` varchar(125) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tagging_tags`
+--
+
+CREATE TABLE `tagging_tags` (
+  `id` int UNSIGNED NOT NULL,
+  `tag_group_id` int UNSIGNED DEFAULT NULL,
+  `slug` varchar(125) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(125) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `suggest` tinyint(1) NOT NULL DEFAULT '0',
+  `count` int UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tagging_tag_groups`
+--
+
+CREATE TABLE `tagging_tag_groups` (
+  `id` int UNSIGNED NOT NULL,
+  `slug` varchar(125) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(125) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -29,11 +688,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tbl_aboutus` (
-  `id` int(11) NOT NULL,
-  `title` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `image` text DEFAULT NULL,
-  `desc_sort` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `content` text CHARACTER SET utf8mb4 DEFAULT NULL,
+  `id` int NOT NULL,
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `image` text,
+  `desc_sort` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `update_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -42,7 +701,7 @@ CREATE TABLE `tbl_aboutus` (
 --
 
 INSERT INTO `tbl_aboutus` (`id`, `title`, `image`, `desc_sort`, `content`, `update_at`) VALUES
-(1, 'Sơ lược về Thiên Phú Tây Ninh', '1665544004-—Pngtree—golden squares extruded abstract background_11685112.png', '<p>C&ocirc;ng ty Cổ phần Đầu Tư&nbsp;Địa ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh&nbsp;l&agrave; doanh nghiệp hoạt động chuy&ecirc;n s&acirc;u về lĩnh vực Bất Động Sản với nhiều năm kinh nghiệm.</p>\r\n\r\n<p>L&agrave; một c&ocirc;ng ty trẻ với đội ngũ nh&acirc;n vi&ecirc;n năng động, s&aacute;ng tạo v&agrave; nhiệt huyết, C&ocirc;ng ty Thi&ecirc;n Ph&uacute; T&acirc;y Ninh đ&atilde; th&agrave;nh c&ocirc;ng v&agrave; tạo được những dấu ấn của bản th&acirc;n doanh nghiệp. Khẳng định được vị thế của m&igrave;nh tại thị trường bất động sản T&acirc;y Ninh.</p>\r\n\r\n<p>Với phương ch&acirc;m &ldquo;Hợp T&aacute;c C&ugrave;ng Ph&aacute;t Triển&rdquo;: C&ocirc;ng ty đ&atilde; c&oacute; những th&agrave;nh c&ocirc;ng trong lĩnh vực bất động sản với vai tr&ograve; đơn vị Ph&acirc;n phối độc quyền c&aacute;c dự &aacute;n lớn tại thị trường T&acirc;y Ninh</p>\r\n\r\n<p>&nbsp;</p>', '<h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Sơ lược về Thi&ecirc;n Ph&uacute; T&acirc;y Ninh</h1>\r\n\r\n<p>C&ocirc;ng ty Cổ phần Đầu Tư&nbsp;Địa ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh&nbsp;l&agrave; doanh nghiệp hoạt động chuy&ecirc;n s&acirc;u về lĩnh vực Bất Động Sản với nhiều năm kinh nghiệm.</p>\r\n\r\n<p>L&agrave; một c&ocirc;ng ty trẻ với đội ngũ nh&acirc;n vi&ecirc;n năng động, s&aacute;ng tạo v&agrave; nhiệt huyết, C&ocirc;ng ty Thi&ecirc;n Ph&uacute; T&acirc;y Ninh đ&atilde; th&agrave;nh c&ocirc;ng v&agrave; tạo được những dấu ấn của bản th&acirc;n doanh nghiệp. Khẳng định được vị thế của m&igrave;nh tại thị trường bất động sản T&acirc;y Ninh.</p>\r\n\r\n<p>Với phương ch&acirc;m &ldquo;Hợp T&aacute;c C&ugrave;ng Ph&aacute;t Triển&rdquo;: C&ocirc;ng ty đ&atilde; c&oacute; những th&agrave;nh c&ocirc;ng trong lĩnh vực bất động sản với vai tr&ograve; đơn vị Ph&acirc;n phối độc quyền c&aacute;c dự &aacute;n lớn tại thị trường T&acirc;y Ninh</p>\r\n\r\n<p><strong>TẦM NH&Igrave;N</strong></p>\r\n\r\n<p>Ph&aacute;t triển với phương ch&acirc;m bền vững, x&acirc;y dựng hệ thống nh&acirc;n sự ổn định, x&acirc;y dựng ch&iacute;nh s&aacute;ch chăm s&oacute;c kh&aacute;ch h&agrave;ng tận t&acirc;m v&agrave; chuy&ecirc;n nghiệp trong 05 năm đầu.</p>\r\n\r\n<p>Ph&aacute;t triển th&agrave;nh doanh nghiệp c&oacute; thương hiệu trong lĩnh vực ph&aacute;t triển dự &aacute;n bất động sản cao cấp&nbsp;trong 05 năm tiếp theo.&nbsp;</p>\r\n\r\n<p>Ph&aacute;t triển mạnh trong lĩnh vực Bất Động Sản. G&oacute;p phần mang lại cuộc sống hạnh ph&uacute;c v&agrave; thịnh vượng cho cộng đồng trong suốt qu&aacute; tr&igrave;nh hoạt động v&agrave; ph&aacute;t triển.</p>\r\n\r\n<p><strong>SỨ MỆNH</strong></p>\r\n\r\n<p>Mang đến cho kh&aacute;ch h&agrave;ng những sản phẩm đầu tư chất lượng nhất, tốt nhất tr&ecirc;n thị trường.</p>\r\n\r\n<p>Đem lại cho kh&aacute;ch h&agrave;ng nguồn lợi nhuận bền vững. G&oacute;p phần ph&aacute;t triển kinh tế &ndash; x&atilde; hội của đất nước.</p>\r\n\r\n<p>Mang lại cuộc sống hạnh ph&uacute;c v&agrave; thịnh vượng cho cộng đồng trong suốt qu&aacute; tr&igrave;nh hoạt động v&agrave; ph&aacute;t triển.</p>\r\n\r\n<p><strong>GI&Aacute; TRỊ CỐT L&Otilde;I</strong></p>\r\n\r\n<p>Tầm: Thi&ecirc;n Ph&uacute;&nbsp;với tầm nh&igrave;n s&acirc;u rộng l&agrave; lợi thế gi&uacute;p nắm bắt cơ hội v&agrave; đem đến cho kh&aacute;ch h&agrave;ng những sản phẩm ho&agrave;n hảo nhất.</p>\r\n\r\n<p>T&acirc;m: Thi&ecirc;n Ph&uacute; lu&ocirc;n đặt chữ T&acirc;m l&agrave;m nền tảng. Lu&ocirc;n thượng t&ocirc;n Ph&aacute;p luật, duy tr&igrave; Đạo đức, lấy kh&aacute;ch h&agrave;ng l&agrave;m trung t&acirc;m.</p>\r\n\r\n<p>Kỷ: Thi&ecirc;n Ph&uacute; lu&ocirc;n giữ t&iacute;nh kỷ luật tạo ra t&aacute;c phong chuy&ecirc;n nghiệp, minh bạch. Tạo cho kh&aacute;ch h&agrave;ng sự tin tưởng v&agrave; an t&acirc;m.</p>\r\n\r\n<p>Th&agrave;nh t&iacute;ch b&aacute;n h&agrave;ng ấn tượng đến với Thi&ecirc;n Ph&uacute; kh&ocirc;ng chỉ bởi nhờ nắm bắt cơ hội tốt từ thị trường BĐS mang lại, m&agrave; c&ograve;n bởi chiến lược v&agrave; tư duy s&aacute;ng tạo c&ugrave;ng kh&aacute;t vọng tự chủ của một doanh nghiệp trẻ.</p>', '2022-10-12');
+(1, 'Sơ lược về Thiên Phú Tây Ninh', '1660037286-LTL_TOPP_2.jpg', '<p>C&ocirc;ng ty Cổ phần Đầu Tư&nbsp;Địa ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh&nbsp;l&agrave; doanh nghiệp hoạt động chuy&ecirc;n s&acirc;u về lĩnh vực Bất Động Sản với nhiều năm kinh nghiệm.</p>\r\n\r\n<p>L&agrave; một c&ocirc;ng ty trẻ với đội ngũ nh&acirc;n vi&ecirc;n năng động, s&aacute;ng tạo v&agrave; nhiệt huyết, C&ocirc;ng ty Thi&ecirc;n Ph&uacute; T&acirc;y Ninh đ&atilde; th&agrave;nh c&ocirc;ng v&agrave; tạo được những dấu ấn của bản th&acirc;n doanh nghiệp. Khẳng định được vị thế của m&igrave;nh tại thị trường bất động sản T&acirc;y Ninh.</p>\r\n\r\n<p>Với phương ch&acirc;m &ldquo;Hợp T&aacute;c C&ugrave;ng Ph&aacute;t Triển&rdquo;: C&ocirc;ng ty đ&atilde; c&oacute; những th&agrave;nh c&ocirc;ng trong lĩnh vực bất động sản với vai tr&ograve; đơn vị Ph&acirc;n phối độc quyền c&aacute;c dự &aacute;n lớn tại thị trường T&acirc;y Ninh</p>\r\n\r\n<p>&nbsp;</p>', '<h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Sơ lược về Thi&ecirc;n Ph&uacute; T&acirc;y Ninh</h1>\r\n\r\n<p>C&ocirc;ng ty Cổ phần Đầu Tư&nbsp;Địa ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh&nbsp;l&agrave; doanh nghiệp hoạt động chuy&ecirc;n s&acirc;u về lĩnh vực Bất Động Sản với nhiều năm kinh nghiệm.</p>\r\n\r\n<p>L&agrave; một c&ocirc;ng ty trẻ với đội ngũ nh&acirc;n vi&ecirc;n năng động, s&aacute;ng tạo v&agrave; nhiệt huyết, C&ocirc;ng ty Thi&ecirc;n Ph&uacute; T&acirc;y Ninh đ&atilde; th&agrave;nh c&ocirc;ng v&agrave; tạo được những dấu ấn của bản th&acirc;n doanh nghiệp. Khẳng định được vị thế của m&igrave;nh tại thị trường bất động sản T&acirc;y Ninh.</p>\r\n\r\n<p>Với phương ch&acirc;m &ldquo;Hợp T&aacute;c C&ugrave;ng Ph&aacute;t Triển&rdquo;: C&ocirc;ng ty đ&atilde; c&oacute; những th&agrave;nh c&ocirc;ng trong lĩnh vực bất động sản với vai tr&ograve; đơn vị Ph&acirc;n phối độc quyền c&aacute;c dự &aacute;n lớn tại thị trường T&acirc;y Ninh</p>\r\n\r\n<p><strong>TẦM NH&Igrave;N</strong></p>\r\n\r\n<p>Ph&aacute;t triển với phương ch&acirc;m bền vững, x&acirc;y dựng hệ thống nh&acirc;n sự ổn định, x&acirc;y dựng ch&iacute;nh s&aacute;ch chăm s&oacute;c kh&aacute;ch h&agrave;ng tận t&acirc;m v&agrave; chuy&ecirc;n nghiệp trong 05 năm đầu.</p>\r\n\r\n<p>Ph&aacute;t triển th&agrave;nh doanh nghiệp c&oacute; thương hiệu trong lĩnh vực ph&aacute;t triển dự &aacute;n bất động sản cao cấp&nbsp;trong 05 năm tiếp theo.&nbsp;</p>\r\n\r\n<p>Ph&aacute;t triển mạnh trong lĩnh vực Bất Động Sản. G&oacute;p phần mang lại cuộc sống hạnh ph&uacute;c v&agrave; thịnh vượng cho cộng đồng trong suốt qu&aacute; tr&igrave;nh hoạt động v&agrave; ph&aacute;t triển.</p>\r\n\r\n<p><strong>SỨ MỆNH</strong></p>\r\n\r\n<p>Mang đến cho kh&aacute;ch h&agrave;ng những sản phẩm đầu tư chất lượng nhất, tốt nhất tr&ecirc;n thị trường.</p>\r\n\r\n<p>Đem lại cho kh&aacute;ch h&agrave;ng nguồn lợi nhuận bền vững. G&oacute;p phần ph&aacute;t triển kinh tế &ndash; x&atilde; hội của đất nước.</p>\r\n\r\n<p>Mang lại cuộc sống hạnh ph&uacute;c v&agrave; thịnh vượng cho cộng đồng trong suốt qu&aacute; tr&igrave;nh hoạt động v&agrave; ph&aacute;t triển.</p>\r\n\r\n<p><strong>GI&Aacute; TRỊ CỐT L&Otilde;I</strong></p>\r\n\r\n<p>Tầm: Thi&ecirc;n Ph&uacute;&nbsp;với tầm nh&igrave;n s&acirc;u rộng l&agrave; lợi thế gi&uacute;p nắm bắt cơ hội v&agrave; đem đến cho kh&aacute;ch h&agrave;ng những sản phẩm ho&agrave;n hảo nhất.</p>\r\n\r\n<p>T&acirc;m: Thi&ecirc;n Ph&uacute; lu&ocirc;n đặt chữ T&acirc;m l&agrave;m nền tảng. Lu&ocirc;n thượng t&ocirc;n Ph&aacute;p luật, duy tr&igrave; Đạo đức, lấy kh&aacute;ch h&agrave;ng l&agrave;m trung t&acirc;m.</p>\r\n\r\n<p>Kỷ: Thi&ecirc;n Ph&uacute; lu&ocirc;n giữ t&iacute;nh kỷ luật tạo ra t&aacute;c phong chuy&ecirc;n nghiệp, minh bạch. Tạo cho kh&aacute;ch h&agrave;ng sự tin tưởng v&agrave; an t&acirc;m.</p>\r\n\r\n<p>Th&agrave;nh t&iacute;ch b&aacute;n h&agrave;ng ấn tượng đến với Thi&ecirc;n Ph&uacute; kh&ocirc;ng chỉ bởi nhờ nắm bắt cơ hội tốt từ thị trường BĐS mang lại, m&agrave; c&ograve;n bởi chiến lược v&agrave; tư duy s&aacute;ng tạo c&ugrave;ng kh&aacute;t vọng tự chủ của một doanh nghiệp trẻ.</p>', '2022-08-09');
 
 -- --------------------------------------------------------
 
@@ -51,7 +710,23 @@ INSERT INTO `tbl_aboutus` (`id`, `title`, `image`, `desc_sort`, `content`, `upda
 --
 
 CREATE TABLE `tbl_admin` (
-  `admin_id` int(10) UNSIGNED NOT NULL,
+  `admin_id` int UNSIGNED NOT NULL,
+  `admin_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tbl_admin_`
+--
+
+CREATE TABLE `tbl_admin_` (
+  `admin_id` int UNSIGNED NOT NULL,
   `admin_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -61,10 +736,10 @@ CREATE TABLE `tbl_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `tbl_admin`
+-- Đang đổ dữ liệu cho bảng `tbl_admin_`
 --
 
-INSERT INTO `tbl_admin` (`admin_id`, `admin_email`, `admin_password`, `admin_name`, `admin_phone`, `created_at`, `updated_at`) VALUES
+INSERT INTO `tbl_admin_` (`admin_id`, `admin_email`, `admin_password`, `admin_name`, `admin_phone`, `created_at`, `updated_at`) VALUES
 (1, 'admin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', '012345678', '2021-06-28 15:15:21', NULL),
 (2, 'ngocthanh@gmail.com', '0192023a7bbd73250516f069df18b500', 'Ngọc Thạnh', '', NULL, NULL),
 (3, 'dat@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'dat', '0973409613', '2022-07-28 03:37:30', '2022-07-20 03:37:30');
@@ -76,9 +751,9 @@ INSERT INTO `tbl_admin` (`admin_id`, `admin_email`, `admin_password`, `admin_nam
 --
 
 CREATE TABLE `tbl_banner` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `image` text NOT NULL,
-  `status` int(11) DEFAULT NULL
+  `status` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -89,8 +764,7 @@ INSERT INTO `tbl_banner` (`id`, `image`, `status`) VALUES
 (7, '1660036950-Blog-Images-What-Does-the-Vietnam-Startup-Scene-Look-like-in-2019.jpg', 1),
 (8, '1659754597-landmark-81-o-dau-1.jpg', 1),
 (9, '1660037016-59f1a44500663.jpg', 1),
-(10, '1660037136-lm81-1.jpg', 1),
-(11, '1665132837-—Pngtree—golden squares extruded abstract background_11685112.png', 0);
+(10, '1660037136-lm81-1.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -99,20 +773,36 @@ INSERT INTO `tbl_banner` (`id`, `image`, `status`) VALUES
 --
 
 CREATE TABLE `tbl_brand_product` (
-  `brand_id` int(11) NOT NULL,
-  `brand_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `brand_desc` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `brand_status` int(11) DEFAULT NULL,
+  `brand_id` int UNSIGNED NOT NULL,
+  `brand_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `brand_desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `brand_status` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `brand_image` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tbl_brand_product_`
+--
+
+CREATE TABLE `tbl_brand_product_` (
+  `brand_id` int NOT NULL,
+  `brand_name` varchar(255) CHARACTER SET utf8mb3 DEFAULT NULL,
+  `brand_desc` varchar(255) CHARACTER SET utf8mb3 DEFAULT NULL,
+  `brand_status` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `brand_image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Đang đổ dữ liệu cho bảng `tbl_brand_product`
+-- Đang đổ dữ liệu cho bảng `tbl_brand_product_`
 --
 
-INSERT INTO `tbl_brand_product` (`brand_id`, `brand_name`, `brand_desc`, `brand_status`, `created_at`, `updated_at`, `brand_image`) VALUES
+INSERT INTO `tbl_brand_product_` (`brand_id`, `brand_name`, `brand_desc`, `brand_status`, `created_at`, `updated_at`, `brand_image`) VALUES
 (1, 'moven pick', '', 1, NULL, NULL, '1658065821-mo.jpg'),
 (2, 'pull man', '', 1, NULL, NULL, '1658065846-pull.jpg'),
 (3, 'intercontinental', '', 1, NULL, NULL, '1658065877-inter.jpg'),
@@ -125,25 +815,60 @@ INSERT INTO `tbl_brand_product` (`brand_id`, `brand_name`, `brand_desc`, `brand_
 --
 
 CREATE TABLE `tbl_category_product` (
-  `category_id` int(10) UNSIGNED NOT NULL,
-  `icon_svg` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `flagship` int(11) DEFAULT NULL,
+  `id` int UNSIGNED NOT NULL,
   `category_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category_desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_status` int(11) NOT NULL,
-  `display_menu` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `category_desc` text COLLATE utf8mb4_unicode_ci,
+  `category_status` int NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `category_image` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `category_image` text COLLATE utf8mb4_unicode_ci,
+  `icon_svg` text COLLATE utf8mb4_unicode_ci,
+  `flagship` int DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `display_menu` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tbl_category_product`
 --
 
-INSERT INTO `tbl_category_product` (`category_id`, `icon_svg`, `flagship`, `category_name`, `slug`, `category_desc`, `category_status`, `display_menu`, `created_at`, `updated_at`, `category_image`, `meta_keywords`) VALUES
+INSERT INTO `tbl_category_product` (`id`, `category_name`, `category_desc`, `category_status`, `created_at`, `updated_at`, `category_image`, `icon_svg`, `flagship`, `slug`, `display_menu`, `meta_keywords`) VALUES
+(24, 'ĐẤT NỀN', '<p>Đất nền</p>', 1, '2022-11-28 13:35:00', NULL, '', '1658155121-villa.svg', 0, 'dat-nen', '[\"1\"]', 'Danh mục dự án của Thiên Phú'),
+(25, 'SHOPHOUSE', '<p>Nh&agrave; phố thương mại</p>', 1, '2022-11-28 13:35:00', NULL, '', '1658155174-shophouse.svg', 0, 'shophouse', '[\"1\"]', 'Danh mục dự án của Thiên Phú'),
+(26, 'KHÁCH SẠN', '<p>Kh&aacute;ch sạn ven biển</p>', 0, '2022-11-28 13:35:00', NULL, '', '1658155190-hotel.svg', 1, 'khach-san', '[\"1\"]', 'Danh mục dự án của Thiên Phú'),
+(27, 'CĂN HỘ', '<p>Căn hộ kh&aacute;ch sạn</p>', 1, '2022-11-28 13:35:00', NULL, '', '1658155325-coltel.svg', 0, 'can-ho', '[\"1\"]', 'Danh mục dự án của Thiên Phú'),
+(28, 'TIN NỘI BỘ', '<p>Tin nội bộ của Thi&ecirc;n Ph&uacute;</p>', 1, '2022-11-28 13:35:00', NULL, '', NULL, 0, 'tin-noi-bo', '[\"2\"]', 'Tin nội bộ của Thiên Phú'),
+(29, 'TIN TUYỂN DỤNG', '<p>Tin tuyển dụng của Địa ốc Thi&ecirc;n ph&uacute;</p>', 1, '2022-11-28 13:34:00', NULL, '', NULL, 0, 'tin-tuyen-dung', '[\"2\"]', 'Tin tuyển dụng của Địa ốc Thiên phú'),
+(30, 'TIN THỊ TRƯỜNG DỰ ÁN', '<p>Bản tin thị trường v&agrave; dự &aacute;n</p>', 1, '2022-11-28 12:48:00', NULL, 'quan-ly-danh-muc/November2022/XwRw5ueAWqbCvNJCuOuU.jpg', NULL, 0, 'tin-thi-truong-du-an', '[\"1\"]', 'Bản tin thị trường và dự án'),
+(39, 'zxzxc', NULL, 0, '2022-11-28 13:49:00', NULL, NULL, NULL, NULL, 'zxzxc', '{\"1\":\"1\"}', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tbl_category_product_`
+--
+
+CREATE TABLE `tbl_category_product_` (
+  `category_id` int UNSIGNED NOT NULL,
+  `icon_svg` text COLLATE utf8mb4_unicode_ci,
+  `flagship` int DEFAULT NULL,
+  `category_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_status` int NOT NULL,
+  `display_menu` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `category_image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tbl_category_product_`
+--
+
+INSERT INTO `tbl_category_product_` (`category_id`, `icon_svg`, `flagship`, `category_name`, `slug`, `category_desc`, `category_status`, `display_menu`, `created_at`, `updated_at`, `category_image`, `meta_keywords`) VALUES
 (24, '1658155121-villa.svg', 0, 'ĐẤT NỀN', 'dat-nen', 'Đất nền', 1, '[\"1\"]', NULL, NULL, '', 'Danh mục dự án của Thiên Phú'),
 (25, '1658155174-shophouse.svg', 0, 'SHOPHOUSE', 'shophouse', 'Nhà phố thương mại', 1, '[\"1\"]', NULL, NULL, '', 'Danh mục dự án của Thiên Phú'),
 (26, '1658155190-hotel.svg', 1, 'KHÁCH SẠN', 'khach-san', 'Khách sạn ven biển', 0, '[\"1\"]', NULL, NULL, '', 'Danh mục dự án của Thiên Phú'),
@@ -159,10 +884,10 @@ INSERT INTO `tbl_category_product` (`category_id`, `icon_svg`, `flagship`, `cate
 --
 
 CREATE TABLE `tbl_count_visitors_online` (
-  `id` int(11) NOT NULL,
-  `session_id` text DEFAULT NULL,
-  `time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int NOT NULL,
+  `session_id` text,
+  `time` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -171,10 +896,10 @@ CREATE TABLE `tbl_count_visitors_online` (
 --
 
 CREATE TABLE `tbl_flagship` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 DEFAULT NULL,
   `slug` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -185,15 +910,15 @@ CREATE TABLE `tbl_flagship` (
 --
 
 CREATE TABLE `tbl_garenal_setting` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `address` text CHARACTER SET utf8 DEFAULT NULL,
-  `link_fb` text DEFAULT NULL,
+  `address` text CHARACTER SET utf8mb3,
+  `link_fb` text,
   `page_id_fb` varchar(255) DEFAULT NULL,
-  `link_youtube` text DEFAULT NULL,
-  `link_instagram` text DEFAULT NULL,
+  `link_youtube` text,
+  `link_instagram` text,
   `email` varchar(255) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL
+  `type` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -201,7 +926,7 @@ CREATE TABLE `tbl_garenal_setting` (
 --
 
 INSERT INTO `tbl_garenal_setting` (`id`, `phone`, `address`, `link_fb`, `page_id_fb`, `link_youtube`, `link_instagram`, `email`, `type`) VALUES
-(3, '0896.456.078', 'Sô 344 Đường 30/4, Khu Phố 1, Phường 3, TP.Tây Ninh', 'https://www.facebook.com/diaocthienphutayninh', '104272020993375', 'https://www.youtube.com/watch?v=BNCSmCvqw4g&feature=youtu.be', NULL, 'info.thienphutayninh@gmail.com', 1);
+(3, '02766.525.525', 'Sô 344 Đường 30/4, Khu Phố 1, Phường 3, TP.Tây Ninh', 'https://www.facebook.com/diaocthienphutayninh', '104272020993375', 'https://www.youtube.com/watch?v=BNCSmCvqw4g&feature=youtu.be', NULL, 'info.thienphutayninh@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -210,10 +935,10 @@ INSERT INTO `tbl_garenal_setting` (`id`, `phone`, `address`, `link_fb`, `page_id
 --
 
 CREATE TABLE `tbl_metaseo` (
-  `id` int(11) NOT NULL,
-  `meta_desc` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `meta_keywords` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `meta_title` text CHARACTER SET utf8mb4 DEFAULT NULL
+  `id` int NOT NULL,
+  `meta_desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `meta_keywords` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `meta_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -228,44 +953,69 @@ INSERT INTO `tbl_metaseo` (`id`, `meta_desc`, `meta_keywords`, `meta_title`) VAL
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `tbl_nhan_vien`
+--
+
+CREATE TABLE `tbl_nhan_vien` (
+  `id` int UNSIGNED NOT NULL,
+  `avatar` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint DEFAULT NULL,
+  `date_start_work` datetime DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `department_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `number_phone` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tbl_nhan_vien`
+--
+
+INSERT INTO `tbl_nhan_vien` (`id`, `avatar`, `name`, `status`, `date_start_work`, `title`, `department_name`, `number_phone`, `email`, `created_at`, `updated_at`) VALUES
+(2, 'nhan-vien/November2022/8tbU8AH8KaND8E3xicsu.jpg', 'nhan vien 1', NULL, '2022-11-16 00:00:00', 'hokage', 'san bat cuop hcm', '0973409613', NULL, NULL, NULL),
+(3, 'nhan-vien/November2022/7YzR1ByjNDzWvngdhhdn.jpg', 'nhan vien 2', NULL, '2022-11-23 00:00:00', 'aax', 'ádád', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `tbl_posts`
 --
 
 CREATE TABLE `tbl_posts` (
-  `post_id` int(11) NOT NULL,
-  `post_desc` text CHARACTER SET utf8mb4 NOT NULL,
-  `post_content` text CHARACTER SET utf8mb4 NOT NULL,
+  `id` int NOT NULL,
+  `post_desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `post_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `post_image` text NOT NULL,
   `post_author` varchar(255) DEFAULT NULL,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `post_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `catID` int(11) NOT NULL,
+  `catID` int NOT NULL,
   `display` varchar(255) DEFAULT NULL,
-  `post_slug` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `status` int(9) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `post_slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Đang đổ dữ liệu cho bảng `tbl_posts`
 --
 
-INSERT INTO `tbl_posts` (`post_id`, `post_desc`, `post_content`, `post_image`, `post_author`, `create_at`, `update_at`, `post_title`, `catID`, `display`, `post_slug`, `status`) VALUES
+INSERT INTO `tbl_posts` (`id`, `post_desc`, `post_content`, `post_image`, `post_author`, `create_at`, `update_at`, `post_title`, `catID`, `display`, `post_slug`, `status`) VALUES
 (10, 'ĐỊA ỐC THIÊN PHÚ TÂY NINH TUYỂN 20 CHUYÊN VIÊN KINH DOANH ĐI LÀM NGAY', '<p><img alt=\"💥\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t40/1/16/1f4a5.png\" style=\"height:16px; width:16px\" /> M&Ocirc;I TRƯỜNG L&Agrave;M VIỆC TRẺ, NĂNG ĐỘNG &ndash; CƠ HỘI THĂNG TIẾN CAO<img alt=\"💥\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t40/1/16/1f4a5.png\" style=\"height:16px; width:16px\" /> KH&Ocirc;NG &Aacute;P DOANH SỐ - ĐƯỢC Đ&Agrave;O TẠO<img alt=\"💥\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t40/1/16/1f4a5.png\" style=\"height:16px; width:16px\" /></p>\r\n\r\n<p><img alt=\"👉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t51/1/16/1f449.png\" style=\"height:16px; width:16px\" /> QUYỀN LỢI :</p>\r\n\r\n<p>- Lương cơ bản : 5 - 8 triệu.</p>\r\n\r\n<p>- Hoa hồng cao từ 40 triệu / sản phẩm &amp; kh&ocirc;ng giới hạn.</p>\r\n\r\n<p>- Thưởng c&aacute; nh&acirc;n - thưởng team &ndash; thưởng ph&ograve;ng ban.</p>\r\n\r\n<p>- Thưởng th&aacute;ng - qu&yacute; - năm.</p>\r\n\r\n<p>- X&eacute;t tăng lương theo th&aacute;ng, thăng tiến nhanh.</p>\r\n\r\n<p>- Được hỗ trợ data kh&aacute;ch h&agrave;ng.</p>\r\n\r\n<p>- Được đ&agrave;o tạo kiến thức thực tiễn về kỹ năng b&aacute;n h&agrave;ng, marketing, thị trường v&agrave; ph&aacute;p l&yacute; BĐS.</p>\r\n\r\n<p>- Chỉ cần bạn si&ecirc;ng năng, năng động, ham học hỏi, cầu tiến, c&ocirc;ng ty sẽ đ&agrave;o tạo bạn th&agrave;nh nh&acirc;n vi&ecirc;n sale BĐS chuy&ecirc;n nghiệp v&agrave; thu nhập cao.</p>\r\n\r\n<p>- Sản phẩm độc quyền, đa dạng v&agrave; nhiều ph&acirc;n kh&uacute;c.</p>\r\n\r\n<p>- Du lịch h&agrave;ng năm, tham gia team building.</p>\r\n\r\n<p>- Hưởng đầy đủ chế độ theo quy định nh&agrave; nước.</p>\r\n\r\n<p><img alt=\"👉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t51/1/16/1f449.png\" style=\"height:16px; width:16px\" /> M&Ocirc; TẢ C&Ocirc;NG VIỆC :</p>\r\n\r\n<p>- T&igrave;m kiếm kh&aacute;ch h&agrave;ng tiềm năng, mở rộng k&ecirc;nh khai th&aacute;c kh&aacute;ch h&agrave;ng tiềm năng.</p>\r\n\r\n<p>- T&igrave;m hiểu nhu cầu, tư vấn cho kh&aacute;ch h&agrave;ng mua sản phẩm của c&ocirc;ng ty.</p>\r\n\r\n<p>- Chăm s&oacute;c kh&aacute;ch h&agrave;ng, tạo mối quan hệ với kh&aacute;ch h&agrave;ng, hỗ trợ kh&aacute;ch h&agrave;ng trước v&agrave; sau giao dịch.</p>\r\n\r\n<p>- Tư vấn, đ&agrave;m ph&aacute;n, thương lượng, chốt sale.</p>\r\n\r\n<p><img alt=\"👉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t51/1/16/1f449.png\" style=\"height:16px; width:16px\" /> Y&Ecirc;U CẦU :</p>\r\n\r\n<p>- C&oacute; phương tiện đi lại.</p>\r\n\r\n<p>- Tốt nghiệp THPT trở l&ecirc;n.</p>\r\n\r\n<p>- Ưu ti&ecirc;n ứng vi&ecirc;n c&oacute; kinh nghiệm trong ng&agrave;nh li&ecirc;n quan : b&aacute;n h&agrave;ng, bảo hiểm, t&agrave;i ch&iacute;nh&hellip;</p>\r\n\r\n<p>- Kh&ocirc;ng y&ecirc;u cầu kinh nghiệm, sẽ được c&ocirc;ng ty đ&agrave;o tạo. Chỉ cần c&oacute; đam m&ecirc; BĐS, th&iacute;ch kinh doanh, th&iacute;ch kiếm nhiều tiền.<br />\r\n&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/images/tuyedung-2.jpg\" style=\"height:573px; width:942px\" /></p>\r\n\r\n<p>&nbsp;</p>', '1658158202-tuyen-dung.jpg', NULL, '2022-07-18 15:30:02', '2022-08-03 17:00:00', 'Tuyển 20 chuyên viên kinh doanh', 29, '[\"1\"]', 'tuyen-20-chuyen-vien-kinh-doanh', 1),
-(13, 'Team building 3 ngày 2 đêm tại Phan Thiết', '<p><img alt=\"💖\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te9/1/16/1f496.png\" /> Team building 3 ng&agrave;y 2 đ&ecirc;m tại Phan Thiết vừa qua đối với c&aacute;c th&agrave;nh vi&ecirc;n Địa Ốc Thi&ecirc;n Ph&uacute; kh&ocirc;ng d&agrave;i nhưng đủ để đọng lại nhiều kỷ niệm kh&oacute; qu&ecirc;n.<br />\r\n<br />\r\n<span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/FLVjprVC820ESceCuV-ZjugV6XvXivoP8y2LIP2PfQ2VQODCtNare2hlT5MvQYeaRgLBDss36rWWAcSady50LbggdU861z7ohAwZ441VgIEoGeGO802BnTdBLk1QsrgwSJiiXMSCYGOKohN6kdhE1iE\" style=\"height:303px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/fg2W7pxjJwNbesnAWX-39tgGXphhMcohyJOXqVKDfCII9ZKHaWo9n2ca8p_WtP_GMKQsnFt90x5Trs_snoyt3vZRqhSIF6ahzClVpV4c5Tw3hhPTF83gOjusMbYv2gDCfCmOH0dF513tqsaHVQFi5vM\" style=\"height:375px; width:602px\" /></span></span></span></p>\r\n\r\n<p><img alt=\"💖\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te9/1/16/1f496.png\" /> Tất cả th&agrave;nh vi&ecirc;n Thi&ecirc;n Ph&uacute; đ&atilde; c&oacute; những ng&agrave;y vui vẻ c&ugrave;ng nhau. Những c&aacute;i &ocirc;m nồng thắm, những tiếng cười sảng kho&aacute;i, những hoạt động th&uacute; vị gi&uacute;p gắn kết c&aacute;c th&agrave;nh vi&ecirc;n như một gia đ&igrave;nh thật sự.<br />\r\n<span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/0eRbe0PQF4bFf5JEJXsHD1u2PGk1GW_9A7VN4wjrCPKQTvY5fc2xv8fAmwf3-OwWburlvrVk_QXthIam7Yyfj6ttdh5Fq_cVmQktv9saYr8kWyaPegmWuIYSnUibBOnS9P_9SWYoUss0sP4_nGyKBZI\" style=\"height:303px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/F8wEDbUethHsDJ2eFmvGDXYCgMMqfgQxJr7TS_1CKbFRAyUaGztrrEY4ra4U08b4swqjYhylBvQmx7wkS6bNJitl3IJZPk4WvYKsXotPaheDYrB6CD3JcjRhud4igy-CU-O4nOUEwwy1i0kgZ2oQSqM\" style=\"height:339px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh6.googleusercontent.com/BBTQKsA-31cKrYaA2C6-ErsQMIPRB8vnjvaKMETbkuKCO1wEzDfmX-uS9AqgSIhsNxNSLjwUop2Q6zZKeaoqwFUookEwaOU5MdmW7u1qq12vZ1EjczJ8zWhqS2lEa2W_UEnXGUNpCzo1TXfn5ljF_xw\" style=\"height:339px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/OoeXP5Dpk62Q0EartTmMmfTssPieakIkptBiS0rkrEDa_JrwyXK8McbDATZ9Dhls68Ky5ox3V1lUiXoHpa5vcFXXhRrHGyKog3DDjiVHljXA824xOOti_KCfZq5P7El3GS2M_6QxN4o9AvTc65EayeA\" style=\"height:471px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh6.googleusercontent.com/Z3lRpjF08rzXQ9LujatauPibmy7YezweI2s48X67-yti2J3ZKZGKp44-49q5Lay-OJS1OddQF8hP5pDJRSX7AojoYlwLKCng9kB90FgYYMxxFReXz5aQQlkF2Ark2dA86dVy2_735AV6xWWrqnPYgtQ\" style=\"height:285px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/aFGL-yP6LVaqaurAimqKUu7eJWv3KBmSBmApYJEGh6Re4vaedmuFqzD-S6A6ya_l29ZcBKRCCH5w4AqEPAmrf8FJlD_jcJKctZPSHGTCvmV2Q6DYE3ZH9PT3UFrvCgZeElEjUwXDq-bTNY_C7v9d4UQ\" style=\"height:339px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/hNAA35yOgJV9Y0D1ZI12aSek-cNL6ykdX5LcZjO2M8eV06OqW8UjnNyiVt7zhHh51BxvZ0iuPo04XH9kphKcfhhdZVGMWB0FDBR5tIlour-DxYdrGEgMhx31sG1Ehdn_hLxCXprPuIE8FrRGSrKlTbY\" style=\"height:339px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/s8pw73cDmOIe6k9WKvKC6LQuqPjDJh4vp-D61fZ4byp2OLxiGvsZUS55ouSEXi2RYnh-ESO1FQ9rqomE5mkvS6_JVByJ-n5ruORfEN21w-iqQGkNdDQVHHDRMxrd6cdlopSjtop3p30sqjL_iwBZnTg\" style=\"height:339px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/v-O1PUmDv6iShwIijcEKtxngPaqDs7Sp1eCqyKqHd7txgBKenKnj4vrvryemcOAyslYIAFi6ef-VHDwQUqwFQX9QOGHlm0zXLnGGFVGH_-epAOwTQk47ZoTRs7nTJy_OqvFa0auY7Q-bSHfXqQ-rv80\" style=\"height:339px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/Edg5LmW96Md3ypesNvmzhpp3guD-vDBoXqQtHlF38iZutolx7VQO27ZoOf61VN5zGYp3L71mwPX_NzUIah4iPpTXHfLaRE3COo8krRLV64GpA546sOw3TFj-LC2mlPp--fJuL0O_8s7hwJNfBa6MlBQ\" style=\"height:339px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/RmErmQdwS6UdpUg5vi-l7R-Jcb55-0o4T4RjM_Rg9FADcQ1nphh0g7ExDOH4jTadE5VDUmT9fJwZZL5wB5J_zTaMUIa4JOPBDuF1zrrGr-6jnPyTber6JpDdFbo_JIjYNUR4AIBBogGN2wGALVJLPmA\" style=\"height:339px; width:602px\" /></span></span></span><br />\r\n<span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/pOa-JqEwyIkmOHcWupDwZMI6u7c2Epb2Pavu9Zsyk1g_LJ5SE0IAkNjGeKgah1id_kn-VULoB9r04m-tw7BqfYDfYUUhKiuM2P6xzUOM7eJ1WGSSxJyLFJMEYLvbLVQKp_-11QrlZmfeLED_tcXMCHQ\" style=\"height:627px; width:602px\" /></span></span></span></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/IJZpV5MJbumyeGC_5VIMx7_DGeCfDnzHlZAX2LrGFfzC4vnCYs57bNFpqTHNaKlVIewfx4ct1FmZgyBgaikMkBtERcBGiMakMBr2V2dyRth60tBDwnAx2ZK3gpktq0rXFTmJMxF2H9b8Y5VmTLnvH9c\" style=\"height:367px; width:602px\" /></span></span></span></p>', '1665562551-z3793878976438_c573efb811d5045f55bb7f691222b781.jpg', NULL, '2022-07-17 17:00:00', '2022-10-11 17:00:00', 'TEAM BUILDING 2022 CỦA ĐỊA ỐC THIÊN PHÚ TÂY NINH', 28, '[\"1\",\"3\"]', 'team-building-2022-cua-dia-oc-thien-phu-tay-ninh', 1),
-(15, '💫💫 TỔNG KẾT HOẠT ĐỘNG KINH DOANH 6 THÁNG ĐẦU NĂM & CHIẾN LƯỢC KINH DOANH 6 THÁNG CUỐI NĂM 2022 💫💫', '<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Chiều ng&agrave;y 05/07/2022, c&ocirc;ng ty CP Đầu Tư Địa Ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh tổ chức buổi tổng kết hoạt động kinh doanh 6 th&aacute;ng đầu năm &amp; chiến lược kinh doanh 6 th&aacute;ng cuối năm 2022.</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/MTAXVOfqACZ2JCMzNJ6jrgTckkfxi4sJmNFRuc_mjwwRxGLATlhgxnpdNmMgrj7IZrdd3CVxvZFsaTSiNJ3y7mACCahoVsAi-xYjsLTSBy36xnwH9RCYbKMDhw2l5lx8Cfshgo75DMTYSHz5gNjKa-M\" style=\"height:456px; width:602px\" /></span></span></span></p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Mở đầu, c&aacute;c ph&ograve;ng ban b&aacute;o c&aacute;o v&agrave; đ&aacute;nh gi&aacute; t&igrave;nh h&igrave;nh hoạt động vừa qua, n&ecirc;u l&ecirc;n những kh&oacute; khăn v&agrave; thuận lợi để đưa ra chiến lược tốt cho 6 th&aacute;ng cuối năm 2022.</p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Bạn l&atilde;nh đạo đ&atilde; khen thưởng c&aacute;c c&aacute; nh&acirc;n, tập thể c&oacute; th&agrave;nh t&iacute;ch tốt trong 6 th&aacute;ng đầu năm 2022.</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/RKX3L13B9TWCb2bWTtOsdR0pv2fa21Ml-K0danG5_x_zB8yY0bi1_DkbQ3OKaYNT_HanIXhAsCBdie1v0atBNjtU51R-NTyg43g5VC6q4Bqmlpuyib5kG6Y5ywK1WCad9W9fgSD6rHKSl2Eo4jCtSjo\" style=\"height:465px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Anh Mai Hữu Sang: Chuy&ecirc;n vi&ecirc;n kinh doanh hạng nh&igrave; 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/vqoKD_dNo-AcJlTjY3SewJJHJ1B6YCVAAYjzLfxkWTWJ3fadFjXwI8_Qgb7y2WsHI_Ba72MV864HimBrEeYxt1M-OiX746c4dxgbKoFpKnScS8KzKQSKncrqNh_V4j7dgm1A8oQtSBNVpKbSHJKR0pw\" style=\"height:419px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị Nguyễn Thị Kim Chi: Chuy&ecirc;n vi&ecirc;n kinh doanh xuất sắc nhất 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/zjrp13kvNM4x6-7-AdpYVFavQ4jtpcVwqOx_-NmkJyMQTvanLSCnyDhmHUKDJGlhO0DRhqIdxQYxNpLqiuxLlWgGbvkH5dLXRpSJ_y9YCozByDfKCOow-zPzRe69nmfbOjoVFMdyYv4bDhmuw9RxlSw\" style=\"height:363px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Anh L&ecirc; Ho&agrave;ng Lộc: Trưởng ph&ograve;ng kinh doanh xuất sắc 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/cKhC64viqbhzntINdj8WukSm0uhozIEUjLaQSUq-c9oHBZAIwCV9RN407HPjJb058xUeGJfDXDT3wH981bRXiPOAVlwxEWFJecGbBLPiTU0SSRSvJla0iAM7lClVnd736UFZTAS0YC8m-UHrt8ZXs1Y\" style=\"height:301px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Ph&ograve;ng kinh doanh 2: Ph&ograve;ng kinh doanh xuất sắc nhất 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh6.googleusercontent.com/yyC2uIORTWG4jq3LzS7Ic25x7ioz-n_cixkBuuHjYjcQyYzRQv4-17ckYnxRANhSn6QErY3WhZR1HufXkVaaclKfEY8LHzZKbury29foZC87m-81L82-R_Yu0t6cDZcuK7sRRHq486udCGlEDJNPagA\" style=\"height:407px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Anh Nguyễn Th&agrave;nh Ph&uacute;c: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ kinh doanh 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/LZirRMzd-BZlHaYKJ9J8-J4BIcjuzeVzZG0jCdHermlwGEXnnmR5z1694gK3dMHz0bHIncM4OnfACCVkHwQJ7gmsWFLwiaewYoUFAVn2oAOE7F0S1tglYrAU8Wpd-pL07xHQ6jwWizSwvyXXNGzmR7U\" style=\"height:387px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị B&ugrave;i Kim Lệ Hằng: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ kinh doanh 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/xPkFfEDZs6VSPIayMdbtk1Q6JgfXvR_CwpSUiRdGlI_-x2TtIMmAWJmiqh0064nmsXytw_L9OAjrUcR19RS2HPqXScGDSK0stSwHbLSyw8JrivpThM6DUtToej-SaJD0X4Jz46swju_yqEEmegwNr20\" style=\"height:368px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị Phạm Thị Diễm Phương: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ kinh doanh 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/Rh46ULkVOt2kpLnp_KOk2h--UQLOS2T_rMARm1Fhn19E0_1P7SI83AYRyuZqta2glnq_Clsbh0NbkMFwnN6bSX2hiaT1n99g1kPbezEH3_1dCzT9PsnmUIDxEARpARPr23N7qRhbbspxdE2Gx_vy4Bc\" style=\"height:373px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị Nguyễn Thị Phương Dung: Ho&agrave;n th&agrave;nh chỉ ti&ecirc;u tuyển dụng nh&acirc;n sự 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><img alt=\"🎂\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t5/1/16/1f382.png\" style=\"height:16px; width:16px\" /> Cuối buổi lễ, chương tr&igrave;nh ch&uacute;c mừng sinh nhật cho c&aacute;c th&agrave;nh vi&ecirc;n c&oacute; ng&agrave;y sinh trong th&aacute;ng 7 cũng được tổ chức với kh&ocirc;ng gian ấm c&uacute;ng<img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t8c/1/16/1f389.png\" style=\"height:16px; width:16px\" /><img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t8c/1/16/1f389.png\" style=\"height:16px; width:16px\" /></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh6.googleusercontent.com/qv8HAk6uGQifESV3-vaqWVV64q9NEqVILYGEvuthamWe03m2qQBCxB7imDqm2T1ovcqf0kGfSxRVPOBM45tpxTIGJI5baaeTyZfeCt-ynT_tiZBdwWBi-9adY4ZSW2IgNBIq1MVEFSC7JdZcxbTnlYU\" style=\"height:320px; width:602px\" /></span></span></span><br />\r\n&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', '1659604334-z3618151394234_bc5dcb18e19d211cc173db2965145dc5.jpg', NULL, '2022-07-17 17:00:00', '2022-10-11 17:00:00', 'Tổng kết kinh doanh Địa ốc thiên phú', 28, '[\"3\"]', 'tong-ket-kinh-doanh-dia-oc-thien-phu', 1),
-(16, 'Nhà Phố Thương Mại Châu Thành với vị trí đắc địa, tọa lạc ngay tại vòng xoay Thị Trấn Châu Thành trên trục đường chính Hoàng Lê Kha với Lộ Giới 30m giúp kết nối giữa Thành Phố Tây Ninh và cửa khẩu Phước Tân – Svay rieng (Campuchia). Thêm vào đó là các trục đường số 01 (LG 10M), đường số 02 (LG 9M) giúp kết nối 360 độ tại khu vực với đầy đủ các tiện ích ngoại khu: Trung tâm hành chính, Trường học, bệnh viện, ngân hàng, siêu thị…', '<div class=\"elementor-widget-wrap\">\r\n<div class=\"elementor-element elementor-element-0b02012 elementor-widget elementor-widget-spacer\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-spacer\">\r\n<div class=\"elementor-spacer-inner\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-dbee748 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>NH&Agrave; PHỐ THƯƠNG MẠI CH&Acirc;U TH&Agrave;NH</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-4961300 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>Giao thương thịnh vượng - Kết nối phồn vinh</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-97696c4 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-7fa3b30 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/NHA-PH%C3%93.jpg\" style=\"height:572px; width:1284px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-d1f70a6 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/z3368763397637_cd23867ce411c5a40321d3951bdbfe5c-2.jpg\" style=\"height:1818px; width:1284px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2ec0d67 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-765cdb1 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h5>TỔNG QUAN NH&Agrave; PHỐ THƯƠNG MẠI CH&Acirc;U TH&Agrave;NH</h5>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-0b4e940 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<ul>\r\n	<li>T&ecirc;n dự &aacute;n: NH&Agrave; PHỐ THƯƠNG MẠI THỊ TRẤN CH&Acirc;U TH&Agrave;NH</li>\r\n	<li>Chủ đầu tư: C&ocirc;ng ty TNHH T&acirc;n Ngọc Lực</li>\r\n	<li>Đơn vị ph&acirc;n phối độc quyền: Địa Ốc Thi&ecirc;n Ph&uacute;</li>\r\n	<li>Vị tr&iacute; dự &aacute;n: Thị Trấn Ch&acirc;u Th&agrave;nh</li>\r\n	<li>Diện t&iacute;ch: 5,470m2</li>\r\n	<li>Quy m&ocirc;: gồm 2 block A &amp; B với tổng 35 căn&nbsp;</li>\r\n	<li>Thiết kế: T&acirc;n Cổ Điển 1 trệt 2 lầu</li>\r\n	<li>Hạ tầng giao th&ocirc;ng: mặt tiền đường Ho&agrave;ng L&ecirc; Kha(LG 30M)</li>\r\n	<li>Hệ thống điện &acirc;m, nước m&aacute;y, c&aacute;p quang&hellip;</li>\r\n</ul>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-cc0395b elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2150e49 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h5>VỊ TR&Iacute; TRUNG T&Acirc;M - N&Acirc;NG TẦM GI&Aacute; TRỊ</h5>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2c7f1c7 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh với vị tr&iacute; đắc địa, tọa lạc ngay tại v&ograve;ng xoay Thị Trấn Ch&acirc;u Th&agrave;nh tr&ecirc;n trục đường ch&iacute;nh Ho&agrave;ng L&ecirc; Kha với Lộ Giới 30m gi&uacute;p kết nối giữa Th&agrave;nh Phố T&acirc;y Ninh v&agrave; cửa khẩu Phước T&acirc;n &ndash; Svay rieng (Campuchia). Th&ecirc;m v&agrave;o đ&oacute; l&agrave; c&aacute;c trục đường số 01 (LG 10M), đường số 02 (LG 9M) gi&uacute;p kết nối 360 độ tại khu vực với đầy đủ c&aacute;c tiện &iacute;ch ngoại khu: Trung t&acirc;m h&agrave;nh ch&iacute;nh, Trường học, bệnh viện, ng&acirc;n h&agrave;ng, si&ecirc;u thị&hellip;</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-0d5cf7b elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/v%E1%BB%8B-tr%C3%AD-4.jpg\" style=\"height:1246px; width:2048px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-4b79c14 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-ecbcec6 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>SƠ ĐỒ TỔNG THỂ</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-a2ba268 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/s%C6%A1-%C4%91%E1%BB%93.jpg\" style=\"height:1754px; width:2480px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-f7f8582 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/m%E1%BA%B7t-c%E1%BA%AFt.jpg\" style=\"height:905px; width:1280px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-53e0df1 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-217850e elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>PH&Aacute;P L&Yacute;</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-d1a3c28 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh hiện đ&atilde; c&oacute; đầy đủ bộ Ph&aacute;p L&yacute; m&agrave; một dự &aacute;n BĐS cần phải c&oacute;, đ&oacute; l&agrave;: CHỦ TRƯƠNG ĐẦU TƯ, PH&Ecirc; DUYỆT CHI TIẾT 1/500 V&Agrave; GIẤY PH&Eacute;P X&Acirc;Y DỰNG. Cộng với thương hiệu v&agrave; sự uy t&iacute;n của CĐT T&acirc;n Ngọc Lực, qu&yacute; kh&aacute;ch h&agrave;ng ho&agrave;n to&agrave;n c&oacute; thể y&ecirc;n t&acirc;m</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-c22a0c6 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/PH%C3%81P-L%C3%9D.jpg\" style=\"height:740px; width:991px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-80fcea0 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-897b8d7 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>TIỆN &Iacute;CH XUNG QUANH</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-1c8862a elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh được c&aacute;c NĐT đ&aacute;nh gi&aacute; cao do c&oacute; nhiều tiềm năng ph&aacute;t triển, c&ugrave;ng với đ&oacute; l&agrave; vị tr&iacute; gi&aacute;p với Trung T&acirc;m Th&agrave;nh Phố T&acirc;y Ninh n&ecirc;n được thừa hưởng tất cả c&aacute;c tiện &iacute;ch m&agrave; TPTN đang c&oacute;.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-82ed13d elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>TIẾN ĐỘ THI C&Ocirc;NG &amp; MỘT SỐ H&Igrave;NH ẢNH THỰC TẾ</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-eec752e elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh hiện tại đ&atilde; ho&agrave;n thiện to&agrave;n bộ Block A, sẵn s&agrave;ng đi v&agrave;o khai th&aacute;c Kinh Doanh. Hiện tại một số đơn vị đ&atilde; đi v&agrave;o vận h&agrave;nh khai th&aacute;c th&agrave;nh c&ocirc;ng, v&agrave; sắp tới đ&acirc;y sẽ l&agrave; sự xuất hiện của nhiều chuỗi hệ thống Kinh Doanh. Hứa hẹn sẽ trở th&agrave;nh t&acirc;m điểm giao thương của khu vực.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-bad8589 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>BẢNG GI&Aacute; CH&Iacute;NH THỨC</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-984dc51 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Bảng gi&aacute; F0&nbsp; Block A với 18 căn đ&atilde; ho&agrave;n thiện từ Chủ Đầu Tư.</p>\r\n\r\n<p>Th&ecirc;m nữa Kh&aacute;ch H&agrave;ng c&ograve;n được Ng&acirc;n H&agrave;ng hỗ trợ l&ecirc;n đến 70% Gi&aacute; Trị</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-c3cdb1b elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>CH&Iacute;NH S&Aacute;CH B&Aacute;N H&Agrave;NG HẤP DẪN - THỜI ĐIỂM &quot; V&Agrave;NG &quot; ĐỂ Đ&Oacute;N ĐẦU</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-bec0ca6 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Th&aacute;ng 5/2022 v&agrave; th&aacute;ng 6/2022 c&ugrave;ng với gi&aacute; b&aacute;n ưu đ&atilde;i, Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh c&agrave;ng ghi điểm trong mắt Nh&agrave; Đầu Tư nhờ khả năng sẵn s&agrave;ng đi v&agrave;o hoạt động ngay lập tức, c&ugrave;ng với đ&oacute; l&agrave; những ch&iacute;nh s&aacute;ch b&aacute;n h&agrave;ng Đặc Biệt d&agrave;nh cho Qu&yacute; Kh&aacute;ch H&agrave;ng c&oacute; thể kể đến như: G&oacute;i qu&agrave; tặng nội thất đẳng cấp l&ecirc;n đến 50 triệu; Chiết Khấu l&ecirc;n đến 3% v&agrave; đặc biệt hơn cả l&agrave; ch&iacute;nh s&aacute;ch chưa từng c&oacute; từ trước đến nay: Thanh to&aacute;n 50% &ndash; Nhận nh&agrave; Kinh Doanh ngay.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2bf7df5 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Ngo&agrave;i ra, Qu&yacute; Kh&aacute;ch H&agrave;ng khi đầu tư Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh c&ograve;n c&oacute; cơ hội nhận được 1 chiếc xe Mazda 3 trị gi&aacute; l&ecirc;n đến 700 triệu&nbsp;</p>\r\n\r\n<p>Đ&acirc;y ch&iacute;nh l&agrave; thời điểm quyết định để sở hữu m&ocirc; h&igrave;nh Kinh Doanh tuyệt vời c&ugrave;ng với Nh&agrave; Phố Thương Mại Thị Trấn Ch&acirc;u Th&agrave;nh khi m&agrave; c&oacute; qu&aacute; nhiều lợi thế, đ&oacute; l&agrave;: tiềm năng của khu vực, tiến độ v&agrave; chất lượng nổi trội của sản phẩm, hơn nữa l&agrave; ch&iacute;nh s&aacute;ch b&aacute;n h&agrave;ng v&ocirc; c&ugrave;ng hấp dẫn.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-4c277e9 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-e809a54 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-e15749f elementor-section--handles-inside elementor-shape-circle elementor-sticky elementor-sticky--active elementor-sticky--effects elementor-view-stacked elementor-widget elementor-widget-icon\" style=\"bottom:0px; margin-bottom:0px; margin-top:0px; position:fixed; width:1120px\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-icon-wrapper\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>', '1659751064-94751c966834aa6af325.jpg', NULL, '2022-07-23 17:00:00', '2022-10-11 17:00:00', 'NHÀ PHỐ THƯƠNG MẠI THỊ TRẤN CHÂU THÀNH', 25, '[\"2\"]', 'nha-pho-thuong-mai-thi-tran-chau-thanh', 1),
-(17, 'Khu dân cư đô thị Phường 3 là dự án đất nền phân lô, nằm trên mặt tiền đường Nguyễn Hữu Thọ, phường 3, thành phố Tây Ninh, tỉnh Tây Ninh. Dự án nằm cách đường Nguyễn Chí Thanh khoảng 210m.', '<h2><strong>Quy m&ocirc; dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh</strong></h2>\r\n\r\n<p><img alt=\"Khu dân cư đô thị Phường 3 Tây Ninh 1\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-1.jpeg?t=1\" /></p>\r\n\r\n<p>Khu d&acirc;n cư đ&ocirc; thị Phường 3 được triển khai x&acirc;y dựng tr&ecirc;n khu đất rộng 5,37 ha, với tổng số 199 nền đất ph&acirc;n l&ocirc;.</p>\r\n\r\n<p><a href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-2.jpeg?t=1\" onclick=\"return hs.expand(this)\" title=\"Khu dân cư đô thị Phường 3 Tây Ninh\"><img alt=\"Khu dân cư đô thị Phường 3 Tây Ninh\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-2.jpeg?t=1\" style=\"height:468px; width:750px\" /></a></p>\r\n\r\n<p>Mỗi nền đất dự &aacute;n c&oacute; diện t&iacute;ch từ 100 &ndash; 600 m2, được x&acirc;y dựng tự do với chiều cao từ 2 &ndash; 4 tầng.</p>\r\n\r\n<p><a href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/Khu-dan-cu-Do-thi-Phuong-3---Anh-1.jpg?t=1\" onclick=\"return hs.expand(this)\" title=\"Khu dân cư đô thị Phường 3 Tây Ninh\"><img alt=\"Khu dân cư đô thị Phường 3 Tây Ninh\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/Khu-dan-cu-Do-thi-Phuong-3---Anh-1.jpg?t=1\" style=\"height:381px; width:750px\" /></a></p>\r\n\r\n<p>Dự &aacute;n được đầu tư x&acirc;y dựng hệ thống hạ tầng cơ sở: hệ thống điện nước &acirc;m, đường nội khu v&agrave; đường ch&iacute;nh c&oacute; lộ giới 10 &ndash; 27m, c&ugrave;ng tiện &iacute;ch nội khu gồm: c&ocirc;ng vi&ecirc;n c&acirc;y xanh, trường học, trung t&acirc;m thương mại, hồ bơi,&hellip;</p>\r\n\r\n<p><a href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-4.png?t=1\" onclick=\"return hs.expand(this)\" title=\"Khu dân cư đô thị Phường 3 Tây Ninh\"><img alt=\"Khu dân cư đô thị Phường 3 Tây Ninh\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-4.png?t=1\" style=\"height:464px; width:750px\" /></a></p>\r\n\r\n<p><a href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-5.jpeg?t=1\" onclick=\"return hs.expand(this)\" title=\"Khu dân cư đô thị Phường 3 Tây Ninh\"><img alt=\"Khu dân cư đô thị Phường 3 Tây Ninh\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-5.jpeg?t=1\" style=\"height:402px; width:750px\" /></a></p>\r\n\r\n<p>Từ vị tr&iacute; dự &aacute;n, cư d&acirc;n c&oacute; thể di chuyển đến c&aacute;c tiện &iacute;ch ngoại khu trọng điểm của TP.T&acirc;y Ninh như c&aacute;ch Bệnh viện Y học Cổ truyền T&acirc;y Ninh khoảng 700m, Bệnh viện Đa khoa T&acirc;y Ninh khoảng 1,3km, C&ocirc;ng an TP.T&acirc;y Ninh khoảng 1,5km, Trường THPT chuy&ecirc;n Ho&agrave;ng L&ecirc; Kha khoảng 1,6km, s&acirc;n vận động T&acirc;y Ninh khoảng 1,7km&hellip;</p>\r\n\r\n<h2><strong>Th&ocirc;ng tin lịch sử &amp; ph&aacute;p l&yacute; dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3</strong></h2>\r\n\r\n<p><strong>Ng&agrave;y 13/3/2020:</strong>&nbsp;dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 đ&atilde; được UBND tỉnh T&acirc;y Ninh duyệt chủ trương đầu tư tại Quyết định số 485/QĐ-UBND v&agrave; duyệt quy hoạch chi tiết 1/500 tại Quyết định số 615/QĐ-UBND ng&agrave;y 14/7/2020&nbsp;<a href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/Phap-ly-Khu-dan-cu-Do-thi-Phuong-3.jpg\" target=\"_blank\">(<strong>Đ&iacute;nh k&egrave;m</strong>)</a></p>\r\n\r\n<h2><strong>Th&ocirc;ng tin dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh từ CafeLand</strong></h2>\r\n\r\n<p>Khu d&acirc;n cư đ&ocirc; thị Phường 3 do C&ocirc;ng ty TNHH VM To&agrave;n Cầu l&agrave;m chủ đầu tư. C&ocirc;ng ty TNHH Hưng Ph&uacute;c S&agrave;i G&ograve;n (Hưng Ph&uacute;c Land)&nbsp;l&agrave; đơn vị ph&aacute;t triển dự &aacute;n.</p>\r\n\r\n<p>C&ocirc;ng ty TNHH VM To&agrave;n Cầu được th&agrave;nh lập v&agrave;o ng&agrave;y 26/6/2019, c&oacute; trụ sở ch&iacute;nh đặt tại số 13 đường số 9B, Khu đ&ocirc; thị An Ph&uacute; An Kh&aacute;nh (Q.2, TP.HCM). Theo c&ocirc;ng bố th&ocirc;ng tin thay đổi doanh nghiệp ng&agrave;y 28/8/2020, C&ocirc;ng ty VM To&agrave;n Cầu hoạt động với vốn điều lệ 200 tỉ đồng, do b&agrave; Phan L&yacute; Ngọc Loan (sinh năm 1976) l&agrave; người đại diện ph&aacute;p luật.</p>\r\n\r\n<p>Được biết, dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 đ&atilde; được UBND tỉnh T&acirc;y Ninh duyệt chủ trương đầu tư tại Quyết định số 485/QĐ-UBND ng&agrave;y 13/3/2020, duyệt quy hoạch chi tiết 1/500 tại Quyết định số 615/QĐ-UBND ng&agrave;y 14/7/2020 với tổng mức đầu tư 45 tỉ đồng.</p>\r\n\r\n<p>Ng&agrave;y 18/9/2020, Khu d&acirc;n cư đ&ocirc; thị Phường 3 được Sở X&acirc;y dựng tỉnh cấp giấp ph&eacute;p x&acirc;y dựng số 116/GPXD.&nbsp;Theo tiến độ, dự &aacute;n được thực hiện từ th&aacute;ng 1/2020 đến th&aacute;ng 6/2021&nbsp;ho&agrave;n thiện v&agrave; b&agrave;n giao hạ tầng kỹ thuật cho Nh&agrave; nước. Sau đ&oacute;, dự &aacute;n mới được ph&eacute;p b&aacute;n c&aacute;c nền đất theo quy hoạch được duyệt.</p>\r\n\r\n<p>Gi&aacute; b&aacute;n đất nền được tham khảo tr&ecirc;n thị trường của dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 từ 1,7 &ndash; 1,8 tỉ đồng/nền.</p>\r\n\r\n<h2><strong>Th&ocirc;ng tin nhanh dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh</strong></h2>\r\n\r\n<table align=\"center\" border=\"1\" cellpadding=\"1\" cellspacing=\"1\">\r\n	<tbody>\r\n		<tr>\r\n			<td><strong>Dự &aacute;n:&nbsp;&nbsp;</strong>Khu d&acirc;n cư đ&ocirc; thị Phường 3</td>\r\n			<td>\r\n			<p><strong>Tổng diện t&iacute;ch:&nbsp;</strong>5,37 ha</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Vị tr&iacute;:&nbsp;</strong>Đường Nguyễn Hữu Thọ, phường 3, th&agrave;nh phố T&acirc;y Ninh, tỉnh T&acirc;y Ninh</p>\r\n			</td>\r\n			<td><strong>Tổng vốn đầu tư:</strong>&nbsp;45 tỉ đồng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Loại h&igrave;nh:</strong>&nbsp;Đất nền</p>\r\n			</td>\r\n			<td><strong>Ng&agrave;y khởi c&ocirc;ng:&nbsp;</strong></td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p><strong>Chủ đầu tư:&nbsp;</strong>C&ocirc;ng ty TNHH VM To&agrave;n Cầu</p>\r\n\r\n			<p><strong>Đơn vị ph&aacute;t triển:&nbsp;</strong>C&ocirc;ng ty TNHH Hưng Ph&uacute;c S&agrave;i G&ograve;n (Hưng Ph&uacute;c Land)</p>\r\n			</td>\r\n			<td><strong>Năm ho&agrave;n th&agrave;nh:&nbsp;</strong>Th&aacute;ng 6/2021</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '1660019662-Khu-dan-cu-Do-thi-Phuong-3---Anh-1.jpg', NULL, '2022-07-25 04:25:32', '2022-08-08 17:00:00', 'KHU DÂN CƯ ĐÔ THỊ PHƯỜNG 3 TÂY NINH', 24, '[\"2\",\"3\"]', 'khu-dan-cu-do-thi-phuong-3-tay-ninh', 1),
-(18, 'ở tại Tây Ninh. Nếu bạn đã có kinh nghiệm trong lĩnh vực bất động sản, kinh doanh hoặc muốn thử sức ở môi trường làm việc mới đầy năng động, sáng tạo, chuyên nghiệp với những chính sách lương thưởng và phúc lợi hấp dẫn, nguồn sản phẩm đa dạng luôn được cập nhật liên tục thì hãy tham gia tuyển dụng nhân viên kinh doanh bất động sản của chúng tôi để được đứng vào hàng ngũ Chuyên viên kinh doanh BĐS năng động và chuyên nghiệp của', '<div class=\"details-outer\">\r\n<h2>Nh&acirc;n vi&ecirc;n kinh doanh Bất động sản</h2>\r\n\r\n<div class=\"details-text\">\r\n<p><strong>C&ocirc;ng ty cổ phần đầu tư Địa ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh</strong> đang triển khai h&agrave;ng loạt c&aacute;c dự &aacute;n <strong>Đất nền</strong>, <strong>căn hộ</strong>, <strong>nh&agrave; phố </strong>ở tại T&acirc;y Ninh. Nếu bạn đ&atilde; c&oacute; kinh nghiệm trong lĩnh vực bất động sản, kinh doanh hoặc muốn thử sức ở m&ocirc;i trường l&agrave;m việc mới đầy năng động, s&aacute;ng tạo, chuy&ecirc;n nghiệp với những ch&iacute;nh s&aacute;ch lương thưởng v&agrave; ph&uacute;c lợi hấp dẫn, nguồn sản phẩm đa dạng lu&ocirc;n được cập nhật li&ecirc;n tục th&igrave; h&atilde;y tham gia tuyển dụng nh&acirc;n vi&ecirc;n kinh doanh bất động sản của ch&uacute;ng t&ocirc;i để được đứng v&agrave;o h&agrave;ng ngũ Chuy&ecirc;n vi&ecirc;n kinh doanh BĐS năng động v&agrave; chuy&ecirc;n nghiệp của <strong>ĐỊA ỐC THI&Ecirc;N PH&Uacute; T&Acirc;Y NINH</strong>.</p>\r\n\r\n<p>✅ <strong>ĐỊA ĐIỂM TRỤ SỞ L&Agrave;M VIỆC</strong>: <span style=\"color:#ff0000\">334, đường 30/4, khu phố 1, phường 3, Tp. T&acirc;y Ninh</span> (đối diện <strong>ng&acirc;n h&agrave;ng</strong>&nbsp;<strong>Vietinbank</strong>)</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/images/images.png\" style=\"height:138px; width:138px\" /></p>\r\n\r\n<p>&nbsp;<strong>Y&Ecirc;U CẦU TUYỂN DỤNG</strong>:</p>\r\n\r\n<p>Giới t&iacute;nh: Nam/Nữ. Độ tuổi: 22 &ndash; 35 tuổi</p>\r\n\r\n<p>- Ngoại h&igrave;nh: dễ nh&igrave;n, Gương mặt ưa nh&igrave;n.</p>\r\n\r\n<p>- Kinh nghiệm:&nbsp;</p>\r\n\r\n<p>+ C&oacute; Kinh nghiệm Bất động sản, kinh doanh từ 3 th&aacute;ng &ndash; 1 năm.</p>\r\n\r\n<p>+ Chưa c&oacute; Kinh nghiệm nếu thể hiện tốt sẽ được nhận đ&agrave;o tạo.</p>\r\n\r\n<p>- Giao tiếp: tr&igrave;nh b&agrave;y mạch lạc v&agrave; thuyết phục được người nghe, biết lắng nghe v&agrave; phản biện đ&uacute;ng l&uacute;c.</p>\r\n\r\n<p>- Phong c&aacute;ch: Năng động, trẻ trung, trung thực, ham học hỏi v&agrave; cầu tiến.</p>\r\n\r\n<p>- Kỹ năng mềm:</p>\r\n\r\n<p>+ C&oacute; kỹ năng tư vấn, chăm s&oacute;c kh&aacute;ch h&agrave;ng tốt.</p>\r\n\r\n<p>+ C&oacute; khả năng l&agrave;m việc độc lập v&agrave; theo nh&oacute;m.</p>\r\n\r\n<p>+ C&oacute; kỹ năng đ&agrave;m ph&aacute;n, thuyết phục.</p>\r\n\r\n<p>- Y&ecirc;u cầu kh&aacute;c:</p>\r\n\r\n<p>+ Sẵn s&agrave;ng đi c&ocirc;ng t&aacute;c khi c&oacute; y&ecirc;u cầu.</p>\r\n\r\n<p>+ C&oacute; trang bị Laptop, xe m&aacute;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>✅ <strong>M&Ocirc; TẢ C&Ocirc;NG VIỆC</strong>:</p>\r\n\r\n<p>- Thực hiện kế hoạch doanh thu được giao.</p>\r\n\r\n<p>- Cập nhật đ&uacute;ng v&agrave; đủ th&ocirc;ng tin c&aacute;c dự &aacute;n đang b&aacute;n.</p>\r\n\r\n<p>- Tư vấn kh&aacute;ch h&agrave;ng, đưa kh&aacute;ch đi xem dự &aacute;n.</p>\r\n\r\n<p>- Khai th&aacute;c, chăm s&oacute;c kh&aacute;ch h&agrave;ng.</p>\r\n\r\n<p>- Thực hiện c&aacute;c thủ tục cho kh&aacute;ch h&agrave;ng.</p>\r\n\r\n<p>- Thực hiện kế hoạch quảng c&aacute;o.</p>\r\n\r\n<p>- Trực s&agrave;n, trực nh&agrave; mẫu,.. theo đ&uacute;ng lịch ph&acirc;n c&ocirc;ng.</p>\r\n\r\n<p>- Cập nhật t&igrave;nh h&igrave;nh thị trường theo ph&acirc;n c&ocirc;ng.</p>\r\n\r\n<p>- Tham gia đầy đủ c&aacute;c kh&oacute;a huấn luyện đ&agrave;o tạo.</p>\r\n\r\n<p>- Thực hiện c&aacute;c b&aacute;o c&aacute;o theo quy định: b&aacute;o c&aacute;o ng&agrave;y, th&aacute;ng, qu&yacute;, kh&aacute;ch h&agrave;ng tiềm năng.</p>\r\n\r\n<p>- Thực hiện c&aacute;c nhiệm vụ ph&aacute;t sinh kh&aacute;c do cấp quản l&yacute; trực tiếp giao.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>✅ <strong>LƯƠNG + THƯỞNG</strong>:</p>\r\n\r\n<p>- LCB: Theo năng lực 5-15 triệu/ th&aacute;ng ( kh&ocirc;ng phụ thuộc doanh số)&nbsp;&nbsp;</p>\r\n\r\n<p>- Hoa hồng: 40-80 triệu/ sản phẩm</p>\r\n\r\n<p>- Thưởng luỹ tiến: 10-20 triệu/ sản phẩm</p>\r\n\r\n<p>- Thưởng c&aacute;c ng&agrave;y lễ - Lương th&aacute;ng 13, du lịch c&ugrave;ng c&ocirc;ng ty.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>✅ <strong>Đ&Agrave;O TẠO V&Agrave; THĂNG TIẾN R&Otilde; R&Agrave;NG</strong> :</p>\r\n\r\n<p>- C&aacute;c chương tr&igrave;nh đ&agrave;o tạo chuy&ecirc;n biệt theo từng cấp bậc.</p>\r\n\r\n<p>- Được đ&agrave;o tạo tận tay nếu bạn l&agrave; người chưa c&oacute; kinh nghiệm trong BĐS.</p>\r\n\r\n<p>- Lộ tr&igrave;nh thăng tiến theo từng năm đối với nh&acirc;n vi&ecirc;n c&oacute; sự cống hiến v&agrave; thể hiện được bản th&acirc;n một c&aacute;ch tốt nhất.</p>\r\n\r\n<p>- Cty hỗ trợ đào tạo th&ecirc;m ki&ecirc;́n thức marketing v&agrave; khai thác khách hàng (SEO, Google AdWords, Facebook, Email&hellip;).</p>\r\n\r\n<p>- L&agrave;m việc trong m&ocirc;i trường chuy&ecirc;n nghiệp, đồng nghiệp giỏi chuy&ecirc;n m&ocirc;n, cơ hội thăng tiến cao, trao dồi kiến thức để nh&acirc;n sự ph&aacute;t triển li&ecirc;n tục.</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/IY1-8KVBuKGNMhTJfdaRWeUEi2-HK-BTnEI8N1CrBkCwb2xTql_HCwaE0HaJ9vFiv2kPEriSHcpVQIYJ8H9K9caoM-JjjFeaai5D70HvpHkondwClYAkwG3ntVACINn-Dd1b0Q0xDUGQSQRXhB5btSc\" style=\"height:803px; width:602px\" /></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Nhận hồ sơ v&agrave; tiếp nhận phỏng vấn tại <strong>Địa Ốc Thi&ecirc;n Ph&uacute; </strong></p>\r\n\r\n<p>Hạn ch&oacute;t nộp hồ sơ đến hết ng&agrave;y 31/5/2021</p>\r\n\r\n<p>&nbsp;</p>\r\n</div>\r\n</div>', '1658770596-t.jpg', NULL, '2022-05-14 17:00:00', '2022-10-02 17:00:00', 'Nhân viên kinh doanh Bất động sản', 29, NULL, 'nhan-vien-kinh-doanh-bat-dong-san', 1);
-INSERT INTO `tbl_posts` (`post_id`, `post_desc`, `post_content`, `post_image`, `post_author`, `create_at`, `update_at`, `post_title`, `catID`, `display`, `post_slug`, `status`) VALUES
+(13, 'Team building 3 ngày 2 đêm tại Phan Thiết', '<p><img src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te9/1/16/1f496.png\" alt=\"💖\" /> Team building 3 ng&agrave;y 2 đ&ecirc;m tại Phan Thiết vừa qua đối với c&aacute;c th&agrave;nh vi&ecirc;n Địa Ốc Thi&ecirc;n Ph&uacute; kh&ocirc;ng d&agrave;i nhưng đủ để đọng lại nhiều kỷ niệm kh&oacute; qu&ecirc;n.<br /><br /><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img src=\"http://dev.phuonghung.abc//public/storage/quan-ly-bai-viet/November2022/Screenshot from 2022-11-21 14-44-501.png\" alt=\"\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 375px; width: 602px;\" src=\"https://lh3.googleusercontent.com/fg2W7pxjJwNbesnAWX-39tgGXphhMcohyJOXqVKDfCII9ZKHaWo9n2ca8p_WtP_GMKQsnFt90x5Trs_snoyt3vZRqhSIF6ahzClVpV4c5Tw3hhPTF83gOjusMbYv2gDCfCmOH0dF513tqsaHVQFi5vM\" /></span></span></span></p>\r\n<p><img src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te9/1/16/1f496.png\" alt=\"💖\" /> Tất cả th&agrave;nh vi&ecirc;n Thi&ecirc;n Ph&uacute; đ&atilde; c&oacute; những ng&agrave;y vui vẻ c&ugrave;ng nhau. Những c&aacute;i &ocirc;m nồng thắm, những tiếng cười sảng kho&aacute;i, những hoạt động th&uacute; vị gi&uacute;p gắn kết c&aacute;c th&agrave;nh vi&ecirc;n như một gia đ&igrave;nh thật sự.<br /><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 303px; width: 602px;\" src=\"https://lh3.googleusercontent.com/0eRbe0PQF4bFf5JEJXsHD1u2PGk1GW_9A7VN4wjrCPKQTvY5fc2xv8fAmwf3-OwWburlvrVk_QXthIam7Yyfj6ttdh5Fq_cVmQktv9saYr8kWyaPegmWuIYSnUibBOnS9P_9SWYoUss0sP4_nGyKBZI\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh5.googleusercontent.com/F8wEDbUethHsDJ2eFmvGDXYCgMMqfgQxJr7TS_1CKbFRAyUaGztrrEY4ra4U08b4swqjYhylBvQmx7wkS6bNJitl3IJZPk4WvYKsXotPaheDYrB6CD3JcjRhud4igy-CU-O4nOUEwwy1i0kgZ2oQSqM\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh6.googleusercontent.com/BBTQKsA-31cKrYaA2C6-ErsQMIPRB8vnjvaKMETbkuKCO1wEzDfmX-uS9AqgSIhsNxNSLjwUop2Q6zZKeaoqwFUookEwaOU5MdmW7u1qq12vZ1EjczJ8zWhqS2lEa2W_UEnXGUNpCzo1TXfn5ljF_xw\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 471px; width: 602px;\" src=\"https://lh3.googleusercontent.com/OoeXP5Dpk62Q0EartTmMmfTssPieakIkptBiS0rkrEDa_JrwyXK8McbDATZ9Dhls68Ky5ox3V1lUiXoHpa5vcFXXhRrHGyKog3DDjiVHljXA824xOOti_KCfZq5P7El3GS2M_6QxN4o9AvTc65EayeA\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 285px; width: 602px;\" src=\"https://lh6.googleusercontent.com/Z3lRpjF08rzXQ9LujatauPibmy7YezweI2s48X67-yti2J3ZKZGKp44-49q5Lay-OJS1OddQF8hP5pDJRSX7AojoYlwLKCng9kB90FgYYMxxFReXz5aQQlkF2Ark2dA86dVy2_735AV6xWWrqnPYgtQ\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh3.googleusercontent.com/aFGL-yP6LVaqaurAimqKUu7eJWv3KBmSBmApYJEGh6Re4vaedmuFqzD-S6A6ya_l29ZcBKRCCH5w4AqEPAmrf8FJlD_jcJKctZPSHGTCvmV2Q6DYE3ZH9PT3UFrvCgZeElEjUwXDq-bTNY_C7v9d4UQ\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh4.googleusercontent.com/hNAA35yOgJV9Y0D1ZI12aSek-cNL6ykdX5LcZjO2M8eV06OqW8UjnNyiVt7zhHh51BxvZ0iuPo04XH9kphKcfhhdZVGMWB0FDBR5tIlour-DxYdrGEgMhx31sG1Ehdn_hLxCXprPuIE8FrRGSrKlTbY\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh5.googleusercontent.com/s8pw73cDmOIe6k9WKvKC6LQuqPjDJh4vp-D61fZ4byp2OLxiGvsZUS55ouSEXi2RYnh-ESO1FQ9rqomE5mkvS6_JVByJ-n5ruORfEN21w-iqQGkNdDQVHHDRMxrd6cdlopSjtop3p30sqjL_iwBZnTg\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh3.googleusercontent.com/v-O1PUmDv6iShwIijcEKtxngPaqDs7Sp1eCqyKqHd7txgBKenKnj4vrvryemcOAyslYIAFi6ef-VHDwQUqwFQX9QOGHlm0zXLnGGFVGH_-epAOwTQk47ZoTRs7nTJy_OqvFa0auY7Q-bSHfXqQ-rv80\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh3.googleusercontent.com/Edg5LmW96Md3ypesNvmzhpp3guD-vDBoXqQtHlF38iZutolx7VQO27ZoOf61VN5zGYp3L71mwPX_NzUIah4iPpTXHfLaRE3COo8krRLV64GpA546sOw3TFj-LC2mlPp--fJuL0O_8s7hwJNfBa6MlBQ\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 339px; width: 602px;\" src=\"https://lh3.googleusercontent.com/RmErmQdwS6UdpUg5vi-l7R-Jcb55-0o4T4RjM_Rg9FADcQ1nphh0g7ExDOH4jTadE5VDUmT9fJwZZL5wB5J_zTaMUIa4JOPBDuF1zrrGr-6jnPyTber6JpDdFbo_JIjYNUR4AIBBogGN2wGALVJLPmA\" /></span></span></span><br /><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 627px; width: 602px;\" src=\"https://lh5.googleusercontent.com/pOa-JqEwyIkmOHcWupDwZMI6u7c2Epb2Pavu9Zsyk1g_LJ5SE0IAkNjGeKgah1id_kn-VULoB9r04m-tw7BqfYDfYUUhKiuM2P6xzUOM7eJ1WGSSxJyLFJMEYLvbLVQKp_-11QrlZmfeLED_tcXMCHQ\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 367px; width: 602px;\" src=\"https://lh5.googleusercontent.com/IJZpV5MJbumyeGC_5VIMx7_DGeCfDnzHlZAX2LrGFfzC4vnCYs57bNFpqTHNaKlVIewfx4ct1FmZgyBgaikMkBtERcBGiMakMBr2V2dyRth60tBDwnAx2ZK3gpktq0rXFTmJMxF2H9b8Y5VmTLnvH9c\" /></span></span></span></p>', '1658773862-p.jpg', NULL, '2022-07-18 15:15:00', '2022-08-03 17:00:00', '🌈 CHUYẾN ĐI CỦA SỰ GẮN KẾT YÊU THƯƠNG🌈', 28, '[\"1\",\"3\"]', 'chuyen-di-cua-su-gan-ket-yeu-thuong', 1),
+(15, '💫💫 TỔNG KẾT HOẠT ĐỘNG KINH DOANH 6 THÁNG ĐẦU NĂM & CHIẾN LƯỢC KINH DOANH 6 THÁNG CUỐI NĂM 2022 💫💫', '<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Chiều ng&agrave;y 05/07/2022, c&ocirc;ng ty CP Đầu Tư Địa Ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh tổ chức buổi tổng kết hoạt động kinh doanh 6 th&aacute;ng đầu năm &amp; chiến lược kinh doanh 6 th&aacute;ng cuối năm 2022.</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/MTAXVOfqACZ2JCMzNJ6jrgTckkfxi4sJmNFRuc_mjwwRxGLATlhgxnpdNmMgrj7IZrdd3CVxvZFsaTSiNJ3y7mACCahoVsAi-xYjsLTSBy36xnwH9RCYbKMDhw2l5lx8Cfshgo75DMTYSHz5gNjKa-M\" style=\"height:456px; width:602px\" /></span></span></span></p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Mở đầu, c&aacute;c ph&ograve;ng ban b&aacute;o c&aacute;o v&agrave; đ&aacute;nh gi&aacute; t&igrave;nh h&igrave;nh hoạt động vừa qua, n&ecirc;u l&ecirc;n những kh&oacute; khăn v&agrave; thuận lợi để đưa ra chiến lược tốt cho 6 th&aacute;ng cuối năm 2022.</p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Bạn l&atilde;nh đạo đ&atilde; khen thưởng c&aacute;c c&aacute; nh&acirc;n, tập thể c&oacute; th&agrave;nh t&iacute;ch tốt trong 6 th&aacute;ng đầu năm 2022.</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/RKX3L13B9TWCb2bWTtOsdR0pv2fa21Ml-K0danG5_x_zB8yY0bi1_DkbQ3OKaYNT_HanIXhAsCBdie1v0atBNjtU51R-NTyg43g5VC6q4Bqmlpuyib5kG6Y5ywK1WCad9W9fgSD6rHKSl2Eo4jCtSjo\" style=\"height:465px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Anh Mai Hữu Sang: Chuy&ecirc;n vi&ecirc;n kinh doanh hạng nh&igrave; 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/vqoKD_dNo-AcJlTjY3SewJJHJ1B6YCVAAYjzLfxkWTWJ3fadFjXwI8_Qgb7y2WsHI_Ba72MV864HimBrEeYxt1M-OiX746c4dxgbKoFpKnScS8KzKQSKncrqNh_V4j7dgm1A8oQtSBNVpKbSHJKR0pw\" style=\"height:419px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị Nguyễn Thị Kim Chi: Chuy&ecirc;n vi&ecirc;n kinh doanh xuất sắc nhất 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/zjrp13kvNM4x6-7-AdpYVFavQ4jtpcVwqOx_-NmkJyMQTvanLSCnyDhmHUKDJGlhO0DRhqIdxQYxNpLqiuxLlWgGbvkH5dLXRpSJ_y9YCozByDfKCOow-zPzRe69nmfbOjoVFMdyYv4bDhmuw9RxlSw\" style=\"height:363px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Anh L&ecirc; Ho&agrave;ng Lộc: Trưởng ph&ograve;ng kinh doanh xuất sắc 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/cKhC64viqbhzntINdj8WukSm0uhozIEUjLaQSUq-c9oHBZAIwCV9RN407HPjJb058xUeGJfDXDT3wH981bRXiPOAVlwxEWFJecGbBLPiTU0SSRSvJla0iAM7lClVnd736UFZTAS0YC8m-UHrt8ZXs1Y\" style=\"height:301px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Ph&ograve;ng kinh doanh 2: Ph&ograve;ng kinh doanh xuất sắc nhất 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh6.googleusercontent.com/yyC2uIORTWG4jq3LzS7Ic25x7ioz-n_cixkBuuHjYjcQyYzRQv4-17ckYnxRANhSn6QErY3WhZR1HufXkVaaclKfEY8LHzZKbury29foZC87m-81L82-R_Yu0t6cDZcuK7sRRHq486udCGlEDJNPagA\" style=\"height:407px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Anh Nguyễn Th&agrave;nh Ph&uacute;c: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ kinh doanh 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/LZirRMzd-BZlHaYKJ9J8-J4BIcjuzeVzZG0jCdHermlwGEXnnmR5z1694gK3dMHz0bHIncM4OnfACCVkHwQJ7gmsWFLwiaewYoUFAVn2oAOE7F0S1tglYrAU8Wpd-pL07xHQ6jwWizSwvyXXNGzmR7U\" style=\"height:387px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị B&ugrave;i Kim Lệ Hằng: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ kinh doanh 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh3.googleusercontent.com/xPkFfEDZs6VSPIayMdbtk1Q6JgfXvR_CwpSUiRdGlI_-x2TtIMmAWJmiqh0064nmsXytw_L9OAjrUcR19RS2HPqXScGDSK0stSwHbLSyw8JrivpThM6DUtToej-SaJD0X4Jz46swju_yqEEmegwNr20\" style=\"height:368px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị Phạm Thị Diễm Phương: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ kinh doanh 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh4.googleusercontent.com/Rh46ULkVOt2kpLnp_KOk2h--UQLOS2T_rMARm1Fhn19E0_1P7SI83AYRyuZqta2glnq_Clsbh0NbkMFwnN6bSX2hiaT1n99g1kPbezEH3_1dCzT9PsnmUIDxEARpARPr23N7qRhbbspxdE2Gx_vy4Bc\" style=\"height:373px; width:602px\" /></span></span></span></p>\r\n\r\n<p>Chị Nguyễn Thị Phương Dung: Ho&agrave;n th&agrave;nh chỉ ti&ecirc;u tuyển dụng nh&acirc;n sự 6 th&aacute;ng đầu năm 2022</p>\r\n\r\n<p><img alt=\"🎂\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t5/1/16/1f382.png\" style=\"height:16px; width:16px\" /> Cuối buổi lễ, chương tr&igrave;nh ch&uacute;c mừng sinh nhật cho c&aacute;c th&agrave;nh vi&ecirc;n c&oacute; ng&agrave;y sinh trong th&aacute;ng 7 cũng được tổ chức với kh&ocirc;ng gian ấm c&uacute;ng<img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t8c/1/16/1f389.png\" style=\"height:16px; width:16px\" /><img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t8c/1/16/1f389.png\" style=\"height:16px; width:16px\" /></p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh6.googleusercontent.com/qv8HAk6uGQifESV3-vaqWVV64q9NEqVILYGEvuthamWe03m2qQBCxB7imDqm2T1ovcqf0kGfSxRVPOBM45tpxTIGJI5baaeTyZfeCt-ynT_tiZBdwWBi-9adY4ZSW2IgNBIq1MVEFSC7JdZcxbTnlYU\" style=\"height:320px; width:602px\" /></span></span></span><br />\r\n&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', '1659604334-z3618151394234_bc5dcb18e19d211cc173db2965145dc5.jpg', NULL, '2022-07-17 17:00:00', '2022-10-02 17:00:00', 'Tổng kết kinh doanh Địa ốc thiên phú 23', 28, '[\"1\",\"3\"]', 'tong-ket-kinh-doanh-dia-oc-thien-phu-23', 1),
+(16, 'Nhà Phố Thương Mại Châu Thành với vị trí đắc địa, tọa lạc ngay tại vòng xoay Thị Trấn Châu Thành trên trục đường chính Hoàng Lê Kha với Lộ Giới 30m giúp kết nối giữa Thành Phố Tây Ninh và cửa khẩu Phước Tân – Svay rieng (Campuchia). Thêm vào đó là các trục đường số 01 (LG 10M), đường số 02 (LG 9M) giúp kết nối 360 độ tại khu vực với đầy đủ các tiện ích ngoại khu: Trung tâm hành chính, Trường học, bệnh viện, ngân hàng, siêu thị…', '<div class=\"elementor-widget-wrap\">\r\n<div class=\"elementor-element elementor-element-0b02012 elementor-widget elementor-widget-spacer\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-spacer\">\r\n<div class=\"elementor-spacer-inner\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-dbee748 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>NH&Agrave; PHỐ THƯƠNG MẠI CH&Acirc;U TH&Agrave;NH</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-4961300 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>Giao thương thịnh vượng - Kết nối phồn vinh</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-97696c4 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-7fa3b30 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/NHA-PH%C3%93.jpg\" style=\"height:572px; width:1284px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-d1f70a6 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/z3368763397637_cd23867ce411c5a40321d3951bdbfe5c-2.jpg\" style=\"height:1818px; width:1284px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2ec0d67 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-765cdb1 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h5>TỔNG QUAN NH&Agrave; PHỐ THƯƠNG MẠI CH&Acirc;U TH&Agrave;NH</h5>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-0b4e940 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<ul>\r\n	<li>T&ecirc;n dự &aacute;n: NH&Agrave; PHỐ THƯƠNG MẠI THỊ TRẤN CH&Acirc;U TH&Agrave;NH</li>\r\n	<li>Chủ đầu tư: C&ocirc;ng ty TNHH T&acirc;n Ngọc Lực</li>\r\n	<li>Đơn vị ph&acirc;n phối độc quyền: Địa Ốc Thi&ecirc;n Ph&uacute;</li>\r\n	<li>Vị tr&iacute; dự &aacute;n: Thị Trấn Ch&acirc;u Th&agrave;nh</li>\r\n	<li>Diện t&iacute;ch: 5,470m2</li>\r\n	<li>Quy m&ocirc;: gồm 2 block A &amp; B với tổng 35 căn&nbsp;</li>\r\n	<li>Thiết kế: T&acirc;n Cổ Điển 1 trệt 2 lầu</li>\r\n	<li>Hạ tầng giao th&ocirc;ng: mặt tiền đường Ho&agrave;ng L&ecirc; Kha(LG 30M)</li>\r\n	<li>Hệ thống điện &acirc;m, nước m&aacute;y, c&aacute;p quang&hellip;</li>\r\n</ul>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-cc0395b elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2150e49 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h5>VỊ TR&Iacute; TRUNG T&Acirc;M - N&Acirc;NG TẦM GI&Aacute; TRỊ</h5>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2c7f1c7 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh với vị tr&iacute; đắc địa, tọa lạc ngay tại v&ograve;ng xoay Thị Trấn Ch&acirc;u Th&agrave;nh tr&ecirc;n trục đường ch&iacute;nh Ho&agrave;ng L&ecirc; Kha với Lộ Giới 30m gi&uacute;p kết nối giữa Th&agrave;nh Phố T&acirc;y Ninh v&agrave; cửa khẩu Phước T&acirc;n &ndash; Svay rieng (Campuchia). Th&ecirc;m v&agrave;o đ&oacute; l&agrave; c&aacute;c trục đường số 01 (LG 10M), đường số 02 (LG 9M) gi&uacute;p kết nối 360 độ tại khu vực với đầy đủ c&aacute;c tiện &iacute;ch ngoại khu: Trung t&acirc;m h&agrave;nh ch&iacute;nh, Trường học, bệnh viện, ng&acirc;n h&agrave;ng, si&ecirc;u thị&hellip;</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-0d5cf7b elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/v%E1%BB%8B-tr%C3%AD-4.jpg\" style=\"height:1246px; width:2048px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-4b79c14 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-ecbcec6 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>SƠ ĐỒ TỔNG THỂ</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-a2ba268 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/s%C6%A1-%C4%91%E1%BB%93.jpg\" style=\"height:1754px; width:2480px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-f7f8582 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/m%E1%BA%B7t-c%E1%BA%AFt.jpg\" style=\"height:905px; width:1280px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-53e0df1 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-217850e elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>PH&Aacute;P L&Yacute;</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-d1a3c28 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh hiện đ&atilde; c&oacute; đầy đủ bộ Ph&aacute;p L&yacute; m&agrave; một dự &aacute;n BĐS cần phải c&oacute;, đ&oacute; l&agrave;: CHỦ TRƯƠNG ĐẦU TƯ, PH&Ecirc; DUYỆT CHI TIẾT 1/500 V&Agrave; GIẤY PH&Eacute;P X&Acirc;Y DỰNG. Cộng với thương hiệu v&agrave; sự uy t&iacute;n của CĐT T&acirc;n Ngọc Lực, qu&yacute; kh&aacute;ch h&agrave;ng ho&agrave;n to&agrave;n c&oacute; thể y&ecirc;n t&acirc;m</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-c22a0c6 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full lazyloaded size-full\" src=\"https://simpleweb1.cdn.vccloud.vn/wp-content/uploads/2022/05/PH%C3%81P-L%C3%9D.jpg\" style=\"height:740px; width:991px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-80fcea0 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-897b8d7 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h5>TIỆN &Iacute;CH XUNG QUANH</h5>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-1c8862a elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh được c&aacute;c NĐT đ&aacute;nh gi&aacute; cao do c&oacute; nhiều tiềm năng ph&aacute;t triển, c&ugrave;ng với đ&oacute; l&agrave; vị tr&iacute; gi&aacute;p với Trung T&acirc;m Th&agrave;nh Phố T&acirc;y Ninh n&ecirc;n được thừa hưởng tất cả c&aacute;c tiện &iacute;ch m&agrave; TPTN đang c&oacute;.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-a69b362 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%20979%20676\'%3E%3C/svg%3E\" style=\"height:676px; width:979px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-7eb18d5 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-82ed13d elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h5>TIẾN ĐỘ THI C&Ocirc;NG &amp; MỘT SỐ H&Igrave;NH ẢNH THỰC TẾ</h5>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-eec752e elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh hiện tại đ&atilde; ho&agrave;n thiện to&agrave;n bộ Block A, sẵn s&agrave;ng đi v&agrave;o khai th&aacute;c Kinh Doanh. Hiện tại một số đơn vị đ&atilde; đi v&agrave;o vận h&agrave;nh khai th&aacute;c th&agrave;nh c&ocirc;ng, v&agrave; sắp tới đ&acirc;y sẽ l&agrave; sự xuất hiện của nhiều chuỗi hệ thống Kinh Doanh. Hứa hẹn sẽ trở th&agrave;nh t&acirc;m điểm giao thương của khu vực.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-bad8589 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201664%20936\'%3E%3C/svg%3E\" style=\"height:936px; width:1664px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-1b2907b elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p><em>Block A đ&atilde; x&acirc;y dựng ho&agrave;n thiện to&agrave;n bộ</em></p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-42c1731 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201664%20936\'%3E%3C/svg%3E\" style=\"height:936px; width:1664px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-f5f6374 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p><em>Một số đơn vị đ&atilde; hoạt động Kinh Doanh</em></p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-9dc9574 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201664%20936\'%3E%3C/svg%3E\" style=\"height:936px; width:1664px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-6d55fd1 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201664%20936\'%3E%3C/svg%3E\" style=\"height:936px; width:1664px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-5141f73 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201664%20936\'%3E%3C/svg%3E\" style=\"height:936px; width:1664px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-907791a elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p><em>H&igrave;nh ảnh thực tế tại khu vực</em></p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-1341efc elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-f775472 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>BẢNG GI&Aacute; CH&Iacute;NH THỨC</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-984dc51 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Bảng gi&aacute; F0&nbsp; Block A với 18 căn đ&atilde; ho&agrave;n thiện từ Chủ Đầu Tư.</p>\r\n\r\n<p>Th&ecirc;m nữa Kh&aacute;ch H&agrave;ng c&ograve;n được Ng&acirc;n H&agrave;ng hỗ trợ l&ecirc;n đến 70% Gi&aacute; Trị</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-c3cdb1b elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201284%201785\'%3E%3C/svg%3E\" style=\"height:1785px; width:1284px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-e1e2c13 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-f3ff086 elementor-widget elementor-widget-heading\">\r\n<div class=\"elementor-widget-container\">\r\n<h2>CH&Iacute;NH S&Aacute;CH B&Aacute;N H&Agrave;NG HẤP DẪN - THỜI ĐIỂM &quot; V&Agrave;NG &quot; ĐỂ Đ&Oacute;N ĐẦU</h2>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-bec0ca6 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Th&aacute;ng 5/2022 v&agrave; th&aacute;ng 6/2022 c&ugrave;ng với gi&aacute; b&aacute;n ưu đ&atilde;i, Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh c&agrave;ng ghi điểm trong mắt Nh&agrave; Đầu Tư nhờ khả năng sẵn s&agrave;ng đi v&agrave;o hoạt động ngay lập tức, c&ugrave;ng với đ&oacute; l&agrave; những ch&iacute;nh s&aacute;ch b&aacute;n h&agrave;ng Đặc Biệt d&agrave;nh cho Qu&yacute; Kh&aacute;ch H&agrave;ng c&oacute; thể kể đến như: G&oacute;i qu&agrave; tặng nội thất đẳng cấp l&ecirc;n đến 50 triệu; Chiết Khấu l&ecirc;n đến 3% v&agrave; đặc biệt hơn cả l&agrave; ch&iacute;nh s&aacute;ch chưa từng c&oacute; từ trước đến nay: Thanh to&aacute;n 50% &ndash; Nhận nh&agrave; Kinh Doanh ngay.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-9ad9bc6 elementor-widget elementor-widget-image\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-image\"><img alt=\"\" class=\"attachment-full size-full\" src=\"data:image/svg+xml,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201284%201795\'%3E%3C/svg%3E\" style=\"height:1795px; width:1284px\" /></div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-2bf7df5 elementor-widget elementor-widget-text-editor\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-clearfix elementor-text-editor\">\r\n<p>Ngo&agrave;i ra, Qu&yacute; Kh&aacute;ch H&agrave;ng khi đầu tư Nh&agrave; Phố Thương Mại Ch&acirc;u Th&agrave;nh c&ograve;n c&oacute; cơ hội nhận được 1 chiếc xe Mazda 3 trị gi&aacute; l&ecirc;n đến 700 triệu&nbsp;</p>\r\n\r\n<p>Đ&acirc;y ch&iacute;nh l&agrave; thời điểm quyết định để sở hữu m&ocirc; h&igrave;nh Kinh Doanh tuyệt vời c&ugrave;ng với Nh&agrave; Phố Thương Mại Thị Trấn Ch&acirc;u Th&agrave;nh khi m&agrave; c&oacute; qu&aacute; nhiều lợi thế, đ&oacute; l&agrave;: tiềm năng của khu vực, tiến độ v&agrave; chất lượng nổi trội của sản phẩm, hơn nữa l&agrave; ch&iacute;nh s&aacute;ch b&aacute;n h&agrave;ng v&ocirc; c&ugrave;ng hấp dẫn.</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-4c277e9 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-e809a54 elementor-widget elementor-widget-divider\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-divider\">&nbsp;</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"elementor-element elementor-element-e15749f elementor-section--handles-inside elementor-shape-circle elementor-sticky elementor-sticky--active elementor-sticky--effects elementor-view-stacked elementor-widget elementor-widget-icon\" style=\"bottom:0px; margin-bottom:0px; margin-top:0px; position:fixed; width:1120px\">\r\n<div class=\"elementor-widget-container\">\r\n<div class=\"elementor-icon-wrapper\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>', '1659751064-94751c966834aa6af325.jpg', NULL, '2022-07-04 17:00:00', '2022-11-08 17:00:00', 'NHÀ PHỐ THƯƠNG MẠI THỊ TRẤN CHÂU THÀNH', 24, '[\"2\"]', 'nha-pho-thuong-mai-thi-tran-chau-thanh', 1),
+(17, 'Khu dân cư đô thị Phường 3 là dự án đất nền phân lô, nằm trên mặt tiền đường Nguyễn Hữu Thọ, phường 3, thành phố Tây Ninh, tỉnh Tây Ninh. Dự án nằm cách đường Nguyễn Chí Thanh khoảng 210m.', '<h2><strong>Quy m&ocirc; dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh</strong></h2>\r\n<p><img src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-1.jpeg?t=1\" alt=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh 1\" /></p>\r\n<p>Khu d&acirc;n cư đ&ocirc; thị Phường 3 được triển khai x&acirc;y dựng tr&ecirc;n khu đất rộng 5,37 ha, với tổng số 199 nền đất ph&acirc;n l&ocirc;.</p>\r\n<p><a title=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-2.jpeg?t=1\"><img style=\"height: 468px; width: 750px;\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-2.jpeg?t=1\" alt=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" /></a></p>\r\n<p>Mỗi nền đất dự &aacute;n c&oacute; diện t&iacute;ch từ 100 &ndash; 600 m2, được x&acirc;y dựng tự do với chiều cao từ 2 &ndash; 4 tầng.</p>\r\n<p><a title=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/Khu-dan-cu-Do-thi-Phuong-3---Anh-1.jpg?t=1\"><img style=\"height: 381px; width: 750px;\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/Khu-dan-cu-Do-thi-Phuong-3---Anh-1.jpg?t=1\" alt=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" /></a></p>\r\n<p>Dự &aacute;n được đầu tư x&acirc;y dựng hệ thống hạ tầng cơ sở: hệ thống điện nước &acirc;m, đường nội khu v&agrave; đường ch&iacute;nh c&oacute; lộ giới 10 &ndash; 27m, c&ugrave;ng tiện &iacute;ch nội khu gồm: c&ocirc;ng vi&ecirc;n c&acirc;y xanh, trường học, trung t&acirc;m thương mại, hồ bơi,&hellip;</p>\r\n<p><a title=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-4.png?t=1\"><img style=\"height: 464px; width: 750px;\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-4.png?t=1\" alt=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" /></a></p>\r\n<p><a title=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-5.jpeg?t=1\"><img style=\"height: 402px; width: 750px;\" src=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/image-20210409152338-5.jpeg?t=1\" alt=\"Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh\" /></a></p>\r\n<p>Từ vị tr&iacute; dự &aacute;n, cư d&acirc;n c&oacute; thể di chuyển đến c&aacute;c tiện &iacute;ch ngoại khu trọng điểm của TP.T&acirc;y Ninh như c&aacute;ch Bệnh viện Y học Cổ truyền T&acirc;y Ninh khoảng 700m, Bệnh viện Đa khoa T&acirc;y Ninh khoảng 1,3km, C&ocirc;ng an TP.T&acirc;y Ninh khoảng 1,5km, Trường THPT chuy&ecirc;n Ho&agrave;ng L&ecirc; Kha khoảng 1,6km, s&acirc;n vận động T&acirc;y Ninh khoảng 1,7km&hellip;</p>\r\n<h2><strong>Th&ocirc;ng tin lịch sử &amp; ph&aacute;p l&yacute; dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3</strong></h2>\r\n<p><strong>Ng&agrave;y 13/3/2020:</strong>&nbsp;dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 đ&atilde; được UBND tỉnh T&acirc;y Ninh duyệt chủ trương đầu tư tại Quyết định số 485/QĐ-UBND v&agrave; duyệt quy hoạch chi tiết 1/500 tại Quyết định số 615/QĐ-UBND ng&agrave;y 14/7/2020&nbsp;<a href=\"https://static1.cafeland.vn/cafelandnew/hinh-anh/2021/04/09/144/Phap-ly-Khu-dan-cu-Do-thi-Phuong-3.jpg\" target=\"_blank\" rel=\"noopener\">(<strong>Đ&iacute;nh k&egrave;m</strong>)</a></p>\r\n<h2><strong>Th&ocirc;ng tin dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh từ CafeLand</strong></h2>\r\n<p>Khu d&acirc;n cư đ&ocirc; thị Phường 3 do C&ocirc;ng ty TNHH VM To&agrave;n Cầu l&agrave;m chủ đầu tư. C&ocirc;ng ty TNHH Hưng Ph&uacute;c S&agrave;i G&ograve;n (Hưng Ph&uacute;c Land)&nbsp;l&agrave; đơn vị ph&aacute;t triển dự &aacute;n.</p>\r\n<p>C&ocirc;ng ty TNHH VM To&agrave;n Cầu được th&agrave;nh lập v&agrave;o ng&agrave;y 26/6/2019, c&oacute; trụ sở ch&iacute;nh đặt tại số 13 đường số 9B, Khu đ&ocirc; thị An Ph&uacute; An Kh&aacute;nh (Q.2, TP.HCM). Theo c&ocirc;ng bố th&ocirc;ng tin thay đổi doanh nghiệp ng&agrave;y 28/8/2020, C&ocirc;ng ty VM To&agrave;n Cầu hoạt động với vốn điều lệ 200 tỉ đồng, do b&agrave; Phan L&yacute; Ngọc Loan (sinh năm 1976) l&agrave; người đại diện ph&aacute;p luật.</p>\r\n<p>Được biết, dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 đ&atilde; được UBND tỉnh T&acirc;y Ninh duyệt chủ trương đầu tư tại Quyết định số 485/QĐ-UBND ng&agrave;y 13/3/2020, duyệt quy hoạch chi tiết 1/500 tại Quyết định số 615/QĐ-UBND ng&agrave;y 14/7/2020 với tổng mức đầu tư 45 tỉ đồng.</p>\r\n<p>Ng&agrave;y 18/9/2020, Khu d&acirc;n cư đ&ocirc; thị Phường 3 được Sở X&acirc;y dựng tỉnh cấp giấp ph&eacute;p x&acirc;y dựng số 116/GPXD.&nbsp;Theo tiến độ, dự &aacute;n được thực hiện từ th&aacute;ng 1/2020 đến th&aacute;ng 6/2021&nbsp;ho&agrave;n thiện v&agrave; b&agrave;n giao hạ tầng kỹ thuật cho Nh&agrave; nước. Sau đ&oacute;, dự &aacute;n mới được ph&eacute;p b&aacute;n c&aacute;c nền đất theo quy hoạch được duyệt.</p>\r\n<p>Gi&aacute; b&aacute;n đất nền được tham khảo tr&ecirc;n thị trường của dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 từ 1,7 &ndash; 1,8 tỉ đồng/nền.</p>\r\n<h2><strong>Th&ocirc;ng tin nhanh dự &aacute;n Khu d&acirc;n cư đ&ocirc; thị Phường 3 T&acirc;y Ninh</strong></h2>\r\n<table border=\"1\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\">\r\n<tbody>\r\n<tr>\r\n<td><strong>Dự &aacute;n:&nbsp;&nbsp;</strong>Khu d&acirc;n cư đ&ocirc; thị Phường 3</td>\r\n<td>\r\n<p><strong>Tổng diện t&iacute;ch:&nbsp;</strong>5,37 ha</p>\r\n</td>\r\n</tr>\r\n<tr>\r\n<td>\r\n<p><strong>Vị tr&iacute;:&nbsp;</strong>Đường Nguyễn Hữu Thọ, phường 3, th&agrave;nh phố T&acirc;y Ninh, tỉnh T&acirc;y Ninh</p>\r\n</td>\r\n<td><strong>Tổng vốn đầu tư:</strong>&nbsp;45 tỉ đồng</td>\r\n</tr>\r\n<tr>\r\n<td>\r\n<p><strong>Loại h&igrave;nh:</strong>&nbsp;Đất nền</p>\r\n</td>\r\n<td><strong>Ng&agrave;y khởi c&ocirc;ng:&nbsp;</strong></td>\r\n</tr>\r\n<tr>\r\n<td>\r\n<p><strong>Chủ đầu tư:&nbsp;</strong>C&ocirc;ng ty TNHH VM To&agrave;n Cầu</p>\r\n<p><strong>Đơn vị ph&aacute;t triển:&nbsp;</strong>C&ocirc;ng ty TNHH Hưng Ph&uacute;c S&agrave;i G&ograve;n (Hưng Ph&uacute;c Land)</p>\r\n</td>\r\n<td><strong>Năm ho&agrave;n th&agrave;nh:&nbsp;</strong>Th&aacute;ng 6/2021</td>\r\n</tr>\r\n</tbody>\r\n</table>', 'quan-ly-bai-viet/November2022/1D9TluLB5rZZIjsGbxst.jpg', NULL, '2022-07-25 04:25:00', '2022-08-08 17:00:00', 'KHU DÂN CƯ ĐÔ THỊ PHƯỜNG 3 TÂY NINH', 24, '[\"2\",\"3\"]', 'khu-dan-cu-do-thi-phuong-3-tay-ninh', 1),
+(18, 'ở tại Tây Ninh. Nếu bạn đã có kinh nghiệm trong lĩnh vực bất động sản, kinh doanh hoặc muốn thử sức ở môi trường làm việc mới đầy năng động, sáng tạo, chuyên nghiệp với những chính sách lương thưởng và phúc lợi hấp dẫn, nguồn sản phẩm đa dạng luôn được cập nhật liên tục thì hãy tham gia tuyển dụng nhân viên kinh doanh bất động sản của chúng tôi để được đứng vào hàng ngũ Chuyên viên kinh doanh BĐS năng động và chuyên nghiệp của', '<div class=\"details-outer\">\r\n<h2>&nbsp;</h2>\r\n\r\n<h2>Nh&acirc;n vi&ecirc;n kinh doanh Bất động sản</h2>\r\n\r\n<div class=\"details-text\">\r\n<p><strong>C&ocirc;ng ty cổ phần đầu tư Địa ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh</strong> đang triển khai h&agrave;ng loạt c&aacute;c dự &aacute;n <strong>Đất nền</strong>, <strong>căn hộ</strong>, <strong>nh&agrave; phố </strong>ở tại T&acirc;y Ninh. Nếu bạn đ&atilde; c&oacute; kinh nghiệm trong lĩnh vực bất động sản, kinh doanh hoặc muốn thử sức ở m&ocirc;i trường l&agrave;m việc mới đầy năng động, s&aacute;ng tạo, chuy&ecirc;n nghiệp với những ch&iacute;nh s&aacute;ch lương thưởng v&agrave; ph&uacute;c lợi hấp dẫn, nguồn sản phẩm đa dạng lu&ocirc;n được cập nhật li&ecirc;n tục th&igrave; h&atilde;y tham gia tuyển dụng nh&acirc;n vi&ecirc;n kinh doanh bất động sản của ch&uacute;ng t&ocirc;i để được đứng v&agrave;o h&agrave;ng ngũ Chuy&ecirc;n vi&ecirc;n kinh doanh BĐS năng động v&agrave; chuy&ecirc;n nghiệp của <strong>ĐỊA ỐC THI&Ecirc;N PH&Uacute; T&Acirc;Y NINH</strong>.</p>\r\n\r\n<p>✅ <strong>ĐỊA ĐIỂM TRỤ SỞ L&Agrave;M VIỆC</strong>: <span style=\"color:#ff0000\">334, đường 30/4, khu phố 1, phường 3, Tp. T&acirc;y Ninh</span> (đối diện <strong>ng&acirc;n h&agrave;ng</strong>&nbsp;<strong>Vietinbank</strong>)</p>\r\n\r\n<p><img alt=\"\" src=\"http://dev.phuonghung.abc/public/uploads/files/Screenshot%20from%202022-09-03%2011-13-52.png\" style=\"height:900px; width:1600px\" /></p>\r\n\r\n<p>&nbsp;✅ <strong>Y&Ecirc;U CẦU TUYỂN DỤNG</strong>:</p>\r\n\r\n<p>Giới t&iacute;nh: Nam/Nữ. Độ tuổi: 22 &ndash; 35 tuổi</p>\r\n\r\n<p>- Ngoại h&igrave;nh: dễ nh&igrave;n, Gương mặt ưa nh&igrave;n.</p>\r\n\r\n<p>- Kinh nghiệm:&nbsp;</p>\r\n\r\n<p>+ C&oacute; Kinh nghiệm Bất động sản, kinh doanh từ 3 th&aacute;ng &ndash; 1 năm.</p>\r\n\r\n<p>+ Chưa c&oacute; Kinh nghiệm nếu thể hiện tốt sẽ được nhận đ&agrave;o tạo.</p>\r\n\r\n<p>- Giao tiếp: tr&igrave;nh b&agrave;y mạch lạc v&agrave; thuyết phục được người nghe, biết lắng nghe v&agrave; phản biện đ&uacute;ng l&uacute;c.</p>\r\n\r\n<p>- Phong c&aacute;ch: Năng động, trẻ trung, trung thực, ham học hỏi v&agrave; cầu tiến.</p>\r\n\r\n<p>- Kỹ năng mềm:</p>\r\n\r\n<p>+ C&oacute; kỹ năng tư vấn, chăm s&oacute;c kh&aacute;ch h&agrave;ng tốt.</p>\r\n\r\n<p>+ C&oacute; khả năng l&agrave;m việc độc lập v&agrave; theo nh&oacute;m.</p>\r\n\r\n<p>+ C&oacute; kỹ năng đ&agrave;m ph&aacute;n, thuyết phục.</p>\r\n\r\n<p>- Y&ecirc;u cầu kh&aacute;c:</p>\r\n\r\n<p>+ Sẵn s&agrave;ng đi c&ocirc;ng t&aacute;c khi c&oacute; y&ecirc;u cầu.</p>\r\n\r\n<p>+ C&oacute; trang bị Laptop, xe m&aacute;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>✅ <strong>M&Ocirc; TẢ C&Ocirc;NG VIỆC</strong>:</p>\r\n\r\n<p>- Thực hiện kế hoạch doanh thu được giao.</p>\r\n\r\n<p>- Cập nhật đ&uacute;ng v&agrave; đủ th&ocirc;ng tin c&aacute;c dự &aacute;n đang b&aacute;n.</p>\r\n\r\n<p>- Tư vấn kh&aacute;ch h&agrave;ng, đưa kh&aacute;ch đi xem dự &aacute;n.</p>\r\n\r\n<p>- Khai th&aacute;c, chăm s&oacute;c kh&aacute;ch h&agrave;ng.</p>\r\n\r\n<p>- Thực hiện c&aacute;c thủ tục cho kh&aacute;ch h&agrave;ng.</p>\r\n\r\n<p>- Thực hiện kế hoạch quảng c&aacute;o.</p>\r\n\r\n<p>- Trực s&agrave;n, trực nh&agrave; mẫu,.. theo đ&uacute;ng lịch ph&acirc;n c&ocirc;ng.</p>\r\n\r\n<p>- Cập nhật t&igrave;nh h&igrave;nh thị trường theo ph&acirc;n c&ocirc;ng.</p>\r\n\r\n<p>- Tham gia đầy đủ c&aacute;c kh&oacute;a huấn luyện đ&agrave;o tạo.</p>\r\n\r\n<p>- Thực hiện c&aacute;c b&aacute;o c&aacute;o theo quy định: b&aacute;o c&aacute;o ng&agrave;y, th&aacute;ng, qu&yacute;, kh&aacute;ch h&agrave;ng tiềm năng.</p>\r\n\r\n<p>- Thực hiện c&aacute;c nhiệm vụ ph&aacute;t sinh kh&aacute;c do cấp quản l&yacute; trực tiếp giao.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>✅ <strong>LƯƠNG + THƯỞNG</strong>:</p>\r\n\r\n<p>- LCB: Theo năng lực 5-15 triệu/ th&aacute;ng ( kh&ocirc;ng phụ thuộc doanh số)&nbsp;&nbsp;</p>\r\n\r\n<p>- Hoa hồng: 40-80 triệu/ sản phẩm</p>\r\n\r\n<p>- Thưởng luỹ tiến: 10-20 triệu/ sản phẩm</p>\r\n\r\n<p>- Thưởng c&aacute;c ng&agrave;y lễ - Lương th&aacute;ng 13, du lịch c&ugrave;ng c&ocirc;ng ty.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>✅ <strong>Đ&Agrave;O TẠO V&Agrave; THĂNG TIẾN R&Otilde; R&Agrave;NG</strong> :</p>\r\n\r\n<p>- C&aacute;c chương tr&igrave;nh đ&agrave;o tạo chuy&ecirc;n biệt theo từng cấp bậc.</p>\r\n\r\n<p>- Được đ&agrave;o tạo tận tay nếu bạn l&agrave; người chưa c&oacute; kinh nghiệm trong BĐS.</p>\r\n\r\n<p>- Lộ tr&igrave;nh thăng tiến theo từng năm đối với nh&acirc;n vi&ecirc;n c&oacute; sự cống hiến v&agrave; thể hiện được bản th&acirc;n một c&aacute;ch tốt nhất.</p>\r\n\r\n<p>- Cty hỗ trợ đào tạo th&ecirc;m ki&ecirc;́n thức marketing v&agrave; khai thác khách hàng (SEO, Google AdWords, Facebook, Email&hellip;).</p>\r\n\r\n<p>- L&agrave;m việc trong m&ocirc;i trường chuy&ecirc;n nghiệp, đồng nghiệp giỏi chuy&ecirc;n m&ocirc;n, cơ hội thăng tiến cao, trao dồi kiến thức để nh&acirc;n sự ph&aacute;t triển li&ecirc;n tục.</p>\r\n\r\n<p><span style=\"font-size:11pt\"><span style=\"font-family:Arial\"><span style=\"color:#000000\"><img src=\"https://lh5.googleusercontent.com/IY1-8KVBuKGNMhTJfdaRWeUEi2-HK-BTnEI8N1CrBkCwb2xTql_HCwaE0HaJ9vFiv2kPEriSHcpVQIYJ8H9K9caoM-JjjFeaai5D70HvpHkondwClYAkwG3ntVACINn-Dd1b0Q0xDUGQSQRXhB5btSc\" style=\"height:803px; width:602px\" /></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Nhận hồ sơ v&agrave; tiếp nhận phỏng vấn tại <strong>Địa Ốc Thi&ecirc;n Ph&uacute; </strong></p>\r\n\r\n<p>Hạn ch&oacute;t nộp hồ sơ đến hết ng&agrave;y 31/5/2021</p>\r\n\r\n<p>&nbsp;</p>\r\n</div>\r\n</div>', '1658770596-t.jpg', NULL, '2022-11-07 17:00:00', '2022-11-07 17:00:00', 'Nhân viên kinh doanh Bất động sản', 29, NULL, 'nhan-vien-kinh-doanh-bat-dong-san', 1);
+INSERT INTO `tbl_posts` (`id`, `post_desc`, `post_content`, `post_image`, `post_author`, `create_at`, `update_at`, `post_title`, `catID`, `display`, `post_slug`, `status`) VALUES
 (19, 'Phối hợp cùng với các bộ phận có liên quan đến dự án để theo dõi, tổng hợp quá trình thực hiện công tác pháp lý cho từng dự án', '<div class=\"details-center fadeinup\">\r\n<div class=\"details-outer\">\r\n<h2 style=\"text-align:center\"><span style=\"font-size:22px\"><strong>Gi&aacute;m đốc ph&aacute;t triển đại l&yacute; bất động sản</strong></span></h2>\r\n\r\n<div class=\"details-text\">\r\n<h3>M&Ocirc; TẢ C&Ocirc;NG VIỆC</h3>\r\n\r\n<p><strong>1. Tr&aacute;ch nhiệm c&ocirc;ng việc:</strong></p>\r\n\r\n<ul>\r\n	<li>Thực hiện c&aacute;c thủ tục ph&aacute;p l&yacute; của dự &aacute;n thuộc khối ph&aacute;t triển dự &aacute;n quản l&yacute;</li>\r\n	<li>Theo d&otilde;i, đ&ocirc;n đốc c&aacute;c chuy&ecirc;n vi&ecirc;n thụ l&yacute; hồ sơ thuộc Sở, Ng&agrave;nh xem x&eacute;t giải quyết hồ sơ C&ocirc;ng ty kịp thời</li>\r\n	<li>Phối hợp c&ugrave;ng với c&aacute;c bộ phận c&oacute; li&ecirc;n quan đến dự &aacute;n để theo d&otilde;i, tổng hợp qu&aacute; tr&igrave;nh thực hiện c&ocirc;ng t&aacute;c ph&aacute;p l&yacute; cho từng dự &aacute;n</li>\r\n	<li>Tham mưu cho L&atilde;nh đạo ph&ograve;ng v&agrave; l&atilde;nh đạo cấp tr&ecirc;n c&aacute;c vấn đề về ph&aacute;p l&yacute; cần giải quyết cho dự &aacute;n trong giai đoạn chuẩn bị đầu tư</li>\r\n	<li>Phối hợp với Ban quan l&yacute; dự &aacute;n, ph&ograve;ng kỹ thuật thực hiện c&aacute;c thủ tục ph&aacute;p l&yacute; thuộc giai đoạn triển khai x&acirc;y dựng, ho&agrave;n c&ocirc;ng c&ocirc;ng tr&igrave;nh v&agrave; vận h&agrave;nh sử dụng</li>\r\n	<li>Thực hiện c&aacute;c c&ocirc;ng việc li&ecirc;n quan đến c&ocirc;ng t&aacute;c bồi thường giải ph&oacute;ng mặt bằng</li>\r\n</ul>\r\n\r\n<p><strong>2. Quyền hạn:</strong></p>\r\n\r\n<ul>\r\n	<li>Li&ecirc;n hệ với c&aacute;c cơ quan nh&agrave; nước v&agrave; c&aacute;c tổ chức b&ecirc;n ngo&agrave;i để giải quyết c&ocirc;ng việc được ph&acirc;n c&ocirc;ng</li>\r\n	<li>Được quyền quyết định trong việc: Sắp xếp thời gian, tổ chức v&agrave; quản l&yacute; tiến tr&igrave;nh để ho&agrave;n th&agrave;nh c&ocirc;ng việc. Y&ecirc;u cầu hỗ trợ về c&ocirc;ng việc v&agrave; kinh ph&iacute; l&ecirc;n Trưởng Bộ phận/ Trưởng ph&ograve;ng</li>\r\n	<li>Đề xuất kế hoạch triển khai ph&aacute;p l&yacute;, bồi thường từng dự &aacute;n</li>\r\n	<li>Thu thập th&ocirc;ng tin, tổng hợp hồ sơ ph&aacute;p l&yacute; &hellip; từ c&aacute;c ph&ograve;ng ban li&ecirc;n quan để theo d&otilde;i t&igrave;nh h&igrave;nh thực hiện dự &aacute;n</li>\r\n	<li>Đề xuất c&aacute;c phương ph&aacute;p cải tiến, phối hợp l&agrave;m việc n&acirc;ng cao hiệu quả trong c&ocirc;ng việc</li>\r\n	<li>Quyền chủ động triển khai c&ocirc;ng việc</li>\r\n</ul>\r\n\r\n<p><strong>3. Quan hệ c&ocirc;ng t&aacute;c:</strong></p>\r\n\r\n<ul>\r\n	<li><strong>Phối hợp t&aacute;c nghiệp nội bộ:</strong><strong>​​​​​​​​​​​​​​</strong>\r\n\r\n	<ul>\r\n		<li>Y&ecirc;u cầu hỗ trợ từ cấp tr&ecirc;n cho c&aacute;c c&ocirc;ng việc vướng mắc, kh&oacute; khăn c&oacute; thể ảnh hưởng đến tiến độ triển khai c&ocirc;ng việc</li>\r\n		<li>Phối hợp, trao đổi thực hiện c&ocirc;ng t&aacute;c chuy&ecirc;n m&ocirc;n</li>\r\n	</ul>\r\n	</li>\r\n	<li><strong>Phối hợp t&aacute;c nghiệp b&ecirc;n ngo&agrave;i:</strong>\r\n	<ul>\r\n		<li><strong>​​​​​​​</strong>Nắm bắt c&aacute;c cơ chế ch&iacute;nh s&aacute;ch mới v&agrave; những th&ocirc;ng tin ph&aacute;p l&yacute; li&ecirc;n quan chuẩn bị ban h&agrave;nh, l&agrave;m việc c&aacute;c cơ quan chức năng li&ecirc;n quan đến hồ sơ dự &aacute;n của Sacomreal</li>\r\n		<li>Am hiểu mối quan hệ với c&aacute;c đối t&aacute;c c&oacute; li&ecirc;n quan để giải quyết c&aacute;c c&ocirc;ng việc theo y&ecirc;u cầu&hellip;</li>\r\n		<li>B&aacute;o c&aacute;o cấp tr&ecirc;n trực tiếp:&nbsp;<em>Trưởng ph&ograve;ng</em></li>\r\n	</ul>\r\n	</li>\r\n</ul>\r\n\r\n<h3>TI&Ecirc;U CHUẨN TUYỂN DỤNG</h3>\r\n\r\n<p><strong>1. Tr&igrave;nh độ kiến thức:</strong></p>\r\n\r\n<ul>\r\n	<li>&nbsp;<em>Tr&igrave;nh độ học vấn</em>: Cử nh&acirc;n Đại học/ Kỹ sư</li>\r\n	<li>&nbsp;<em>Tr&igrave;nh độ chuy&ecirc;n ng&agrave;nh</em>: Cử nh&acirc;n chuy&ecirc;n ng&agrave;nh luật, hoặc chuy&ecirc;n ng&agrave;nh li&ecirc;n quan</li>\r\n	<li>&nbsp;<em>Kiến thức ph&aacute;p luật</em>: Kiến thức ph&aacute;p luật bất động sản, luật doanh nghiệp</li>\r\n</ul>\r\n\r\n<p><strong>2. Kỹ năng:</strong></p>\r\n\r\n<ul>\r\n	<li>&nbsp;<em>Ngoại ngữ</em>: Giao tiếp cơ bản</li>\r\n	<li>&nbsp;<em>Tin học</em>: Sử dụng tốt Word, Excel, Power Point v&agrave; Internet</li>\r\n	<li>&nbsp;<em>Kỹ năng mềm:</em>&nbsp;Kỹ năng giải quyết t&igrave;nh huống</li>\r\n</ul>\r\n\r\n<p><strong>3. Năng lực:</strong></p>\r\n\r\n<ul>\r\n	<li>&nbsp;<em>Kinh nghiệm c&ocirc;ng t&aacute;c</em>: &Iacute;t nhất 5 năm kinh nghiệp trong ph&aacute;p l&yacute; dự &aacute;n</li>\r\n	<li>&nbsp;<em>Năng lực chuy&ecirc;n m&ocirc;n</em>: Am hiểu chuy&ecirc;n s&acirc;u về lĩnh vực đầu tư dự &aacute;n bất động sản/quy hoạch/kiến tr&uacute;c v&agrave; c&aacute;c quy định về ph&aacute;p luật c&oacute; li&ecirc;n quan đến ng&agrave;nh x&acirc;y dựng, đầu tư bất động sản</li>\r\n	<li>&nbsp;<em>Năng lực chung</em>: Khả năng thực hiện c&aacute;c hồ sơ ph&aacute;p l&yacute; cho c&aacute;c dự &aacute;n bất động sản</li>\r\n</ul>\r\n\r\n<p><strong>4. Y&ecirc;u cầu chung:</strong></p>\r\n\r\n<ul>\r\n	<li>&nbsp;<em>Giới t&iacute;nh</em>: Kh&ocirc;ng ph&acirc;n biệt</li>\r\n	<li>&nbsp;<em>Độ tuổi:</em> 26 &ndash; 40 tuổi</li>\r\n	<li>&nbsp;Giọng n&oacute;i r&otilde; r&agrave;ng, giao tiếp tốt</li>\r\n	<li>&nbsp;<em>Ngoại h&igrave;nh</em>: Ưa nh&igrave;n, phong c&aacute;ch chững chạc</li>\r\n	<li>&nbsp;<em>Phẩm chất c&aacute; nh&acirc;n</em>: Điềm tĩnh, tự tin, trung thực</li>\r\n</ul>\r\n</div>\r\n</div>\r\n\r\n<div class=\"download-but\"><a href=\"http://dev.thienphu.abc/pdf/formviungvien_vi_1620444867.doc\" target=\"_blank\">download</a>&nbsp;<a href=\"http://dev.thienphu.abc/pdf/formviungvien_vi_1620444867.doc\" target=\"_blank\">Mẫu đơn</a></div>\r\n</div>', '1658770930-vanphong.jpg', NULL, '2022-07-25 17:42:10', '2022-08-01 17:00:00', 'Giám đốc phát triển đại lý bất động sản', 29, '[\"3\"]', 'giam-doc-phat-trien-dai-ly-bat-dong-san', 1),
 (122, '✨ Chúc mừng chuyên viên kinh doanh giao dịch thành công', '<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/tf4/1/16/2728.png\" style=\"height:16px; width:16px\" /> Ch&uacute;c mừng chuy&ecirc;n vi&ecirc;n kinh doanh giao dịch th&agrave;nh c&ocirc;ng :</p>\r\n\r\n<p>- Anh Huỳnh C&ocirc;ng Triển : shophouse B1</p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Tổng gi&aacute; trị : 7.899.000.000 đồng.</p>\r\n\r\n<p><img alt=\"❇️\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/tb1/1/16/2747.png\" style=\"height:16px; width:16px\" /> Dự &aacute;n : Nh&agrave; phố thương mại thị trấn Ch&acirc;u Th&agrave;nh.</p>\r\n\r\n<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/tf4/1/16/2728.png\" style=\"height:16px; width:16px\" /> Ch&uacute;c mừng anh Huỳnh C&ocirc;ng Triển.<br />\r\n<br />\r\n<img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/images/chucmung.jpg\" style=\"height:531px; width:300px\" /></p>\r\n\r\n<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Nh&agrave; phố thương mại thị trấn Ch&acirc;u Th&agrave;nh - nh&agrave; phố cao cấp nhất thị trấn Ch&acirc;u Th&agrave;nh</p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Chủ đầu tư : T&acirc;n Ngọc Lực.</p>\r\n\r\n<p><img alt=\"🔸\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/16/1f538.png\" style=\"height:16px; width:16px\" /> Đơn vị ph&acirc;n phối độc quyền : Địa Ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh.</p>\r\n\r\n<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</p>\r\n\r\n<p><img alt=\"🏢\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/tf8/1/16/1f3e2.png\" style=\"height:16px; width:16px\" /> C&ocirc;ng ty CP Đầu tư Địa Ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh.</p>\r\n\r\n<p><img alt=\"📍\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t2d/1/16/1f4cd.png\" style=\"height:16px; width:16px\" />Trụ sở ch&iacute;nh : 344 đường 30/4, khu phố 1, phường 3, TP T&acirc;y Ninh.</p>\r\n\r\n<p><img alt=\"📍\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t2d/1/16/1f4cd.png\" style=\"height:16px; width:16px\" /> Chi nh&aacute;nh : Shophouse A2, khu phố 4, thị trấn Ch&acirc;u Th&agrave;nh, T&acirc;y Ninh.</p>\r\n\r\n<p><img alt=\"☎️\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t22/1/16/260e.png\" style=\"height:16px; width:16px\" /> Hotline : 0988 719 257 ( Ms. Dung )</p>\r\n\r\n<p><img alt=\"📮\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/tec/1/16/1f4ee.png\" style=\"height:16px; width:16px\" /> Email : Info.ThienPhuTayNinh@gmail.com</p>', '1658158496-c.jpg', NULL, '2022-07-18 15:34:56', '2022-08-02 17:00:00', '🎉🎉 CHÚC MỪNG GIAO DỊCH THÀNH CÔNG 🎉🎉', 28, '[\"1\",\"3\"]', 'chuc-mung-giao-dich-thanh-cong', 0),
-(203, '🌟🌟🌟 ĐỊA ỐC THIÊN PHÚ TÂY NINH KHAI TRƯƠNG CHI NHÁNH TẠI THỊ TRẤN CHÂU THÀNH🌟🌟🌟', '<p>&nbsp;</p>\r\n\r\n<p><img alt=\"💫\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/ted/1/16/1f4ab.png\" style=\"height:16px; width:16px\" />&nbsp;Đ&aacute;nh dấu bước chuyển m&igrave;nh ph&aacute;t triển b&agrave;i bản v&agrave; hệ thống hơn tr&ecirc;n nền tảng kết quả kinh doanh vững chắc thời gian qua. Ng&agrave;y 25/04/2022, C&ocirc;ng ty CP Đầu Tư Địa Ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh long trọng khai trương chi nh&aacute;nh tại Shophouse A2, Khu phố 4, Thị trấn Ch&acirc;u Th&agrave;nh, T&acirc;y Ninh.</p>\r\n\r\n<p><img alt=\"May be an image of 2 people and outdoors\" src=\"https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/279140182_708431100577461_7934647117991779455_n.jpg?_nc_cat=105&amp;ccb=1-7&amp;_nc_sid=8bfeb9&amp;_nc_ohc=g1GfUTwmUnsAX8PwIyE&amp;tn=d9K23G7hib4kAcqa&amp;_nc_ht=scontent.fsgn5-2.fna&amp;oh=00_AT9rqiOSiwdEMNKPlsfIMTVBuQAXYtV5P93S3vy29TyCPg&amp;oe=633A2272\" /></p>\r\n\r\n<p><img alt=\"May be an image of 9 people and people standing\" src=\"https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/279048385_708431280577443_3102811175118178660_n.jpg?_nc_cat=110&amp;ccb=1-7&amp;_nc_sid=8bfeb9&amp;_nc_ohc=67BWa5NRmHgAX_IUtcR&amp;_nc_ht=scontent.fsgn5-11.fna&amp;oh=00_AT87GQ_utuszQ4vLZeq-Ff7gOMWjfz9v-ux1gEsr0G-Nrw&amp;oe=63395C75\" /></p>\r\n\r\n<p><img alt=\"💫\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/ted/1/16/1f4ab.png\" style=\"height:16px; width:16px\" /> Đ&acirc;y l&agrave; văn ph&ograve;ng thứ 2 của Địa Ốc Thi&ecirc;n Ph&uacute; tại T&acirc;y Ninh, ngo&agrave;i văn ph&ograve;ng ch&iacute;nh tại số 344 đường 30/4, khu phố 1, phường 3, TP T&acirc;y Ninh . Kh&ocirc;ng những toạ lạc ngay khu thương mại sầm uất mặt tiền đường Ho&agrave;ng L&ecirc; Kha của thị trấn Ch&acirc;u Th&agrave;nh, chi nh&aacute;nh mới được b&agrave;i tr&iacute; trong t&ograve;a nh&agrave; 1 trệt 2 lầu với thiết kế T&acirc;n cổ điển, sang trọng, th&acirc;n thiện với m&ocirc;i trường, mang đến trải nghiệm thuận lợi v&agrave; th&uacute; vị cho kh&aacute;ch h&agrave;ng cũng như m&ocirc;i trường l&agrave;m việc hiện đại, năng động cho cộng sự Địa Ốc Thi&ecirc;n Ph&uacute;.</p>\r\n\r\n<p><img alt=\"May be an image of 5 people and people standing\" src=\"https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/278825319_708431183910786_761061445240507095_n.jpg?_nc_cat=105&amp;ccb=1-7&amp;_nc_sid=8bfeb9&amp;_nc_ohc=XZQXyw4sC0YAX_2zWqb&amp;_nc_ht=scontent.fsgn5-2.fna&amp;oh=00_AT87elMH9AL3l2XrDf1bVzUgr6RYExUWero4MbEzJD_sWA&amp;oe=633A91B4\" /></p>\r\n\r\n<p><img alt=\"💫\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/ted/1/16/1f4ab.png\" style=\"height:16px; width:16px\" />&ldquo; Ng&ocirc;i nh&agrave; mới &ldquo; tại thị trấn Ch&acirc;u Th&agrave;nh được kỳ vọng sẽ l&agrave; m&ocirc;i trường l&agrave;m việc năng động, s&aacute;ng tạo, chuy&ecirc;n nghiệp. Phục vụ kh&aacute;ch h&agrave;ng ng&agrave;y một tốt hơn. Hy vọng thời gian tới Địa Ốc Thi&ecirc;n Ph&uacute; sẽ nhận được nhiều sự ủng hộ v&agrave; tin tưởng từ Qu&yacute; kh&aacute;ch h&agrave;ng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', '1659588798-công ty.jpg', NULL, '2022-08-02 17:00:00', '2022-11-05 17:00:00', 'ĐỊA ỐC THIÊN PHÚ KHAI TRƯƠNG CHI NHÁNH MỚI', 28, '[\"3\"]', 'dia-oc-thien-phu-khai-truong-chi-nhanh-moi', 1),
-(204, 'Chương trình họp tổng kết hoạt động kinh doanh quý III & định hướng chiến lược kinh doanh quý IV năm 2022 của Địa ốc Thiên Phú vừa được diễn ra vào chiều ngày 11/10/2022 với sự tham dự đông đủ của tất cả các CBNV và ban lãnh đạo công ty', '<h1 style=\"text-align:center\"><strong><img alt=\"🌟\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t39/1.5/16/1f31f.png\" style=\"height:16px; width:16px\" /><img alt=\"🌟\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t39/1.5/16/1f31f.png\" style=\"height:16px; width:16px\" /> TỔNG KẾT HOẠT ĐỘNG KINH DOANH QU&Yacute; III &amp; ĐỊNH HƯỚNG CHIẾN LƯỢC KINH DOANH QU&Yacute; IV NĂM 2022<img alt=\"🌟\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t39/1.5/16/1f31f.png\" style=\"height:16px; width:16px\" /><img alt=\"🌟\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t39/1.5/16/1f31f.png\" style=\"height:16px; width:16px\" /></strong></h1>\r\n\r\n<p><img alt=\"📌\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t5/1.5/16/1f4cc.png\" style=\"height:16px; width:16px\" /> Chương tr&igrave;nh họp tổng kết hoạt động kinh doanh qu&yacute; III &amp; định hướng chiến lược kinh doanh qu&yacute; IV năm 2022 của Địa ốc Thi&ecirc;n Ph&uacute; vừa được diễn ra v&agrave;o chiều ng&agrave;y 11/10/2022 với sự tham dự đ&ocirc;ng đủ của tất cả c&aacute;c CBNV v&agrave; ban l&atilde;nh đạo c&ocirc;ng ty.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/bg-tk.png\" style=\"height:563px; width:1000px\" /></p>\r\n\r\n<p><img alt=\"🎯\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t9/1.5/16/1f3af.png\" style=\"height:16px; width:16px\" /> Nội dung ch&iacute;nh của buổi họp nhằm b&aacute;o c&aacute;o kết quả hoạt động kinh doanh trong qu&yacute; III v&agrave; sẵn s&agrave;ng cho những chiến lược kinh doanh v&agrave;o qu&yacute; IV, cũng như tuy&ecirc;n dương c&aacute;c c&aacute; nh&acirc;n c&oacute; th&agrave;nh t&iacute;ch xuất sắc nhất của Địa Ốc Thi&ecirc;n Ph&uacute;.</p>\r\n\r\n<h2><img alt=\"🎖\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t1/1.5/16/1f396.png\" style=\"height:16px; width:16px\" /> Chiến binh khối kinh doanh đạt doanh thu cao qu&yacute; III năm 2022</h2>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3793661577544_6e9249a6fd5ae1875b2090c08d7695f4.jpg\" style=\"height:562px; width:800px\" /></p>\r\n\r\n<p style=\"text-align:center\"><cite>Chị Nguyễn Thị Ngọc Mỹ: CVKD đạt doanh thu hạng ba qu&yacute; III - 2022</cite></p>\r\n\r\n<p style=\"text-align:center\"><cite><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3793661573265_faf2de426bce8e643fd4b5aaacc2de49.jpg\" style=\"height:611px; width:800px\" /></cite></p>\r\n\r\n<p style=\"text-align:center\"><cite>Anh Nguyễn C&ocirc;ng Hậu: CVKD đạt doanh thu hạng nh&igrave; qu&yacute; III - 2022</cite></p>\r\n\r\n<p style=\"text-align:center\"><cite><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3793661568246_cbf74aaf674e223501ff0cf9a83def48.jpg\" style=\"height:539px; width:800px\" /></cite></p>\r\n\r\n<p style=\"text-align:center\"><cite>Anh Huỳnh C&ocirc;ng Triển: Best seller qu&yacute; III - 2022</cite></p>\r\n\r\n<h2><img alt=\"🎖\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t1/1.5/16/1f396.png\" style=\"height:16px; width:16px\" /> Nh&acirc;n vi&ecirc;n khối hỗ trợ ho&agrave;n th&agrave;nh tốt nhiệm vụ qu&yacute; III năm 2022</h2>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3793661559796_a58ca950734162897a3029bf50b027ac.jpg\" style=\"height:613px; width:800px\" /></p>\r\n\r\n<p style=\"text-align:center\"><cite>Anh Nguyễn Th&agrave;nh Ph&uacute;c: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ ph&aacute;p l&yacute; qu&yacute; III - 2022</cite></p>\r\n\r\n<p style=\"text-align:center\"><cite><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3793661560487_70db6ade038058e699009780ee411337.jpg\" style=\"height:515px; width:800px\" /></cite></p>\r\n\r\n<p style=\"text-align:center\"><cite>Chị B&ugrave;i Kim Lệ Hằng: Ho&agrave;n th&agrave;nh tốt c&ocirc;ng t&aacute;c hỗ trợ kinh doanh qu&yacute; III - 2022</cite></p>\r\n\r\n<p style=\"text-align:center\"><cite><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3793661549854_cb1a3ac05c8e7c9933e5be27c8b31e62.jpg\" style=\"height:539px; width:800px\" /></cite></p>\r\n\r\n<p style=\"text-align:center\"><cite>Chị Nguyễn Thị Phương Dung: Ho&agrave;n th&agrave;nh chỉ ti&ecirc;u tuyển dụng qu&yacute; III - 2022</cite></p>\r\n\r\n<p><img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te5/1.5/16/1f389.png\" style=\"height:16px; width:16px\" /> Xin ch&uacute;c mừng c&aacute;c anh chị <img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te5/1.5/16/1f389.png\" style=\"height:16px; width:16px\" /></p>\r\n\r\n<p><img alt=\"🔥\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/ta9/1.5/16/1f525.png\" style=\"height:16px; width:16px\" /> Lại một qu&yacute; mới với những cơ hội mới đang chờ đợi trước mắt, c&aacute;c CBNV của Địa Ốc Thi&ecirc;n Ph&uacute; đều đồng l&ograve;ng quyết t&acirc;m ho&agrave;n th&agrave;nh những mục ti&ecirc;u đề ra v&agrave; cố gắng vượt xa doanh số đ&atilde; đạt được.</p>', '1665562104-z3793661545208_8b0b781b38401e877f0e9e19fc758b52.jpg', NULL, '2022-10-10 17:00:00', '2022-10-11 17:00:00', 'TỔNG KẾT HOẠT ĐỘNG KINH DOANH QUÝ III & ĐỊNH HƯỚNG CHIẾN LƯỢC KINH DOANH QUÝ IV NĂM 2022', 28, '[\"1\",\"3\"]', 'tong-ket-hoat-dong-kinh-doanh-quy-iii-dinh-huong-chien-luoc-kinh-doanh-quy-iv-nam-2022', 1),
-(205, 'Địa Ốc Thiên Phú đã tổ chức một chương trình đặc biệt dành tặng cho các chị em đồng nghiệp với những tiết mục vô cùng hấp dẫn.', '<p>🎊 Nh&acirc;n ng&agrave;y Phụ nữ Việt Nam 20/10, c&aacute;c bạn nam tại Địa Ốc Thi&ecirc;n Ph&uacute; đ&atilde; tổ chức một chương tr&igrave;nh đặc biệt d&agrave;nh tặng cho c&aacute;c chị em đồng nghiệp với những tiết mục v&ocirc; c&ugrave;ng hấp dẫn.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/gdfgdfgdf.jpg\" style=\"height:600px; width:743px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817267820086_ab67486346bade2bafc78a6dc0846e90.jpg\" style=\"height:645px; width:500px\" /></p>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<p>💞 C&aacute;c chị em đều rất vui khi nhận được những b&oacute; hoa tươi thắm c&ugrave;ng những m&oacute;n qu&agrave; bất ngờ do ch&iacute;nh tay c&aacute;c bạn nam chuẩn bị.</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817196256743_b45ddc251b35475fc819b004cd1ce446.jpg\" style=\"height:544px; width:800px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/a.jpg\" style=\"height:430px; width:800px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/f.jpg\" style=\"height:555px; width:800px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817203685973_a538dfbf684da1b3f9dd0f12db5db191.jpg\" style=\"height:533px; width:500px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817203693226_1a4e3933608120aef052f7261e9a03fa(1).jpg\" style=\"height:503px; width:500px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817203693719_cfa294b01ad1d2bc34cf3774d745c2f7.jpg.png\" style=\"height:561px; width:500px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817203701423_b9ad1844ce0979d5bff5abbfddb8f686.jpg\" style=\"height:581px; width:500px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/c.jpg\" style=\"height:534px; width:500px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/d.jpg\" style=\"height:576px; width:500px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/b.jpg\" style=\"height:600px; width:800px\" /></p>\r\n\r\n<p style=\"text-align:center\">&nbsp;</p>\r\n\r\n<p>💞 Xin gửi lời cảm ơn v&agrave; ch&uacute;c &quot;một nửa thế giới&quot; sẽ m&atilde;i lu&ocirc;n xinh đẹp, hạnh ph&uacute;c cũng như gặt h&aacute;i th&ecirc;m nhiều th&agrave;nh c&ocirc;ng trong cuộc sống. 💐 HAPPY VIETNAMESE WOMEN&#39;S DAY 💐</p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817203675583_3ab0294111e75e02d1edf1f64eb21a1b.jpg\" style=\"height:487px; width:800px\" /></p>\r\n\r\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3817203676382_a6e80ccd250fb7cea258b486a5cde71d.jpg\" style=\"height:492px; width:800px\" /></p>', '1666325032-z3817254721097_ff267e7eff6a37761c7e423b715f92b4.jpg', NULL, '2022-10-19 17:00:00', '2022-10-20 17:00:00', '❤️❤️ ĐỊA ỐC THIÊN PHÚ CHÀO MỪNG NGÀY PHỤ NỮ VIỆT NAM 20/10 ❤️❤️', 28, NULL, 'dia-oc-thien-phu-chao-mung-ngay-phu-nu-viet-nam-20-10', 1),
-(206, 'Ngày 06/11/2022 là một ngày quan trọng và hết sức tuyệt vời của Địa Ốc Thiên Phú, đánh dấu tròn 3 năm nỗ lực không ngừng nghỉ của các thành viên dưới ngôi nhà chung mang tên Thiên Phú. Chúng tôi vô cùng tự hào về điều đó!', '<p><img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te5/1.5/16/1f389.png\" style=\"height:16px; width:16px\" /><img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te5/1.5/16/1f389.png\" style=\"height:16px; width:16px\" />MỪNG KỶ NIỆM 3 NĂM TH&Agrave;NH LẬP ĐỊA ỐC THI&Ecirc;N PH&Uacute; T&Acirc;Y NINH<img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te5/1.5/16/1f389.png\" style=\"height:16px; width:16px\" /><img alt=\"🎉\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/te5/1.5/16/1f389.png\" style=\"height:16px; width:16px\" /></p>\r\n\r\n<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1.5/16/2728.png\" style=\"height:16px; width:16px\" /> Ng&agrave;y 06/11/2022 l&agrave; một ng&agrave;y quan trọng v&agrave; hết sức tuyệt vời của Địa Ốc Thi&ecirc;n Ph&uacute;, đ&aacute;nh dấu tr&ograve;n 3 năm nỗ lực kh&ocirc;ng ngừng nghỉ của c&aacute;c th&agrave;nh vi&ecirc;n dưới ng&ocirc;i nh&agrave; chung mang t&ecirc;n Thi&ecirc;n Ph&uacute;. Ch&uacute;ng t&ocirc;i v&ocirc; c&ugrave;ng tự h&agrave;o về điều đ&oacute;!</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553213840_7f352d77c64e9e12e35617c31c756e51.jpg\" style=\"height:702px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553213724_2faba3c16dc8980fe583150ed0188cdc.jpg\" style=\"height:701px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1.5/16/2728.png\" style=\"height:16px; width:16px\" /> Nhằm ch&agrave;o mừng lễ kỷ niệm, v&agrave;o chiều ng&agrave;y 05/11/2022 tại nh&agrave; h&agrave;ng ẩm thực Quen, c&ocirc;ng ty đ&atilde; tổ chức chương tr&igrave;nh &ldquo;Lễ kỷ niệm 3 năm th&agrave;nh lập c&ocirc;ng ty 06/11/2019 &ndash; 06/11/2022&ldquo;.</p>\r\n\r\n<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1.5/16/2728.png\" style=\"height:16px; width:16px\" /> Tại buổi lễ, &ocirc;ng Đỗ Phương H&ugrave;ng - Tổng gi&aacute;m đốc c&ocirc;ng ty Cổ phần Đầu Tư Địa Ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh đ&atilde; c&oacute; b&agrave;i ph&aacute;t biểu nh&igrave;n lại chặng đường 3 năm v&agrave; hướng tới chiến lược ph&aacute;t triển cho những dự &aacute;n sắp tới.</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553236818_6856a57c74050b020cb05b0ad4b3083d.jpg\" style=\"height:800px; width:1200px\" /><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1.5/16/2728.png\" style=\"height:16px; width:16px\" /> B&ecirc;n cạnh đ&oacute;, chương tr&igrave;nh c&ograve;n c&oacute; sự g&oacute;p mặt chia sẻ của &ocirc;ng Đặng Ho&agrave;ng Thanh-gi&aacute;m đốc kinh doanh, cũng l&agrave; một trong những gương mặt đ&atilde; đồng h&agrave;nh c&ugrave;ng c&ocirc;ng ty từ những ng&agrave;y đầu th&agrave;nh lập. &Ocirc;ng đ&atilde; chia sẻ trong thời gian 3 năm qua, c&ugrave;ng Thi&ecirc;n Ph&uacute; vượt qua những kh&oacute; khăn, gian nan nhưng cũng th&ocirc;ng qua đ&oacute; &ocirc;ng c&oacute; cơ hội thử th&aacute;ch bản th&acirc;n hơn, &ocirc;ng muốn gửi lời cảm ơn Thi&ecirc;n Ph&uacute; đ&atilde;, đang v&agrave; sẽ tạo ra nhiều cơ hội, nhiều th&aacute;ch thức hơn cho c&aacute;c th&agrave;nh vi&ecirc;n Thi&ecirc;n Ph&uacute;, cảm ơn c&aacute;c th&agrave;nh vi&ecirc;n đ&atilde; cống hiến v&agrave; đồng h&agrave;nh c&ugrave;ng doanh nghiệp.</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553234714_88ed79631afd14c5a0bff2cfbd55729a.jpg\" style=\"height:800px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1.5/16/2728.png\" style=\"height:16px; width:16px\" /> Chương tr&igrave;nh sau đ&oacute; được tiếp nối bằng một bữa tiệc ấm c&uacute;ng v&agrave; th&acirc;n mật giữa ban l&atilde;nh đạo c&ugrave;ng to&agrave;n thể CBNV c&ocirc;ng ty.</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553240846_28650afc8a8f2713841ceab805cb0477.jpg\" style=\"height:779px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553242343_dc2337c029658b51d7affc5416a67765.jpg\" style=\"height:799px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553242969_9c86d0b90fb7d1a0e5349f5a0bfa3103.jpg\" style=\"height:799px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553246189_493e033373b8926db6c68e08e44cfd52.jpg\" style=\"height:799px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553247125_6b193ad4615d4e37ebfbf6c95ba88c42.jpg\" style=\"height:799px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1.5/16/2728.png\" style=\"height:16px; width:16px\" /> Mở m&agrave;n, phải kể đến tiết mục cắt b&aacute;nh kem h&agrave;o hứng, vui nhộn, c&ugrave;ng những tiết mục giao lưu văn nghệ c&acirc;y nh&agrave; l&aacute; vườn c&agrave;ng khiến bữa tiệc th&ecirc;m phần sinh động v&agrave; lắng động x&uacute;c cảm. Kết th&uacute;c bữa tiệc, mọi người c&ugrave;ng nhau n&acirc;ng ly, ch&uacute;c nhau th&ecirc;m hạnh ph&uacute;c, th&ecirc;m lửa nhiệt huyết để c&ugrave;ng nhau gắn b&oacute;, nỗ lực c&ugrave;ng c&ocirc;ng ty hơn nữa.</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553259389_b906c9a0d5868503afc268c98ac2a7fb.jpg\" style=\"height:744px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553261218_f48b9be9d79f7280bb75d3e0981279b0.jpg\" style=\"height:770px; width:1200px\" /><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553264643_e795996f075d55bed3003af2a62840a0.jpg\" style=\"height:1192px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553276736_065c4a86b38f179696886a0af5f086fa.jpg\" style=\"height:832px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553279672_3be46656ff01e55ed51909e8e0e44a74.jpg\" style=\"height:800px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553280387_6b3ae8503d97a9c5648ad6de44b70cfa.jpg\" style=\"height:990px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/z3859553289248_9227fe4a48ad64adb3d8c73d498bf25f.jpg\" style=\"height:800px; width:1200px\" /></p>\r\n\r\n<p><img alt=\"✨\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1.5/16/2728.png\" style=\"height:16px; width:16px\" /> 3 năm chưa phải l&agrave; một chặng đường d&agrave;i nhưng cũng đủ để Địa Ốc Thi&ecirc;n Ph&uacute; khẳng định vị thế doanh nghiệp v&agrave; niềm tin từ kh&aacute;ch h&agrave;ng.</p>\r\n\r\n<p><img alt=\"❤\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/tf3/1.5/16/2764.png\" style=\"height:16px; width:16px\" /> Nh&acirc;n đ&acirc;y, Thi&ecirc;n Ph&uacute; xin tr&acirc;n trọng gửi lời cảm ơn s&acirc;u sắc đến qu&yacute; kh&aacute;ch h&agrave;ng, qu&yacute; đối t&aacute;c đ&atilde; tin tưởng v&agrave; đồng h&agrave;nh c&ugrave;ng Thi&ecirc;n Ph&uacute; trong thời gian qua.</p>', '1667739032-z3859553251878_69cccf3a159c3612b67adc5e42036372.jpg', NULL, '2022-11-05 17:00:00', '2022-11-06 17:00:00', 'MỪNG KỶ NIỆM 3 NĂM THÀNH LẬP ĐỊA ỐC THIÊN PHÚ TÂY NINH', 28, '[\"1\"]', 'mung-ky-niem-3-nam-thanh-lap-dia-oc-thien-phu-tay-ninh', 1),
-(207, 'Nhà phố thương mại thị trấn Châu Thành hiện đang được đánh giá là lựa chọn ưu tiên của các nhà đầu tư trong lĩnh vực bất động sản. Bên cạnh các lợi thế như pháp lý hoàn chỉnh, xây dựng hoàn thiện, hạ tầng đồng bộ sẵn sàng đưa vào khai thác thì vị trí vàng của dự án được xem là yếu tố hàng đầu mang lại nguồn doanh thu vượt trội, là cơ hội sinh lời ngay lập tức cho nhà đầu tư.', '<p><strong>Vị tr&iacute; trung t&acirc;m &ndash; N&acirc;ng tầm gi&aacute; trị</strong></p>\r\n\r\n<p>Tọa lạc ngay V&ograve;ng xoay trung t&acirc;m thị trấn Ch&acirc;u Th&agrave;nh, tr&ecirc;n trục đường ch&iacute;nh Ho&agrave;ng L&ecirc; Kha (lộ giới 30M) - tuyến đường giao thương kết nối th&agrave;nh phố T&acirc;y Ninh v&agrave; c&aacute;c cửa khẩu quốc tế Campuchia. Hơn nữa, c&aacute;c trục đường số 01 (lộ giới 10m), đường số 02 (lộ giới 9m) gi&uacute;p dự &aacute;n kết nối 360 độ với c&aacute;c tiện &iacute;ch ngoại khu như trung t&acirc;m h&agrave;nh ch&iacute;nh, si&ecirc;u thị, ng&acirc;n h&agrave;ng, trường học...</p>\r\n\r\n<p>Được quy hoạch v&agrave; x&acirc;y dựng với quy m&ocirc; 6.800m&sup2; gồm 2 Block A v&agrave; B, bao gồm 35 căn Shophouse liền kề, được thiết kế theo hướng t&acirc;n cổ điển 1 trệt 2 lầu, vừa hiện đại vừa cổ điển gi&uacute;p nh&agrave; phố thương mại nổi bật l&ecirc;n với phong c&aacute;ch &ldquo;SANG TRỌNG - ĐẲNG CẤP - THƯỢNG LƯU&rdquo;.</p>\r\n\r\n<p>Nơi đ&acirc;y hứa hẹn sẽ trở th&agrave;nh khu trung t&acirc;m thương mại phức hợp s&ocirc;i nổi, năng động ph&ugrave; hợp cho mục đ&iacute;ch cửa h&agrave;ng để kinh doanh lẫn nh&agrave; để ở.</p>\r\n\r\n<p>Hiện nay, dự &aacute;n đ&atilde; ho&agrave;n thiện khu A v&agrave; chủ đầu tư T&acirc;n Ngọc Lực đ&atilde; sẵn s&agrave;ng b&agrave;n giao cho kh&aacute;ch h&agrave;ng v&agrave;o khai th&aacute;c kinh doanh. Lấy tiến độ v&agrave; chất lượng l&agrave;m uy t&iacute;n, nh&agrave; phố thương mại Ch&acirc;u Th&agrave;nh l&agrave; một trong những dự &aacute;n trọng t&acirc;m, g&oacute;p phần khai th&aacute;c tiềm năng bất động sản tại khu vực cũng như nhu cầu khai th&aacute;c c&aacute;c m&ocirc; h&igrave;nh kinh doanh của c&aacute;c nh&agrave; đầu tư.</p>\r\n\r\n<p>Hiện tại, một số kh&aacute;ch h&agrave;ng đ&atilde; đi v&agrave;o vận h&agrave;nh khai th&aacute;c, sắp tới đ&acirc;y sẽ xuất hiện của nhiều chuỗi hệ thống kinh doanh. Như vậy, trong tương lai gần, chắc chắn nh&agrave; phố thương mại Ch&acirc;u Th&agrave;nh hứa hẹn sẽ l&agrave; nơi b&ugrave;ng nổ về giao thương, kinh tế.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong><img src=\"https://baotayninh.vn/image/fckeditor/upload/2022/20220524/images/2(1).jpg\" title=\"Sẵn sàng khai thác kinh doanh với nhà phố thương mại thị trấn Châu Thành\" /></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Ch&iacute;nh s&aacute;ch b&aacute;n h&agrave;ng hấp dẫn &ndash; Thời điểm V&agrave;ng để đ&oacute;n đầu</strong></p>\r\n\r\n<p>B&ecirc;n cạnh sự hấp dẫn c&aacute;c nh&agrave; đầu tư khi dự &aacute;n được trang bị sẵn s&agrave;ng, c&oacute; thể đi v&agrave;o hoạt động kinh doanh ngay lập tức th&igrave; trong th&aacute;ng 5/2022 v&agrave; th&aacute;ng 6/2022, với ch&iacute;nh s&aacute;ch b&aacute;n h&agrave;ng ưu đ&atilde;i đặc biệt như &ldquo;g&oacute;i qu&agrave; tặng nội thất đẳng cấp&rdquo; l&ecirc;n đến 50 triệu đồng, ch&iacute;nh s&aacute;ch &ldquo;chiết khấu&rdquo; l&ecirc;n đến 3% cho những kh&aacute;ch h&agrave;ng thanh to&aacute;n nhanh. Ngo&agrave;i ra, c&ograve;n c&oacute; ưu đ&atilde;i chưa từng c&oacute; từ chủ đầu tư l&agrave; &ldquo;Thanh to&aacute;n 50% - Nhận nh&agrave; ngay&rdquo;.</p>\r\n\r\n<p>Đặc biệt, qu&yacute; kh&aacute;ch h&agrave;ng khi đầu tư nh&agrave; phố thương mại Ch&acirc;u Th&agrave;nh c&ograve;n c&oacute; cơ hội bốc thăm tr&uacute;ng 1 chiếc xe Mazda 3 trị gi&aacute; l&ecirc;n đến 700 triệu đồng.</p>\r\n\r\n<p>Với những lợi thế về tiềm năng khu vực, chất lượng dự &aacute;n vượt trội, ch&iacute;nh s&aacute;ch b&aacute;n h&agrave;ng hấp dẫn, th&igrave; phải chăng đ&acirc;y l&agrave; thời điểm v&agrave;ng quyết định để sở hữu ngay m&ocirc; h&igrave;nh kinh doanh tuyệt vời c&ugrave;ng nh&agrave; phố thương mại Ch&acirc;u Th&agrave;nh?</p>', '1667788468-1(1).jpg', NULL, '2022-05-06 17:00:00', '2022-11-07 02:34:28', 'Sẵn sàng khai thác kinh doanh với nhà phố thương mại thị trấn Châu Thành', 30, '[\"1\"]', 'san-sang-khai-thac-kinh-doanh-voi-nha-pho-thuong-mai-thi-tran-chau-thanh', 1),
-(208, 'hu', '<p>tab an danh dang up dc &gt;&lt;</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/DJI_0425-1-1140x570-1(1).jpeg\" style=\"height:570px; width:1140px\" /><br />\r\n&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://www.diaocthienphu.com.vn/public/uploads/files/DI%E1%BB%84M.jpg\" style=\"height:1200px; width:900px\" /></p>', '1667814387-1.jpg', NULL, '2022-11-06 17:00:00', '2022-11-06 17:00:00', 'asc', 28, '[\"1\"]', 'asc', 1);
+(203, '🌟🌟🌟 ĐỊA ỐC THIÊN PHÚ TÂY NINH KHAI TRƯƠNG CHI NHÁNH TẠI THỊ TRẤN CHÂU THÀNH🌟🌟🌟', '<p>&nbsp;</p>\r\n<p><img style=\"height: 16px; width: 16px;\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/ted/1/16/1f4ab.png\" alt=\"💫\" />&nbsp;Đ&aacute;nh dấu bước chuyển m&igrave;nh ph&aacute;t triển b&agrave;i bản v&agrave; hệ thống hơn tr&ecirc;n nền tảng kết quả kinh doanh vững chắc thời gian qua. Ng&agrave;y 25/04/2022, C&ocirc;ng ty CP Đầu Tư Địa Ốc Thi&ecirc;n Ph&uacute; T&acirc;y Ninh long trọng khai trương chi nh&aacute;nh tại Shophouse A2, Khu phố 4, Thị trấn Ch&acirc;u Th&agrave;nh, T&acirc;y Ninh.</p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 631px; width: 602px;\" src=\"https://lh5.googleusercontent.com/JQrYLhTareWagDU6EyuDS3VroyVr1XydLgVULExgLuqqbdn2K6fS9PRoo_DqRw_n8uCJ5KWjXeS5GlI2lzzYBE48V3_XDisXD_osd7bdaLCOtgQrB7ldCcMUUg9LNlqLG9m4TNbTTYSc-zsA6Dh88eY\" /></span></span></span></p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 524px; width: 602px;\" src=\"https://lh5.googleusercontent.com/5e0OBjY11B25_vDIp0Ne7PLPCwS5OdW0FGq8klWjcIb6NVLIhMfeTv8EJ1XS-huoeSEiWS-BzyLe5UM2t5CdOwn_r7kTcoj7MifNLrmGhdYRF-QwQlShR7KiSRjR3BBSR7xqo2-b7hh4R4TDlQbR-i8\" /></span></span></span></p>\r\n<p><img style=\"height: 16px; width: 16px;\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/ted/1/16/1f4ab.png\" alt=\"💫\" /> Đ&acirc;y l&agrave; văn ph&ograve;ng thứ 2 của Địa Ốc Thi&ecirc;n Ph&uacute; tại T&acirc;y Ninh, ngo&agrave;i văn ph&ograve;ng ch&iacute;nh tại số 344 đường 30/4, khu phố 1, phường 3, TP T&acirc;y Ninh . Kh&ocirc;ng những toạ lạc ngay khu thương mại sầm uất mặt tiền đường Ho&agrave;ng L&ecirc; Kha của thị trấn Ch&acirc;u Th&agrave;nh, chi nh&aacute;nh mới được b&agrave;i tr&iacute; trong t&ograve;a nh&agrave; 1 trệt 2 lầu với thiết kế T&acirc;n cổ điển, sang trọng, th&acirc;n thiện với m&ocirc;i trường, mang đến trải nghiệm thuận lợi v&agrave; th&uacute; vị cho kh&aacute;ch h&agrave;ng cũng như m&ocirc;i trường l&agrave;m việc hiện đại, năng động cho cộng sự Địa Ốc Thi&ecirc;n Ph&uacute;.</p>\r\n<p><span style=\"font-size: 11pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><img style=\"height: 405px; width: 602px;\" src=\"https://lh5.googleusercontent.com/pfu7MvoJI3FpVNj4vejEwKg-pQ_kqlP5ZWPDFSypYN804eD6sw-FnG_YYvtoohJnwDHWXd3gBBiYn7-erOQc_OQ4v-xZhnoJR2w-CBfJ_hZAn6-aQXj47aGlYAg9esAe6xPqYBaWha1yixMuxulggA\" /></span></span></span></p>\r\n<p><img style=\"height: 16px; width: 16px;\" src=\"https://static.xx.fbcdn.net/images/emoji.php/v9/ted/1/16/1f4ab.png\" alt=\"💫\" />&ldquo; Ng&ocirc;i nh&agrave; mới &ldquo; tại thị trấn Ch&acirc;u Th&agrave;nh được kỳ vọng sẽ l&agrave; m&ocirc;i trường l&agrave;m việc năng động, s&aacute;ng tạo, chuy&ecirc;n nghiệp. Phục vụ kh&aacute;ch h&agrave;ng ng&agrave;y một tốt hơn. Hy vọng thời gian tới Địa Ốc Thi&ecirc;n Ph&uacute; sẽ nhận được nhiều sự ủng hộ v&agrave; tin tưởng từ Qu&yacute; kh&aacute;ch h&agrave;ng.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>', '1659588798-công ty.jpg', NULL, '2022-11-29 17:00:00', '2022-11-07 17:00:00', 'ĐỊA ỐC THIÊN PHÚ KHAI TRƯƠNG CHI NHÁNH MỚI', 28, '[\"1\",\"3\"]', 'dia-oc-thien-phu-khai-truong-chi-nhanh-moi', 1),
+(205, '123', '<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\"><img style=\"height: 782px; width: 440px;\" src=\"http://dev.phuonghung.abc/public/uploads/files/274888018_1797299420463272_7786793085305578282_n.jpg\" alt=\"\" /></span></span></span></span></p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">[CH&Uacute; &Yacute;: Trong thời gian n&agrave;y khi gửi h&agrave;ng dễ bị quản l&yacute; thị trường giữ h&agrave;ng kiểm tra n&ecirc;n v&iacute; dụ khi c&oacute; cơ quan n&agrave;o hỏi đột ngột th&igrave; xin n&oacute;i rằng m&aacute;y n&agrave;y mua của người em gửi ra cho chứ kh&ocirc;ng phải bu&ocirc;n b&aacute;n g&igrave;. Xin cảm ơn qu&yacute; kh&aacute;ch. ]</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">QU&Yacute; KH&Aacute;CH LƯU &Yacute; L&Agrave;M THEO HƯỚNG DẪN B&Ecirc;N GIAO H&Agrave;NG ĐỂ ĐƯỢC ĐẢM BẢO QUYỀN LỢI KHI XẢY RA SỰ CỐ DO VẬN CHUYỂN</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">- Vui l&ograve;ng quay clip khi khui h&agrave;ng v&agrave; kiểm tra h&agrave;ng trước sự chứng kiến của bưu t&aacute; , nếu c&oacute; bất kỳ sự cố n&agrave;o xảy ra th&igrave; phải b&aacute;o người b&aacute;n v&agrave; bưu t&aacute; để lập bi&ecirc;n bản tại chỗ , l&agrave;m bằng chứng đ&ograve;i quyền lợi cho m&igrave;nh, mọi tranh chấp khi ko c&oacute; bằng chứng th&igrave; sẽ ko giải quyết đc. ( đ&acirc;y l&agrave; hướng dẫn từ tr&ecirc;n C&ocirc;ng Ty GHTK )</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">- Đối với những kh&aacute;ch n&agrave;o c&oacute; &yacute; định test h&agrave;ng l&acirc;u th&igrave; n&ecirc;n thương lượng hỗ trợ với bưu t&aacute; trước tr&aacute;nh g&acirc;y ảnh hưởng tới bưu t&aacute;.</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">- B&ecirc;n em c&oacute; gửi m&atilde; tracking qu&yacute; kh&aacute;ch c&oacute; thể theo d&otilde;i tại : </span></span></span></span><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #000000;\"><span style=\"background-color: #ffffff;\">https://giaohangtietkiem.vn/#searchPrice</span></span></span></span><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\"> Hoặc Tải APP iGHTK để theo d&otilde;i lịch tr&igrave;nh chi tiết đơn h&agrave;ng&nbsp;</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">- Qu&yacute; kh&aacute;ch vui l&ograve;ng kiểm tra kĩ m&aacute;y trước khi nhận, nếu xảy ra t&igrave;nh trạng ngo&agrave;i &yacute; muốn xin vui l&ograve;ng g&oacute;i h&agrave;ng như cũ v&agrave; gửi lại bưu t&aacute;. v&igrave; h&agrave;ng đ&atilde; qua sử dụng đ&ocirc;i khi c&oacute; nhiều sơ s&oacute;t ,sau khi nhận h&agrave;ng b&ecirc;n shop sẽ ho&agrave;n 100% tiền cọc qua qu&yacute; kh&aacute;ch.</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">- Trong v&ograve;ng 7 ng&agrave;y đầu ti&ecirc;n b&ecirc;n shop sẽ ho&agrave;n lại 100% tiền m&aacute;y nếu c&oacute; lỗi phần cứng từ nh&agrave; sản xuất sau khi kĩ thuật x&aacute;c nhận lỗi . Qu&yacute; kh&aacute;ch vui l&ograve;ng gửi m&aacute;y về lại địa chỉ của shop ( lưu &yacute; thanh to&aacute;n trước ph&iacute; gửi h&agrave;ng ). B&ecirc;n shop sẽ hỗ trợ 50.000 vnd tiền ship sau khi nhận lại h&agrave;ng, v&agrave;o t&agrave;i khoản qu&yacute; kh&aacute;ch trong v&ograve;ng 2 ng&agrave;y l&agrave;m việc.</span></span></span></span></p>\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 11.5pt;\"><span style=\"font-family: Arial;\"><span style=\"color: #001a33;\"><span style=\"background-color: #ffffff;\">-Trong thời gian Bảo h&agrave;nh qu&yacute; kh&aacute;ch xin gửi về địa chỉ shop ( lưu &yacute; thanh to&aacute;n trước ph&iacute; gửi h&agrave;ng ) chi ph&iacute; bảo h&agrave;nh ho&agrave;n to&agrave;n miễn ph&iacute;.</span></span></span></span></p>\r\n<p>&nbsp;</p>', 'quan-ly-bai-viet/November2022/okOhqETv9tTGcV3cDOcA.png', NULL, '2022-10-17 17:00:00', '2022-11-07 17:00:00', 'u', 28, '[\"1\",\"2\",\"3\"]', 'u', 1),
+(206, 'TY', '<p>TY</p>\r\n<p><img src=\"http://dev.phuonghung.abc//public/storage/quan-ly-bai-viet/November2022/Screenshot from 2022-11-21 14-44-50.png\" alt=\"\" /></p>\r\n<p><img style=\"height: 757px; width: 1010px;\" src=\"http://dev.phuonghung.abc/public/uploads/images/1e321fe06d04ae5af715.jpg\" alt=\"\" /></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>', 'quan-ly-bai-viet/November2022/fdPSYCEkx4xoV7s7TRKo.jpg', 'Admin', '2024-05-13 17:00:00', '2022-11-08 17:00:00', 'asdasdas HG', 24, '[\"1\",\"2\",\"3\"]', 'asdasdas-hg', 1);
 
 -- --------------------------------------------------------
 
@@ -274,14 +1024,14 @@ INSERT INTO `tbl_posts` (`post_id`, `post_desc`, `post_content`, `post_image`, `
 --
 
 CREATE TABLE `tbl_recruit` (
-  `id` int(11) NOT NULL,
-  `position` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 DEFAULT NULL,
+  `id` int NOT NULL,
+  `position` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `qty` int DEFAULT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `date_ex` date DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `post_id` int(11) DEFAULT NULL,
-  `active` int(11) DEFAULT NULL
+  `status` int DEFAULT NULL,
+  `post_id` int DEFAULT NULL,
+  `active` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -290,7 +1040,7 @@ CREATE TABLE `tbl_recruit` (
 
 INSERT INTO `tbl_recruit` (`id`, `position`, `qty`, `address`, `date_ex`, `status`, `post_id`, `active`) VALUES
 (3, 'Nhân viên kinh doanh Bất động sản', 20, 'Tây Ninh', '2022-08-21', 2, 10, 1),
-(4, 'Giám đốc phát triển đại lý bất động sản', 1, 'Tây Ninh', '2022-06-14', 1, 19, 1);
+(4, 'Giám đốc phát triển đại lý bất động sản', 17, 'Tây Ninh', '2022-06-18', 1, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -299,11 +1049,11 @@ INSERT INTO `tbl_recruit` (`id`, `position`, `qty`, `address`, `date_ex`, `statu
 --
 
 CREATE TABLE `tbl_vendor` (
-  `id` int(11) NOT NULL,
-  `image` text DEFAULT NULL,
-  `status` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `description` text CHARACTER SET utf8 DEFAULT NULL,
+  `id` int NOT NULL,
+  `image` text,
+  `status` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb3,
   `seo` varchar(255) DEFAULT NULL,
   `slug` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -326,11 +1076,11 @@ INSERT INTO `tbl_vendor` (`id`, `image`, `status`, `name`, `description`, `seo`,
 --
 
 CREATE TABLE `tbl_visitors` (
-  `visitors_id` int(11) NOT NULL,
+  `visitors_id` int NOT NULL,
   `ip_address` varchar(255) DEFAULT NULL,
-  `date_visit` timestamp NOT NULL DEFAULT current_timestamp(),
-  `session_id` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `date_visit` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `session_id` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Đang đổ dữ liệu cho bảng `tbl_visitors`
@@ -4648,24 +5398,218 @@ INSERT INTO `tbl_visitors` (`visitors_id`, `ip_address`, `date_visit`, `session_
 (4307, '116.106.149.6', '2022-08-02 17:00:00', NULL),
 (4308, '116.106.133.199', '2022-08-03 17:00:00', NULL),
 (4309, '27.78.44.124', '2022-08-05 17:00:00', NULL),
-(4310, '116.110.234.120', '2022-08-08 17:00:00', NULL),
-(4311, '113.23.31.30', '2022-08-10 17:00:00', NULL),
-(4312, '116.106.151.182', '2022-09-28 17:00:00', NULL),
-(4313, '116.109.79.149', '2022-10-02 17:00:00', NULL),
-(4314, '116.106.149.213', '2022-10-05 17:00:00', NULL),
-(4315, '116.110.234.172', '2022-10-06 17:00:00', NULL),
-(4316, '116.106.142.75', '2022-10-11 17:00:00', NULL),
-(4317, '116.106.136.196', '2022-10-17 17:00:00', NULL),
-(4318, '203.162.17.89', '2022-10-20 17:00:00', NULL),
-(4319, '116.106.159.99', '2022-10-20 17:00:00', NULL),
-(4320, '14.179.87.162', '2022-11-05 17:00:00', NULL),
-(4321, '116.100.86.0', '2022-11-06 17:00:00', NULL),
-(4322, '115.72.73.248', '2022-11-06 17:00:00', NULL),
-(4323, '171.252.46.185', '2022-11-07 17:00:00', NULL);
+(4310, '116.110.234.120', '2022-08-08 17:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `translations`
+--
+
+CREATE TABLE `translations` (
+  `id` int UNSIGNED NOT NULL,
+  `table_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `column_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foreign_key` int UNSIGNED NOT NULL,
+  `locale` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `translations`
+--
+
+INSERT INTO `translations` (`id`, `table_name`, `column_name`, `foreign_key`, `locale`, `value`, `created_at`, `updated_at`) VALUES
+(1, 'data_types', 'display_name_singular', 5, 'pt', 'Post', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(2, 'data_types', 'display_name_singular', 6, 'pt', 'Página', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(3, 'data_types', 'display_name_singular', 1, 'pt', 'Utilizador', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(4, 'data_types', 'display_name_singular', 4, 'pt', 'Categoria', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(5, 'data_types', 'display_name_singular', 2, 'pt', 'Menu', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(6, 'data_types', 'display_name_singular', 3, 'pt', 'Função', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(7, 'data_types', 'display_name_plural', 5, 'pt', 'Posts', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(8, 'data_types', 'display_name_plural', 6, 'pt', 'Páginas', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(9, 'data_types', 'display_name_plural', 1, 'pt', 'Utilizadores', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(10, 'data_types', 'display_name_plural', 4, 'pt', 'Categorias', '2022-11-15 09:06:12', '2022-11-15 09:06:12'),
+(11, 'data_types', 'display_name_plural', 2, 'pt', 'Menus', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(12, 'data_types', 'display_name_plural', 3, 'pt', 'Funções', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(13, 'categories', 'slug', 1, 'pt', 'categoria-1', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(14, 'categories', 'name', 1, 'pt', 'Categoria 1', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(15, 'categories', 'slug', 2, 'pt', 'categoria-2', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(16, 'categories', 'name', 2, 'pt', 'Categoria 2', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(17, 'pages', 'title', 1, 'pt', 'Olá Mundo', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(18, 'pages', 'slug', 1, 'pt', 'ola-mundo', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(19, 'pages', 'body', 1, 'pt', '<p>Olá Mundo. Scallywag grog swab Cat o\'nine tails scuttle rigging hardtack cable nipper Yellow Jack. Handsomely spirits knave lad killick landlubber or just lubber deadlights chantey pinnace crack Jennys tea cup. Provost long clothes black spot Yellow Jack bilged on her anchor league lateen sail case shot lee tackle.</p>\r\n<p>Ballast spirits fluke topmast me quarterdeck schooner landlubber or just lubber gabion belaying pin. Pinnace stern galleon starboard warp carouser to go on account dance the hempen jig jolly boat measured fer yer chains. Man-of-war fire in the hole nipperkin handsomely doubloon barkadeer Brethren of the Coast gibbet driver squiffy.</p>', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(20, 'menu_items', 'title', 1, 'pt', 'Painel de Controle', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(21, 'menu_items', 'title', 2, 'pt', 'Media', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(22, 'menu_items', 'title', 12, 'pt', 'Publicações', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(23, 'menu_items', 'title', 3, 'pt', 'Utilizadores', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(24, 'menu_items', 'title', 11, 'pt', 'Categorias', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(25, 'menu_items', 'title', 13, 'pt', 'Páginas', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(26, 'menu_items', 'title', 4, 'pt', 'Funções', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(27, 'menu_items', 'title', 5, 'pt', 'Ferramentas', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(28, 'menu_items', 'title', 6, 'pt', 'Menus', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(29, 'menu_items', 'title', 7, 'pt', 'Base de dados', '2022-11-15 09:06:13', '2022-11-15 09:06:13'),
+(30, 'menu_items', 'title', 10, 'pt', 'Configurações', '2022-11-15 09:06:13', '2022-11-15 09:06:13');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `settings` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `users`
+--
+
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Admin', 'admin@admin.com', 'users/November2022/H23NRMhk3fYAKnEI8Zo2.png', NULL, '$2y$10$27kB5RhmKLNSW4G0pqzqM.PSVSp0RcF1/wg5jZoxjoJA3RsbFzB5i', '84bonSIHVdp9g9HqcjhHTOrmxcxBOuobbMmL0xxUkxRJoeL3saIvZJqo1csR', '{\"locale\":\"en\"}', '2022-11-15 09:06:12', '2022-11-15 09:10:07');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `user_roles`
+--
+
+CREATE TABLE `user_roles` (
+  `user_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `categories_slug_unique` (`slug`),
+  ADD KEY `categories_parent_id_foreign` (`parent_id`);
+
+--
+-- Chỉ mục cho bảng `data_rows`
+--
+ALTER TABLE `data_rows`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `data_rows_data_type_id_foreign` (`data_type_id`);
+
+--
+-- Chỉ mục cho bảng `data_types`
+--
+ALTER TABLE `data_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `data_types_name_unique` (`name`),
+  ADD UNIQUE KEY `data_types_slug_unique` (`slug`);
+
+--
+-- Chỉ mục cho bảng `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `menus_name_unique` (`name`);
+
+--
+-- Chỉ mục cho bảng `menu_items`
+--
+ALTER TABLE `menu_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menu_items_menu_id_foreign` (`menu_id`);
+
+--
+-- Chỉ mục cho bảng `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pages_slug_unique` (`slug`);
+
+--
+-- Chỉ mục cho bảng `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `permissions_key_index` (`key`);
+
+--
+-- Chỉ mục cho bảng `permission_role`
+--
+ALTER TABLE `permission_role`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `permission_role_permission_id_index` (`permission_id`),
+  ADD KEY `permission_role_role_id_index` (`role_id`);
+
+--
+-- Chỉ mục cho bảng `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `posts_slug_unique` (`slug`);
+
+--
+-- Chỉ mục cho bảng `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_unique` (`name`);
+
+--
+-- Chỉ mục cho bảng `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `settings_key_unique` (`key`);
+
+--
+-- Chỉ mục cho bảng `tagging_tagged`
+--
+ALTER TABLE `tagging_tagged`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tagging_tagged_taggable_id_index` (`taggable_id`),
+  ADD KEY `tagging_tagged_taggable_type_index` (`taggable_type`),
+  ADD KEY `tagging_tagged_tag_slug_index` (`tag_slug`);
+
+--
+-- Chỉ mục cho bảng `tagging_tags`
+--
+ALTER TABLE `tagging_tags`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tagging_tags_slug_index` (`slug`),
+  ADD KEY `tagging_tags_tag_group_id_foreign` (`tag_group_id`);
+
+--
+-- Chỉ mục cho bảng `tagging_tag_groups`
+--
+ALTER TABLE `tagging_tag_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tagging_tag_groups_slug_index` (`slug`);
 
 --
 -- Chỉ mục cho bảng `tbl_aboutus`
@@ -4677,6 +5621,12 @@ ALTER TABLE `tbl_aboutus`
 -- Chỉ mục cho bảng `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
+  ADD PRIMARY KEY (`admin_id`);
+
+--
+-- Chỉ mục cho bảng `tbl_admin_`
+--
+ALTER TABLE `tbl_admin_`
   ADD PRIMARY KEY (`admin_id`);
 
 --
@@ -4692,9 +5642,21 @@ ALTER TABLE `tbl_brand_product`
   ADD PRIMARY KEY (`brand_id`);
 
 --
+-- Chỉ mục cho bảng `tbl_brand_product_`
+--
+ALTER TABLE `tbl_brand_product_`
+  ADD PRIMARY KEY (`brand_id`);
+
+--
 -- Chỉ mục cho bảng `tbl_category_product`
 --
 ALTER TABLE `tbl_category_product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `tbl_category_product_`
+--
+ALTER TABLE `tbl_category_product_`
   ADD PRIMARY KEY (`category_id`);
 
 --
@@ -4722,10 +5684,16 @@ ALTER TABLE `tbl_metaseo`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `tbl_nhan_vien`
+--
+ALTER TABLE `tbl_nhan_vien`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `tbl_posts`
 --
 ALTER TABLE `tbl_posts`
-  ADD PRIMARY KEY (`post_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `tbl_recruit`
@@ -4746,86 +5714,283 @@ ALTER TABLE `tbl_visitors`
   ADD PRIMARY KEY (`visitors_id`);
 
 --
+-- Chỉ mục cho bảng `translations`
+--
+ALTER TABLE `translations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `translations_table_name_column_name_foreign_key_locale_unique` (`table_name`,`column_name`,`foreign_key`,`locale`);
+
+--
+-- Chỉ mục cho bảng `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `users_role_id_foreign` (`role_id`);
+
+--
+-- Chỉ mục cho bảng `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD PRIMARY KEY (`user_id`,`role_id`),
+  ADD KEY `user_roles_user_id_index` (`user_id`),
+  ADD KEY `user_roles_role_id_index` (`role_id`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
+
+--
+-- AUTO_INCREMENT cho bảng `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `data_rows`
+--
+ALTER TABLE `data_rows`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+
+--
+-- AUTO_INCREMENT cho bảng `data_types`
+--
+ALTER TABLE `data_types`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT cho bảng `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `menu_items`
+--
+ALTER TABLE `menu_items`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT cho bảng `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT cho bảng `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT cho bảng `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT cho bảng `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `tagging_tagged`
+--
+ALTER TABLE `tagging_tagged`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `tagging_tags`
+--
+ALTER TABLE `tagging_tags`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `tagging_tag_groups`
+--
+ALTER TABLE `tagging_tag_groups`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_aboutus`
 --
 ALTER TABLE `tbl_aboutus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `admin_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `admin_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `tbl_admin_`
+--
+ALTER TABLE `tbl_admin_`
+  MODIFY `admin_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_banner`
 --
 ALTER TABLE `tbl_banner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_brand_product`
 --
 ALTER TABLE `tbl_brand_product`
-  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `brand_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `tbl_brand_product_`
+--
+ALTER TABLE `tbl_brand_product_`
+  MODIFY `brand_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_category_product`
 --
 ALTER TABLE `tbl_category_product`
-  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT cho bảng `tbl_category_product_`
+--
+ALTER TABLE `tbl_category_product_`
+  MODIFY `category_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_count_visitors_online`
 --
 ALTER TABLE `tbl_count_visitors_online`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_flagship`
 --
 ALTER TABLE `tbl_flagship`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_garenal_setting`
 --
 ALTER TABLE `tbl_garenal_setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_metaseo`
 --
 ALTER TABLE `tbl_metaseo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `tbl_nhan_vien`
+--
+ALTER TABLE `tbl_nhan_vien`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_posts`
 --
 ALTER TABLE `tbl_posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_recruit`
 --
 ALTER TABLE `tbl_recruit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_vendor`
 --
 ALTER TABLE `tbl_vendor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_visitors`
 --
 ALTER TABLE `tbl_visitors`
-  MODIFY `visitors_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4324;
+  MODIFY `visitors_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4311;
+
+--
+-- AUTO_INCREMENT cho bảng `translations`
+--
+ALTER TABLE `translations`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT cho bảng `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
+
+--
+-- Các ràng buộc cho bảng `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `data_rows`
+--
+ALTER TABLE `data_rows`
+  ADD CONSTRAINT `data_rows_data_type_id_foreign` FOREIGN KEY (`data_type_id`) REFERENCES `data_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `menu_items`
+--
+ALTER TABLE `menu_items`
+  ADD CONSTRAINT `menu_items_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `permission_role`
+--
+ALTER TABLE `permission_role`
+  ADD CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `tagging_tags`
+--
+ALTER TABLE `tagging_tags`
+  ADD CONSTRAINT `tagging_tags_tag_group_id_foreign` FOREIGN KEY (`tag_group_id`) REFERENCES `tagging_tag_groups` (`id`);
+
+--
+-- Các ràng buộc cho bảng `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+
+--
+-- Các ràng buộc cho bảng `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD CONSTRAINT `user_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_roles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

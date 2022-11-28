@@ -161,7 +161,7 @@
                                         <li class="post-comment"><i class="fa fa-comments"></i> <a href="#">0 Bình luận</a> </li>
                                     </ul>
                                 </div>
-                                <div class="dez-post-media dez-img-effect zoom-slow"> <a href="#"><img src="{{asset('public/uploads/post/'.$post->post_image)}}" alt="{{$post->post_title}}"></a> </div>
+                                <div class="dez-post-media dez-img-effect zoom-slow"> <a href="#"><img src="{{asset('public/storage/'.$post->post_image)}}" alt="{{$post->post_title}}"></a> </div>
                                 <div class="dez-post-text">
                                     <?php echo $post->post_content ?>
                                 </div>
@@ -214,19 +214,25 @@
                                             @foreach ($recentPost as $item)
                                             <div class="widget-post clearfix">
                                                 <div class="dez-post-media">
-                                                    <a href="{{URL::to($item->post_id .'/bai-viet-'.$item->post_slug)}}">
-                                                        <img class="new-img" src="{{asset('public/uploads/post/'.$item->post_image)}}" alt="{{$item->post_title}}">
+                                                    <a href="{{URL::to($item->id .'/bai-viet-'.$item->post_slug)}}">
+                                                        <img class="new-img" src="{{asset('public/storage/'.$item->post_image)}}" alt="{{$item->post_title}}">
                                                     </a>
                                                 </div>
                                                 <div class="dez-post-info">
                                                     <div class="dez-post-header">
-                                                        <a href="{{URL::to($item->post_id .'/bai-viet-'.$item->post_slug)}}">
+                                                        <a href="{{URL::to($item->id .'/bai-viet-'.$item->post_slug)}}">
                                                             <h6 class="post-title">{{$item->post_title}}</h6>
                                                         </a>
                                                     </div>
                                                     <div class="dez-post-meta">
                                                         <ul>
-                                                            <li class="post-author">By Thiên Phú</li>
+                                                            <?php 
+                                                        //     $dataType = Voyager::model('User')->where('id', '=',$item->post_author)->first();
+                                                        // echo "<pre>";
+                                                        // print_r($dataType);
+                                                        // echo "</pre>";
+                                                        ?>
+                                                            <li class="post-author"> {{$item->post_author}}</li>
                                                             <li class="post-comment"><i class="fa fa-comments"></i> 0</li>
                                                         </ul>
                                                     </div>
@@ -247,7 +253,7 @@
                                         <ul>
 
                                             @foreach ($listCate as $item)
-                                            <li><a href="{{URL::to('/'.$item->category_id.'/danh-muc-'.$item->slug)}}">{{$item->category_name}}</a> (<?= Helper::countPostOfCategory($item->category_id) ?>)</li>
+                                            <li><a href="{{URL::to('/'.$item->id.'/danh-muc-'.$item->slug)}}">{{$item->category_name}}</a> (<?= Helper::countPostOfCategory($item->id) ?>)</li>
                                             @endforeach
                                         </ul>
                                     </div>
